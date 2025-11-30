@@ -1,11 +1,11 @@
-import { systemRouter } from "./_core/systemRouter";
+// import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
 import { generateAppFromPrompt, modifyAppWithAI } from "./groqClient";
 import * as db from "./db";
 import { nanoid } from "nanoid";
 
 export const appRouter = router({
-  system: systemRouter,
+  // system: systemRouter,
   apps: router({
     generate: publicProcedure
       .input((val: unknown) => {
