@@ -1,6 +1,8 @@
 {
   "include": [
-    "client/src/pages/**/*",
+    "client/src/pages/Home.tsx",
+    "client/src/pages/Examples.tsx",
+    "client/src/pages/Templates.tsx",
     "client/src/lib/**/*", 
     "client/src/components/ui/**/*",
     "client/src/const.ts",
@@ -8,6 +10,7 @@
     "server/_core/index.ts",
     "server/_core/context.ts",
     "server/_core/vite.ts",
+    "server/_core/trpc.ts",
     "server/db.ts",
     "server/groqClient.ts",
     "server/routers.ts"
