@@ -22,7 +22,6 @@ export default function Home() {
   const [isModifying, setIsModifying] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
-  const [verticalPosition, setVerticalPosition] = useState(0);
 
   // Check for URL parameters on mount
   useEffect(() => {
@@ -579,23 +578,15 @@ export default function Home() {
       </motion.nav>
 
       {/* Main Content - Hero Section */}
-      <div className="relative z-10 min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 pt-40 pb-20">
-        <motion.div 
-          className="max-w-5xl mx-auto w-full cursor-move"
-          drag="y"
-          dragConstraints={{ top: -300, bottom: 300 }}
-          dragElastic={0.1}
-          dragTransition={{ bounceStiffness: 300, bounceDamping: 20 }}
-          onDrag={(_, info) => setVerticalPosition(info.offset.y)}
-          whileDrag={{ scale: 0.98 }}
-        >
+      <div className="relative z-10 min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 pt-32 pb-16">
+        <div className="max-w-4xl mx-auto w-full">
           
           {/* Hero Title with Advanced Typography */}
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: [0.6, 0.05, 0.01, 0.9] }}
-            className="text-center mb-10 space-y-5"
+            className="text-center mb-8 space-y-4"
           >
             <div className="relative inline-block">
               <motion.h1 
@@ -759,7 +750,7 @@ export default function Home() {
               </div>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
