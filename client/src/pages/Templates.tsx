@@ -164,13 +164,13 @@ export default function Templates() {
   };
 
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden">
 
       {/* Navigation */}
       <motion.nav 
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="relative z-10 border-b border-white/20 bg-white/60 backdrop-blur-xl px-6 md:px-12 py-4"
+        className="relative z-10 border-b border-white/10 bg-transparent backdrop-blur-md px-6 md:px-12 py-4"
       >
         <div className="flex items-center justify-between">
           <motion.button

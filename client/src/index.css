@@ -142,7 +142,7 @@
     font-feature-settings: "rounding" 1;
     background-image: url('/background.jpg');
     background-size: cover;
-    background-position: center top;
+    background-position: center 20%;
     background-repeat: no-repeat;
     background-attachment: fixed;
   }
@@ -345,7 +345,7 @@
 }
 
 
-/* Overlay for background image to improve text contrast and visual appeal */
+/* Elite gradient overlay with depth */
 body:before {
   content: "";
   position: fixed;
@@ -353,15 +353,37 @@ body:before {
   left: 0;
   width: 100%;
   height: 100%;
-  /* Use a gradient overlay that's transparent at the top to show the face, then gradually becomes opaque */
-  background: linear-gradient(
-    to bottom,
-    rgba(248, 250, 252, 0) 0%,
-    rgba(248, 250, 252, 0.1) 25%,
-    rgba(248, 250, 252, 0.6) 50%,
-    rgba(248, 250, 252, 0.9) 70%,
-    rgba(248, 250, 252, 0.97) 100%
-  );
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(251, 146, 60, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.15) 0%, transparent 50%),
+    linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
   z-index: 0;
   pointer-events: none;
+}
+
+/* Animated gradient mesh background */
+body:after {
+  content: "";
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(circle at 30% 40%, rgba(251, 146, 60, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(249, 115, 22, 0.1) 0%, transparent 40%);
+  animation: meshMove 20s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes meshMove {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(5%, 5%) rotate(120deg); }
+  66% { transform: translate(-5%, 5%) rotate(240deg); }
 }

@@ -3,7 +3,7 @@ import {
   Loader2, Sparkles, Send, Download, Copy, 
   Maximize2, Minimize2, RotateCcw,
   Wand2, Box, Grid3x3, Eye, EyeOff,
-  ChevronRight, Terminal, Palette, Layout, FileCode
+  ChevronRight, Terminal, Palette, Layout, FileCode, Upload, Image, Paperclip
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
@@ -22,6 +22,7 @@ export default function Home() {
   const [isModifying, setIsModifying] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const [verticalPosition, setVerticalPosition] = useState(0);
 
   // Check for URL parameters on mount
   useEffect(() => {
@@ -501,191 +502,263 @@ export default function Home() {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
+      {/* Floating Particles Background Effect */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-amber-400/30 rounded-full"
+            initial={{ 
+              x: Math.random() * window.innerWidth, 
+              y: Math.random() * window.innerHeight,
+              scale: Math.random() * 0.5 + 0.5
+            }}
+            animate={{ 
+              y: [null, Math.random() * window.innerHeight],
+              x: [null, Math.random() * window.innerWidth],
+              opacity: [0.3, 0.8, 0.3]
+            }}
+            transition={{ 
+              duration: Math.random() * 10 + 10, 
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+        ))}
+      </div>
 
-      {/* Navigation */}
+      {/* Navigation - Glassmorphic */}
       <motion.nav 
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="relative z-10 border-b border-white/10 bg-transparent backdrop-blur-md px-6 md:px-12 py-4 flex items-center justify-between"
+        transition={{ duration: 0.8, ease: [0.6, 0.05, 0.01, 0.9] }}
+        className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-black/20 backdrop-blur-2xl"
       >
-        <div className="flex items-center gap-4">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-5 flex items-center justify-between">
           <motion.div 
-            className="relative w-12 h-12 bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30"
-            whileHover={{ scale: 1.05, rotate: 5 }}
-            whileTap={{ scale: 0.95 }}
+            className="flex items-center gap-4"
+            whileHover={{ scale: 1.02 }}
           >
-            <Wand2 className="w-6 h-6 text-white" />
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-2xl opacity-0"
-              whileHover={{ opacity: 0.3 }}
-            />
+            <motion.div 
+              className="relative w-11 h-11 bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 rounded-2xl flex items-center justify-center shadow-2xl shadow-amber-500/40"
+              whileHover={{ rotate: 180 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+            >
+              <Wand2 className="w-5 h-5 text-white" />
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-orange-400 rounded-2xl blur-xl opacity-50" />
+            </motion.div>
+            <div>
+              <h1 className="text-lg font-bold bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 bg-clip-text text-transparent">
+                AI Studio
+              </h1>
+              <p className="text-[10px] text-white/60 tracking-wider uppercase">Elite Creation Platform</p>
+            </div>
           </motion.div>
-          <div>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-              AI Studio
-            </h1>
-            <p className="text-xs text-slate-500">Build anything, instantly</p>
+          
+          <div className="hidden md:flex items-center gap-1">
+            {[
+              { label: "Examples", href: "/examples" },
+              { label: "Templates", href: "/templates" }
+            ].map((item, i) => (
+              <motion.button
+                key={i}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => window.location.href = item.href}
+                className="relative px-5 py-2.5 text-sm font-medium text-white/80 hover:text-white transition-colors group overflow-hidden rounded-xl"
+              >
+                <span className="relative z-10">{item.label}</span>
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity"
+                  layoutId="navHover"
+                />
+              </motion.button>
+            ))}
           </div>
-        </div>
-        
-        <div className="hidden md:flex items-center gap-2">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => window.location.href = "/examples"}
-            className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
-          >
-            Examples
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => window.location.href = "/templates"}
-            className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
-          >
-            Templates
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all"
-          >
-            <Sparkles className="w-4 h-4 inline mr-2" />
-            Pro
-          </motion.button>
         </div>
       </motion.nav>
 
-      {/* Main Content */}
-      <div className="relative z-10 flex-1 flex items-end justify-center px-4 sm:px-6 pb-12 pt-20">
+      {/* Main Content - Hero Section */}
+      <div className="relative z-10 min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 pt-40 pb-20">
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="w-full max-w-3xl space-y-8 mb-8"
+          className="max-w-5xl mx-auto w-full cursor-move"
+          drag="y"
+          dragConstraints={{ top: -300, bottom: 300 }}
+          dragElastic={0.1}
+          dragTransition={{ bounceStiffness: 300, bounceDamping: 20 }}
+          onDrag={(_, info) => setVerticalPosition(info.offset.y)}
+          whileDrag={{ scale: 0.98 }}
         >
-          {/* Header */}
-          <div className="text-center space-y-4">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight drop-shadow-lg">
-                <span className="text-slate-900">
-                  Build anything
-                </span>
-                <br />
-                <span className="bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent">
-                  with AI magic
-                </span>
-              </h1>
-            </motion.div>
+          
+          {/* Hero Title with Advanced Typography */}
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.6, 0.05, 0.01, 0.9] }}
+            className="text-center mb-10 space-y-5"
+          >
+            <div className="relative inline-block">
+              <motion.h1 
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[0.9] tracking-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              >
+                <motion.span 
+                  className="block text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  Build
+                </motion.span>
+                <motion.span 
+                  className="block bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 bg-clip-text text-transparent"
+                  style={{
+                    textShadow: "0 0 80px rgba(251, 146, 60, 0.5)"
+                  }}
+                  animate={{
+                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                  }}
+                  transition={{
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                >
+                  Anything
+                </motion.span>
+              </motion.h1>
+              
+              {/* Decorative Elements */}
+              <motion.div
+                className="absolute -top-8 -right-8 w-24 h-24 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full blur-3xl opacity-40"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.4, 0.6, 0.4]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            </div>
             
             <motion.p 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-base sm:text-lg text-slate-700 max-w-2xl mx-auto drop-shadow-md font-medium"
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto font-light leading-relaxed"
             >
-              Describe your vision in natural language. Watch as AI transforms your ideas into production-ready code in seconds.
+              Transform your vision into{" "}
+              <span className="font-semibold text-amber-400">production-ready code</span>
+              {" "}with the power of AI
             </motion.p>
 
+          </motion.div>
 
-          </div>
-
-          {/* Input Area */}
+          {/* Elite Input Area */}
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-            className="relative mt-8"
+            transition={{ duration: 1, delay: 1 }}
+            className="relative max-w-3xl mx-auto"
           >
-            <div className="relative group">
-              {/* Glow Effect */}
-              <div className="absolute -inset-2 bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 rounded-3xl blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+            {/* Ambient Glow */}
+            <div className="absolute -inset-4 bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-red-500/20 rounded-[3rem] blur-3xl" />
+            <motion.div 
+              className="absolute -inset-2 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 rounded-[2.5rem] opacity-0"
+              whileHover={{ opacity: 0.1 }}
+              transition={{ duration: 0.3 }}
+            />
+            
+            {/* Main Input Container */}
+            <div className="relative bg-white/98 backdrop-blur-3xl rounded-[2rem] shadow-[0_20px_80px_rgba(0,0,0,0.3)] border border-white/40 overflow-hidden">
               
-              {/* Input Container */}
-              <div className="relative bg-white/98 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 overflow-hidden">
+              {/* Input Field */}
+              <div className="relative p-2">
                 <Textarea
                   ref={textareaRef}
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Describe your app... e.g., 'A modern todo app with drag-and-drop, dark mode, and cloud sync'"
-                  className="min-h-32 bg-transparent border-0 px-7 py-5 text-slate-900 placeholder-slate-400 focus:outline-none resize-none text-base leading-relaxed"
+                  placeholder="Describe your vision... e.g., 'A sleek portfolio with 3D animations and dark mode'"
+                  className="min-h-[120px] bg-transparent border-0 px-6 py-4 pr-20 text-slate-900 placeholder-slate-400 focus:outline-none resize-none text-base leading-relaxed font-light"
                   disabled={isGenerating}
                 />
                 
-                {/* Bottom Bar */}
-                <div className="border-t border-slate-200/50 px-4 py-3 flex items-center justify-between bg-slate-50/50">
-                  <div className="flex items-center gap-2">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => window.location.href = "/templates"}
-                      className="p-1.5 hover:bg-white rounded-lg transition-colors"
-                      title="Browse templates"
-                    >
-                      <Layout className="w-4 h-4 text-slate-400 hover:text-slate-600" />
-                    </motion.button>
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => {
-                        const colorSuggestion = "Use a modern color palette with gradients";
-                        setPrompt(prev => prev ? `${prev}. ${colorSuggestion}` : colorSuggestion);
-                        toast.success("Color palette suggestion added!");
-                      }}
-                      className="p-1.5 hover:bg-white rounded-lg transition-colors"
-                      title="Add color palette suggestion"
-                    >
-                      <Palette className="w-4 h-4 text-slate-400 hover:text-slate-600" />
-                    </motion.button>
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => {
-                        const styleSuggestion = "Use clean, modern code with best practices";
-                        setPrompt(prev => prev ? `${prev}. ${styleSuggestion}` : styleSuggestion);
-                        toast.success("Code style suggestion added!");
-                      }}
-                      className="p-2 hover:bg-white rounded-xl transition-colors"
-                      title="Add code style suggestion"
-                    >
-                      <FileCode className="w-4 h-4 text-slate-400 hover:text-slate-600" />
-                    </motion.button>
-                  </div>
-                  
-                  <motion.button
-                    onClick={handleGenerate}
-                    disabled={isGenerating || !prompt.trim()}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="px-6 py-2.5 bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 group"
+                {/* Floating Generate Button */}
+                <motion.button
+                  onClick={handleGenerate}
+                  disabled={isGenerating || !prompt.trim()}
+                  whileHover={{ scale: 1.08, rotate: 5 }}
+                  whileTap={{ scale: 0.92 }}
+                  className="absolute bottom-6 right-6 p-4 bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 text-white rounded-2xl shadow-2xl shadow-amber-500/50 disabled:opacity-40 disabled:cursor-not-allowed group"
+                  title="Generate with AI"
+                >
+                  <motion.div
+                    animate={isGenerating ? { rotate: 360 } : {}}
+                    transition={{ duration: 1, repeat: isGenerating ? Infinity : 0, ease: "linear" }}
                   >
                     {isGenerating ? (
-                      <>
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        <span className="text-sm">Creating magic...</span>
-                      </>
+                      <Loader2 className="w-6 h-6" />
                     ) : (
-                      <>
-                        <Wand2 className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-                        <span className="text-sm">Generate App</span>
-                        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </>
+                      <Sparkles className="w-6 h-6 group-hover:scale-110 transition-transform" />
                     )}
-                  </motion.button>
+                  </motion.div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-orange-400 rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity" />
+                </motion.button>
+              </div>
+              
+              {/* Advanced Toolbar */}
+              <div className="border-t border-slate-200/60 bg-gradient-to-r from-slate-50/80 via-amber-50/50 to-orange-50/80 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  
+                  {/* Left: Upload Options */}
+                  <div className="flex items-center gap-2">
+                    {[
+                      { icon: Image, label: "Image", accept: "image/*" },
+                      { icon: Paperclip, label: "File", accept: "*" },
+                      { icon: Layout, label: "Template", onClick: () => window.location.href = "/templates" }
+                    ].map((item, i) => (
+                      <motion.button
+                        key={i}
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => {
+                          if (item.onClick) {
+                            item.onClick();
+                          } else {
+                            const input = document.createElement('input');
+                            input.type = 'file';
+                            input.accept = item.accept;
+                            input.onchange = () => toast.success(`${item.label} upload coming soon!`);
+                            input.click();
+                          }
+                        }}
+                        className="flex items-center gap-2 px-4 py-2 bg-white/60 hover:bg-white/90 rounded-xl transition-all border border-slate-200/50 group"
+                      >
+                        <item.icon className="w-4 h-4 text-amber-600 group-hover:text-amber-700 transition-colors" />
+                        <span className="text-xs font-medium text-slate-700">{item.label}</span>
+                      </motion.button>
+                    ))}
+                  </div>
+                  
+                  {/* Right: Keyboard Shortcut */}
+                  <div className="flex items-center gap-3">
+                    <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-900/5 rounded-lg">
+                      <kbd className="px-2 py-0.5 bg-white rounded text-xs font-mono text-slate-600 shadow-sm">⏎</kbd>
+                      <span className="text-xs text-slate-500">to generate</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                      <span className="text-xs text-slate-500 font-medium">AI Ready</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-
-
           </motion.div>
-
-
         </motion.div>
       </div>
     </div>
