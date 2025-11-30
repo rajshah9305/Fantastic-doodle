@@ -142,7 +142,7 @@
     font-feature-settings: "rounding" 1;
     background-image: url('/background.jpg');
     background-size: cover;
-    background-position: center;
+    background-position: center top;
     background-repeat: no-repeat;
     background-attachment: fixed;
   }
@@ -353,9 +353,15 @@ body:before {
   left: 0;
   width: 100%;
   height: 100%;
-  /* Use the theme's background color for the overlay */
-  background-color: var(--background);
-  /* Adjust opacity to let the image show through. 0.7 is a good balance. */
-  opacity: 0.7; 
-  z-index: -1;
+  /* Use a gradient overlay that's transparent at the top to show the face, then gradually becomes opaque */
+  background: linear-gradient(
+    to bottom,
+    rgba(248, 250, 252, 0) 0%,
+    rgba(248, 250, 252, 0.1) 25%,
+    rgba(248, 250, 252, 0.6) 50%,
+    rgba(248, 250, 252, 0.9) 70%,
+    rgba(248, 250, 252, 0.97) 100%
+  );
+  z-index: 0;
+  pointer-events: none;
 }

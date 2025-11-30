@@ -500,14 +500,14 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden">
 
       {/* Navigation */}
       <motion.nav 
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="relative z-10 border-b border-white/20 bg-white/60 backdrop-blur-xl px-6 md:px-12 py-4 flex items-center justify-between shadow-sm"
+        className="relative z-10 border-b border-white/10 bg-transparent backdrop-blur-md px-6 md:px-12 py-4 flex items-center justify-between"
       >
         <div className="flex items-center gap-4">
           <motion.div 
@@ -558,22 +558,22 @@ export default function Home() {
       </motion.nav>
 
       {/* Main Content */}
-      <div className="relative z-10 flex-1 flex items-center justify-center px-4 sm:px-6 py-12 sm:py-20">
+      <div className="relative z-10 flex-1 flex items-end justify-center px-4 sm:px-6 pb-12 pt-20">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="w-full max-w-4xl space-y-8"
+          className="w-full max-w-3xl space-y-8 mb-8"
         >
           {/* Header */}
-          <div className="text-center space-y-6">
+          <div className="text-center space-y-4">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold leading-tight">
-                <span className="bg-gradient-to-r from-slate-900 via-blue-900 to-cyan-900 bg-clip-text text-transparent">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight drop-shadow-lg">
+                <span className="text-slate-900">
                   Build anything
                 </span>
                 <br />
@@ -587,7 +587,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto"
+              className="text-base sm:text-lg text-slate-700 max-w-2xl mx-auto drop-shadow-md font-medium"
             >
               Describe your vision in natural language. Watch as AI transforms your ideas into production-ready code in seconds.
             </motion.p>
@@ -600,35 +600,35 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.9 }}
-            className="relative"
+            className="relative mt-8"
           >
             <div className="relative group">
               {/* Glow Effect */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
+              <div className="absolute -inset-2 bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 rounded-3xl blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
               
               {/* Input Container */}
-              <div className="relative bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30 overflow-hidden">
+              <div className="relative bg-white/98 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 overflow-hidden">
                 <Textarea
                   ref={textareaRef}
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Describe your app... e.g., 'A modern todo app with drag-and-drop, dark mode, and cloud sync'"
-                  className="min-h-40 bg-transparent border-0 px-8 py-6 text-slate-900 placeholder-slate-400 focus:outline-none resize-none text-lg leading-relaxed"
+                  className="min-h-32 bg-transparent border-0 px-7 py-5 text-slate-900 placeholder-slate-400 focus:outline-none resize-none text-base leading-relaxed"
                   disabled={isGenerating}
                 />
                 
                 {/* Bottom Bar */}
-                <div className="border-t border-slate-200/50 px-6 py-4 flex items-center justify-between bg-slate-50/50">
-                  <div className="flex items-center gap-3">
+                <div className="border-t border-slate-200/50 px-4 py-3 flex items-center justify-between bg-slate-50/50">
+                  <div className="flex items-center gap-2">
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => window.location.href = "/templates"}
-                      className="p-2 hover:bg-white rounded-xl transition-colors"
+                      className="p-1.5 hover:bg-white rounded-lg transition-colors"
                       title="Browse templates"
                     >
-                      <Layout className="w-5 h-5 text-slate-400 hover:text-slate-600" />
+                      <Layout className="w-4 h-4 text-slate-400 hover:text-slate-600" />
                     </motion.button>
                     <motion.button
                       whileHover={{ scale: 1.05 }}
@@ -638,10 +638,10 @@ export default function Home() {
                         setPrompt(prev => prev ? `${prev}. ${colorSuggestion}` : colorSuggestion);
                         toast.success("Color palette suggestion added!");
                       }}
-                      className="p-2 hover:bg-white rounded-xl transition-colors"
+                      className="p-1.5 hover:bg-white rounded-lg transition-colors"
                       title="Add color palette suggestion"
                     >
-                      <Palette className="w-5 h-5 text-slate-400 hover:text-slate-600" />
+                      <Palette className="w-4 h-4 text-slate-400 hover:text-slate-600" />
                     </motion.button>
                     <motion.button
                       whileHover={{ scale: 1.05 }}
@@ -654,7 +654,7 @@ export default function Home() {
                       className="p-2 hover:bg-white rounded-xl transition-colors"
                       title="Add code style suggestion"
                     >
-                      <FileCode className="w-5 h-5 text-slate-400 hover:text-slate-600" />
+                      <FileCode className="w-4 h-4 text-slate-400 hover:text-slate-600" />
                     </motion.button>
                   </div>
                   
@@ -663,18 +663,18 @@ export default function Home() {
                     disabled={isGenerating || !prompt.trim()}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="px-8 py-3 bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 text-white font-semibold rounded-2xl shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3 group"
+                    className="px-6 py-2.5 bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 group"
                   >
                     {isGenerating ? (
                       <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                        <span>Creating magic...</span>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span className="text-sm">Creating magic...</span>
                       </>
                     ) : (
                       <>
-                        <Wand2 className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-                        <span>Generate App</span>
-                        <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        <Wand2 className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+                        <span className="text-sm">Generate App</span>
+                        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </>
                     )}
                   </motion.button>
