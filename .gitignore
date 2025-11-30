@@ -46,6 +46,22 @@ pids
 *.pid.lock
 *.bak
 
+# Lock files
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Test files
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+
+# Development artifacts
+.manus/
+todo.md
+TODO.md
+
 # Coverage directory used by tools like istanbul
 coverage/
 *.lcov
