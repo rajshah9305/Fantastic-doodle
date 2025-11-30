@@ -58,7 +58,6 @@ yarn.lock
 *.spec.js
 
 # Development artifacts
-.manus/
 todo.md
 TODO.md
 

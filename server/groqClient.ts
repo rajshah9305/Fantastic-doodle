@@ -98,7 +98,9 @@ Guidelines:
   try {
     const message = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
-      max_tokens: 4096,
+      temperature: 1,
+      max_completion_tokens: 8192,
+      top_p: 1,
       messages: [
         {
           role: "system",
@@ -166,7 +168,10 @@ Guidelines:
   try {
     const stream = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
-      max_tokens: 4096,
+      temperature: 1,
+      max_completion_tokens: 8192,
+      top_p: 1,
+      stream: true,
       messages: [
         {
           role: "system",
@@ -177,7 +182,6 @@ Guidelines:
           content: `Create a web application with the following requirements:\n\n${prompt}`,
         },
       ],
-      stream: true,
     });
 
     for await (const chunk of stream) {
@@ -230,7 +234,10 @@ Guidelines:
   try {
     const stream = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
-      max_tokens: 4096,
+      temperature: 1,
+      max_completion_tokens: 8192,
+      top_p: 1,
+      stream: true,
       messages: [
         {
           role: "system",
@@ -241,9 +248,6 @@ Guidelines:
           content: `Create a web application with the following requirements:\n\n${prompt}`,
         },
       ],
-      stream: true,
-      temperature: 1,
-      top_p: 1,
       tools: tools.map((tool) => ({
         type: tool.type,
       })),
@@ -298,7 +302,9 @@ Guidelines:
   try {
     const message = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
-      max_tokens: 4096,
+      temperature: 1,
+      max_completion_tokens: 8192,
+      top_p: 1,
       messages: [
         {
           role: "system",
@@ -358,7 +364,10 @@ Guidelines:
   try {
     const stream = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
-      max_tokens: 4096,
+      temperature: 1,
+      max_completion_tokens: 8192,
+      top_p: 1,
+      stream: true,
       messages: [
         {
           role: "system",
@@ -369,7 +378,6 @@ Guidelines:
           content: `Original app requirements: ${originalPrompt}\n\nCurrent code:\n${currentCode}\n\nModification instruction: ${instruction}`,
         },
       ],
-      stream: true,
     });
 
     for await (const chunk of stream) {

@@ -6,14 +6,15 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import AppViewer from "./pages/AppViewer";
-import Pricing from "./pages/Pricing";
+import Examples from "./pages/Examples";
+import Templates from "./pages/Templates";
 
 function Router() {
-  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path="/" component={Home} />
-      <Route path="/pricing" component={Pricing} />
+      <Route path="/examples" component={Examples} />
+      <Route path="/templates" component={Templates} />
       <Route path="/app/:id" component={AppViewer} />
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}

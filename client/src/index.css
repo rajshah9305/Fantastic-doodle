@@ -260,11 +260,11 @@
 
   /* Gradient backgrounds */
   .gradient-primary {
-    @apply bg-gradient-to-br from-blue-600 to-purple-600;
+    @apply bg-gradient-to-br from-blue-600 to-cyan-600;
   }
 
   .gradient-accent {
-    @apply bg-gradient-to-br from-orange-400 to-pink-600;
+    @apply bg-gradient-to-br from-emerald-500 to-teal-600;
   }
 
   /* Shadow utilities */
@@ -274,5 +274,72 @@
 
   .shadow-elevated {
     @apply shadow-lg hover:shadow-xl transition-shadow;
+  }
+
+  /* Custom animations */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes glow {
+    0%, 100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-glow {
+    animation: glow 3s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 3s linear infinite;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%
+    );
+    background-size: 1000px 100%;
+  }
+
+  /* Smooth scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #3b82f6, #06b6d4);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #2563eb, #0891b2);
   }
 }
