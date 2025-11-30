@@ -44,11 +44,11 @@
 
 :root {
   /* Modern vibrant color palette */
-  --primary: oklch(0.55 0.25 260);
+  --primary: oklch(0.55 0.25 20); /* Rich Red to match background */
   --primary-foreground: oklch(0.98 0.001 0);
-  --secondary: oklch(0.65 0.22 290);
+  --secondary: oklch(0.65 0.22 20); /* Rich Red to match background */
   --secondary-foreground: oklch(0.98 0.001 0);
-  --accent: oklch(0.70 0.25 40);
+  --accent: oklch(0.75 0.3 80); /* Gold/Yellow to match background */
   --accent-foreground: oklch(0.12 0.01 0);
   --destructive: oklch(0.65 0.25 20);
   --destructive-foreground: oklch(0.98 0.001 0);
@@ -64,22 +64,22 @@
   --muted-foreground: oklch(0.45 0.01 0);
   --border: oklch(0.88 0.01 0);
   --input: oklch(0.95 0.005 0);
-  --ring: oklch(0.55 0.25 260);
+  --ring: oklch(0.55 0.25 20);
   
   /* Sidebar styling */
   --sidebar: oklch(0.99 0.001 0);
   --sidebar-foreground: oklch(0.15 0.01 0);
-  --sidebar-primary: oklch(0.55 0.25 260);
+  --sidebar-primary: oklch(0.55 0.25 20);
   --sidebar-primary-foreground: oklch(0.98 0.001 0);
   --sidebar-accent: oklch(0.92 0.005 0);
-  --sidebar-accent-foreground: oklch(0.55 0.25 260);
+  --sidebar-accent-foreground: oklch(0.75 0.3 80);
   --sidebar-border: oklch(0.88 0.01 0);
   --sidebar-ring: oklch(0.55 0.25 260);
   
   /* Chart colors */
-  --chart-1: oklch(0.55 0.25 260);
-  --chart-2: oklch(0.65 0.22 290);
-  --chart-3: oklch(0.70 0.25 40);
+  --chart-1: oklch(0.55 0.25 20);
+  --chart-2: oklch(0.65 0.22 20);
+  --chart-3: oklch(0.75 0.3 80);
   --chart-4: oklch(0.60 0.20 180);
   --chart-5: oklch(0.75 0.18 120);
   
@@ -88,11 +88,11 @@
 
 .dark {
   /* Dark theme colors */
-  --primary: oklch(0.65 0.25 260);
+  --primary: oklch(0.65 0.25 20); /* Rich Red to match background */
   --primary-foreground: oklch(0.12 0.01 0);
-  --secondary: oklch(0.75 0.22 290);
+  --secondary: oklch(0.75 0.22 20); /* Rich Red to match background */
   --secondary-foreground: oklch(0.12 0.01 0);
-  --accent: oklch(0.80 0.25 40);
+  --accent: oklch(0.85 0.3 80); /* Gold/Yellow to match background */
   --accent-foreground: oklch(0.12 0.01 0);
   --destructive: oklch(0.75 0.25 20);
   --destructive-foreground: oklch(0.12 0.01 0);
@@ -108,22 +108,22 @@
   --muted-foreground: oklch(0.70 0.01 0);
   --border: oklch(0.25 0.01 0);
   --input: oklch(0.22 0.01 0);
-  --ring: oklch(0.65 0.25 260);
+  --ring: oklch(0.65 0.25 20);
   
   /* Dark sidebar styling */
   --sidebar: oklch(0.15 0.01 0);
   --sidebar-foreground: oklch(0.95 0.002 0);
-  --sidebar-primary: oklch(0.65 0.25 260);
+  --sidebar-primary: oklch(0.65 0.25 20);
   --sidebar-primary-foreground: oklch(0.12 0.01 0);
   --sidebar-accent: oklch(0.28 0.01 0);
-  --sidebar-accent-foreground: oklch(0.80 0.25 40);
+  --sidebar-accent-foreground: oklch(0.85 0.3 80);
   --sidebar-border: oklch(0.25 0.01 0);
   --sidebar-ring: oklch(0.65 0.25 260);
   
   /* Dark chart colors */
-  --chart-1: oklch(0.65 0.25 260);
-  --chart-2: oklch(0.75 0.22 290);
-  --chart-3: oklch(0.80 0.25 40);
+  --chart-1: oklch(0.65 0.25 20);
+  --chart-2: oklch(0.75 0.22 20);
+  --chart-3: oklch(0.85 0.3 80);
   --chart-4: oklch(0.70 0.20 180);
   --chart-5: oklch(0.85 0.18 120);
 }
@@ -140,7 +140,7 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rounding" 1;
-    background-image: url('/IMG_0863.JPG');
+    background-image: url('/background.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -342,4 +342,20 @@
   ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, #2563eb, #0891b2);
   }
+}
+
+
+/* Overlay for background image to improve text contrast and visual appeal */
+body:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Use the theme's background color for the overlay */
+  background-color: var(--background);
+  /* Adjust opacity to let the image show through. 0.7 is a good balance. */
+  opacity: 0.7; 
+  z-index: -1;
 }
