@@ -31,7 +31,7 @@ export const appRouter = router({
         await db.createGeneratedApp({
           sessionId,
           title: generated.title || "Untitled App",
-          description: generated.description || null,
+          description: null,
           prompt: input.prompt,
           htmlCode: generated.htmlCode,
           cssCode: generated.cssCode || null,

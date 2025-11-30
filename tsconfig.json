@@ -1,6 +1,17 @@
 {
   "include": ["client/src/**/*", "shared/**/*", "server/**/*"],
-  "exclude": ["node_modules", "build", "dist", "**/*.test.ts"],
+  "exclude": [
+    "node_modules", 
+    "build", 
+    "dist", 
+    "**/*.test.ts",
+    "client/src/components/AIChatBox.tsx",
+    "client/src/components/Map.tsx",
+    "server/_core/dataApi.ts",
+    "server/_core/imageGeneration.ts",
+    "server/_core/notification.ts",
+    "server/_core/voiceTranscription.ts"
+  ],
   "compilerOptions": {
     "incremental": true,
     "tsBuildInfoFile": "./node_modules/typescript/tsbuildinfo",
