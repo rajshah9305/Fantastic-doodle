@@ -1,17 +1,22 @@
 {
-  "include": ["client/src/**/*", "shared/**/*", "server/**/*"],
+  "include": [
+    "client/src/pages/**/*",
+    "client/src/lib/**/*", 
+    "client/src/components/ui/**/*",
+    "client/src/const.ts",
+    "shared/**/*", 
+    "server/_core/index.ts",
+    "server/_core/context.ts",
+    "server/_core/vite.ts",
+    "server/db.ts",
+    "server/groqClient.ts",
+    "server/routers.ts"
+  ],
   "exclude": [
     "node_modules", 
     "build", 
     "dist", 
-    "**/*.test.ts",
-    "client/src/components/AIChatBox.tsx",
-    "client/src/components/Map.tsx",
-    "server/_core/dataApi.ts",
-    "server/_core/imageGeneration.ts",
-    "server/_core/notification.ts",
-    "server/_core/voiceTranscription.ts",
-    "server/_core/llm.ts"
+    "**/*.test.ts"
   ],
   "compilerOptions": {
     "incremental": true,
