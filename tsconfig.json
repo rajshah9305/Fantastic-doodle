@@ -10,7 +10,8 @@
     "server/_core/dataApi.ts",
     "server/_core/imageGeneration.ts",
     "server/_core/notification.ts",
-    "server/_core/voiceTranscription.ts"
+    "server/_core/voiceTranscription.ts",
+    "server/_core/llm.ts"
   ],
   "compilerOptions": {
     "incremental": true,
