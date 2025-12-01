@@ -8,11 +8,12 @@ let _db: ReturnType<typeof drizzle> | null = null;
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      const dbPath = process.env.DATABASE_URL.replace('sqlite://', '');
+      const dbPath = process.env.DATABASE_URL.replace('sqlite://', '').replace('file:', '');
       const sqlite = new Database(dbPath);
       _db = drizzle(sqlite);
+      console.log("[Database] Connected successfully to:", dbPath);
     } catch (error) {
-      console.warn("[Database] Failed to connect:", error);
+      console.error("[Database] Failed to connect:", error);
       _db = null;
     }
   }

@@ -1,14 +1,9 @@
-import { Textarea } from "@/components/ui/textarea";
 import { 
-  Loader2, Sparkles, Send, Download, Copy, 
-  Maximize2, Minimize2, RotateCcw,
-  Wand2, Box, Grid3x3, Eye, EyeOff,
-  ChevronRight, Terminal, Settings, Code2, Smartphone, Monitor, Zap, ArrowRight, Save, CheckCircle2
+  Loader2, Copy, Code2, Smartphone, Monitor, Zap, ArrowRight, Save, CheckCircle2
 } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import Editor from "@monaco-editor/react";
-import { motion, AnimatePresence } from "framer-motion";
 import { getOrCreateSessionId } from "@/const";
 import { toast } from "sonner";
 
@@ -18,7 +13,6 @@ export default function Home() {
   const [generatedApp, setGeneratedApp] = useState<any>(null);
   const [showEditor, setShowEditor] = useState(false);
   const [device, setDevice] = useState<'mobile' | 'desktop'>('mobile');
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const generateMutation = trpc.apps.generate.useMutation({
     onSuccess: (data) => {
@@ -129,7 +123,17 @@ export default function Home() {
             </div>
           </div>
 
-
+          {/* Credits Footer */}
+          <div className="absolute bottom-8 left-0 right-0 flex justify-center">
+            <div className="text-center space-y-2">
+              <p className="text-xs font-mono text-muted-foreground">
+                Built & Developed by
+              </p>
+              <p className="text-sm font-bold text-orange-600 tracking-wider">
+                RAJ SHAH
+              </p>
+            </div>
+          </div>
         </main>
       </div>
     );
@@ -139,24 +143,34 @@ export default function Home() {
   const fullCode = `${generatedApp.htmlCode || ''}\n\n<style>\n${generatedApp.cssCode || ''}\n</style>\n\n<script>\n${generatedApp.jsCode || ''}\n</script>`;
 
   return (
-    <div className="h-screen flex flex-col bg-slate-950 text-slate-300 overflow-hidden font-sans">
+    <div className="h-screen flex flex-col bg-black text-slate-300 overflow-hidden font-sans relative">
+      {/* Grid Pattern Background */}
+      <div className="absolute inset-0 z-0 opacity-[0.03]" 
+           style={{ backgroundImage: 'linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
+      </div>
+
       {/* Header */}
-      <header className="h-16 border-b border-border bg-slate-950 flex items-center justify-between px-6 z-20">
+      <header className="h-16 border-b border-orange-900/30 bg-black/80 backdrop-blur-sm flex items-center justify-between px-6 z-20 relative">
         <div className="flex items-center gap-4">
           <button onClick={() => setShowEditor(false)} className="hover:text-white transition-colors">
             <div className="w-8 h-8 bg-orange-600 flex items-center justify-center text-white font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
               A
             </div>
           </button>
-          <div className="h-6 w-px bg-border"></div>
+          <div className="h-6 w-px bg-orange-900/30"></div>
           <div>
             <h2 className="text-sm font-bold text-white tracking-wide uppercase">Workspace</h2>
-            <p className="text-xs text-muted-foreground truncate max-w-[200px]">{generatedApp.title}</p>
+            <p className="text-xs text-orange-400 truncate max-w-[200px]">{generatedApp.title}</p>
+          </div>
+          <div className="h-6 w-px bg-orange-900/30 ml-4"></div>
+          <div className="hidden md:block">
+            <p className="text-[10px] font-mono text-slate-500">Built by</p>
+            <p className="text-xs font-bold text-orange-500">RAJ SHAH</p>
           </div>
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 text-xs font-mono text-green-500">
+          <div className="flex items-center gap-2 text-xs font-mono text-orange-500">
             <CheckCircle2 size={12} />
             BUILD COMPLETE
           </div>
@@ -167,7 +181,7 @@ export default function Home() {
               navigator.clipboard.writeText(code);
               toast.success("Code copied to clipboard!");
             }}
-            className="group relative px-3 py-2 font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center gap-2 bg-slate-900 text-white border border-slate-800 hover:border-orange-500"
+            className="group relative px-3 py-2 font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center gap-2 bg-zinc-900 text-white border border-orange-900/50 hover:border-orange-500 hover:bg-zinc-800"
           >
             <Copy size={14} />
             Copy
@@ -200,13 +214,13 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden relative z-10">
         {/* Code Panel */}
-        <div className="w-1/2 flex flex-col border-r border-border bg-slate-950">
-          <div className="h-10 bg-slate-900 border-b border-border flex items-center px-4 justify-between">
+        <div className="w-1/2 flex flex-col border-r border-orange-900/30 bg-black/50 backdrop-blur-sm">
+          <div className="h-10 bg-zinc-950 border-b border-orange-900/30 flex items-center px-4 justify-between">
             <div className="flex items-center gap-2">
               <Code2 size={14} className="text-orange-600" />
-              <span className="text-xs font-mono font-bold text-muted-foreground">GENERATED_SOURCE.html</span>
+              <span className="text-xs font-mono font-bold text-orange-400">GENERATED_SOURCE.html</span>
             </div>
           </div>
           
@@ -229,29 +243,29 @@ export default function Home() {
         </div>
 
         {/* Preview Panel */}
-        <div className="w-1/2 bg-slate-900 relative flex flex-col">
-          <div className="h-12 border-b border-border flex justify-center items-center gap-4 bg-slate-950 shadow-md z-10">
+        <div className="w-1/2 bg-zinc-950/50 backdrop-blur-sm relative flex flex-col">
+          <div className="h-12 border-b border-orange-900/30 flex justify-center items-center gap-4 bg-black/80 backdrop-blur-sm shadow-md z-10">
             <button 
               onClick={() => setDevice('mobile')}
-              className={`p-2 rounded transition-colors ${device === 'mobile' ? 'text-orange-500 bg-slate-800' : 'text-muted-foreground hover:text-white'}`}
+              className={`p-2 rounded transition-colors ${device === 'mobile' ? 'text-orange-500 bg-zinc-900 border border-orange-600' : 'text-slate-400 hover:text-orange-400 border border-transparent'}`}
             >
               <Smartphone size={16} />
             </button>
             <button 
               onClick={() => setDevice('desktop')}
-              className={`p-2 rounded transition-colors ${device === 'desktop' ? 'text-orange-500 bg-slate-800' : 'text-muted-foreground hover:text-white'}`}
+              className={`p-2 rounded transition-colors ${device === 'desktop' ? 'text-orange-500 bg-zinc-900 border border-orange-600' : 'text-slate-400 hover:text-orange-400 border border-transparent'}`}
             >
               <Monitor size={16} />
             </button>
           </div>
 
-          <div className="flex-1 flex items-center justify-center p-8 bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:20px_20px] overflow-hidden relative">
+          <div className="flex-1 flex items-center justify-center p-8 bg-[radial-gradient(rgba(234,88,12,0.1)_1px,transparent_1px)] [background-size:20px_20px] overflow-hidden relative">
             <div className={`
-              bg-white relative transition-all duration-500 ease-in-out shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] border-[8px] border-slate-800
+              bg-white relative transition-all duration-500 ease-in-out shadow-[0_25px_50px_-12px_rgba(234,88,12,0.3)] border-[8px] border-orange-900
               ${device === 'mobile' ? 'w-[375px] h-[750px] rounded-[3rem]' : 'w-full h-full max-h-[800px] rounded-lg'}
             `}>
               {device === 'mobile' && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 h-6 w-32 bg-slate-800 rounded-b-xl z-20"></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 h-6 w-32 bg-orange-900 rounded-b-xl z-20"></div>
               )}
 
               <div className={`w-full h-full overflow-y-auto ${device === 'mobile' ? 'rounded-[2.5rem]' : ''}`}>

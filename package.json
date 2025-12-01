@@ -12,11 +12,14 @@
     "test": "vitest run",
     "db:push": "drizzle-kit generate && drizzle-kit migrate"
   },
-  "description": "Transform natural language descriptions into fully functional web applications using AI",
-  "author": "Your Name",
+  "description": "Transform natural language descriptions into fully functional web applications using AI - Built by RAJ SHAH",
+  "author": {
+    "name": "RAJ SHAH",
+    "email": "raj@example.com"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/no-code-ai-app-builder"
+    "url": "https://github.com/rajshah/ai-studio"
   },
   "keywords": [
     "ai",

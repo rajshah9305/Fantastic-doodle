@@ -1,6 +1,8 @@
-# No-Code AI App Builder
+# AI STUDIO - No-Code AI App Builder
 
 Transform natural language descriptions into fully functional web applications instantly using AI.
+
+**Built & Developed by RAJ SHAH**
 
 ## 🚀 Features
 
@@ -130,6 +132,12 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 MIT License - feel free to use this project for personal or commercial purposes.
 
+## 👨‍💻 Author
+
+**RAJ SHAH**
+
+This project was built and developed by Raj Shah, showcasing the power of AI-driven application development with a brutalist design aesthetic.
+
 ## 🙏 Acknowledgments
 
 - Powered by [Groq](https://groq.com) for lightning-fast AI inference
@@ -138,4 +146,4 @@ MIT License - feel free to use this project for personal or commercial purposes.
 
 ---
 
-**Built with ❤️ using AI**
+**© 2024 RAJ SHAH. Built with ❤️ using AI**

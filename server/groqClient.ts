@@ -93,7 +93,21 @@ Guidelines:
 - Do NOT use external CDN links or require npm packages
 - Make sure all code is production-ready
 - Escape all special characters properly in JSON strings
-- For code strings, use actual newlines (do not escape them in the JSON - the parser will handle it)`;
+- For code strings, use actual newlines (do not escape them in the JSON - the parser will handle it)
+
+CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
+- Use a brutalist/industrial design aesthetic with sharp edges and bold typography
+- Primary color palette: Orange (#ea580c, #f97316, #fb923c) and Black (#000000, #0a0a0a, #171717)
+- Background colors: Use black (#000000), very dark gray (#0a0a0a, #171717), or white (#ffffff) for contrast
+- Accent colors: Orange shades for buttons, highlights, borders, and interactive elements
+- Typography: Use bold, sans-serif fonts with high contrast
+- Borders: Use thick borders (2-4px) with orange or black colors
+- Shadows: Use hard box-shadows like "4px 4px 0px 0px rgba(0,0,0,1)" for brutalist effect
+- Buttons: Orange background (#ea580c) with black text, thick borders, and hard shadows
+- Interactive states: On hover, shift shadows and translate elements slightly
+- Layout: Use grid patterns, sharp corners, no rounded edges (or minimal rounding)
+- Text: High contrast - white/light text on dark backgrounds, black text on light backgrounds
+- NO pastel colors, NO soft gradients, NO subtle shadows - keep it bold and industrial`;
 
   try {
     const message = await groq.chat.completions.create({
@@ -229,7 +243,21 @@ Guidelines:
 - Ensure the app is self-contained and works standalone
 - Use modern ES6+ JavaScript syntax
 - Do NOT use external CDN links or require npm packages
-- Make sure all code is production-ready`;
+- Make sure all code is production-ready
+
+CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
+- Use a brutalist/industrial design aesthetic with sharp edges and bold typography
+- Primary color palette: Orange (#ea580c, #f97316, #fb923c) and Black (#000000, #0a0a0a, #171717)
+- Background colors: Use black (#000000), very dark gray (#0a0a0a, #171717), or white (#ffffff) for contrast
+- Accent colors: Orange shades for buttons, highlights, borders, and interactive elements
+- Typography: Use bold, sans-serif fonts with high contrast
+- Borders: Use thick borders (2-4px) with orange or black colors
+- Shadows: Use hard box-shadows like "4px 4px 0px 0px rgba(0,0,0,1)" for brutalist effect
+- Buttons: Orange background (#ea580c) with black text, thick borders, and hard shadows
+- Interactive states: On hover, shift shadows and translate elements slightly
+- Layout: Use grid patterns, sharp corners, no rounded edges (or minimal rounding)
+- Text: High contrast - white/light text on dark backgrounds, black text on light backgrounds
+- NO pastel colors, NO soft gradients, NO subtle shadows - keep it bold and industrial`;
 
   try {
     const stream = await groq.chat.completions.create({
@@ -297,7 +325,19 @@ Guidelines:
 - Use modern ES6+ JavaScript syntax
 - Do NOT use external CDN links or require npm packages
 - Escape all special characters properly in JSON strings
-- For code strings, use actual newlines (do not escape them in the JSON - the parser will handle it)`;
+- For code strings, use actual newlines (do not escape them in the JSON - the parser will handle it)
+
+CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
+- Maintain brutalist/industrial design aesthetic with sharp edges and bold typography
+- Primary color palette: Orange (#ea580c, #f97316, #fb923c) and Black (#000000, #0a0a0a, #171717)
+- Background colors: Use black (#000000), very dark gray (#0a0a0a, #171717), or white (#ffffff) for contrast
+- Accent colors: Orange shades for buttons, highlights, borders, and interactive elements
+- Typography: Use bold, sans-serif fonts with high contrast
+- Borders: Use thick borders (2-4px) with orange or black colors
+- Shadows: Use hard box-shadows like "4px 4px 0px 0px rgba(0,0,0,1)" for brutalist effect
+- Buttons: Orange background (#ea580c) with black text, thick borders, and hard shadows
+- Interactive states: On hover, shift shadows and translate elements slightly
+- NO pastel colors, NO soft gradients, NO subtle shadows - keep it bold and industrial`;
 
   try {
     const message = await groq.chat.completions.create({
@@ -359,7 +399,19 @@ Guidelines:
 - Make only the requested changes
 - Ensure the code remains self-contained
 - Use modern ES6+ JavaScript syntax
-- Do NOT use external CDN links or require npm packages`;
+- Do NOT use external CDN links or require npm packages
+
+CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
+- Maintain brutalist/industrial design aesthetic with sharp edges and bold typography
+- Primary color palette: Orange (#ea580c, #f97316, #fb923c) and Black (#000000, #0a0a0a, #171717)
+- Background colors: Use black (#000000), very dark gray (#0a0a0a, #171717), or white (#ffffff) for contrast
+- Accent colors: Orange shades for buttons, highlights, borders, and interactive elements
+- Typography: Use bold, sans-serif fonts with high contrast
+- Borders: Use thick borders (2-4px) with orange or black colors
+- Shadows: Use hard box-shadows like "4px 4px 0px 0px rgba(0,0,0,1)" for brutalist effect
+- Buttons: Orange background (#ea580c) with black text, thick borders, and hard shadows
+- Interactive states: On hover, shift shadows and translate elements slightly
+- NO pastel colors, NO soft gradients, NO subtle shadows - keep it bold and industrial`;
 
   try {
     const stream = await groq.chat.completions.create({
