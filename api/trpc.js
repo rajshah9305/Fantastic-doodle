@@ -1,5 +1,6 @@
 // Vercel serverless function for tRPC API
 import Groq from 'groq-sdk';
+import superjson from 'superjson';
 
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY || '',
@@ -77,7 +78,7 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
 
   try {
     const message = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
+      model: 'GPT-OSS-120B',
       temperature: 1,
       max_completion_tokens: 8192,
       top_p: 1,
@@ -137,13 +138,14 @@ export default async function handler(req, res) {
         if (request.method === 'mutation' && request.path === 'apps.generate') {
           const { prompt } = request.params.input;
           const result = await generateAppFromPrompt(prompt);
+          const data = {
+            success: true,
+            sessionId: 'temp-session',
+            ...result,
+          };
           results.push({
             result: {
-              data: {
-                success: true,
-                sessionId: 'temp-session',
-                ...result,
-              },
+              data: superjson.serialize(data),
             },
           });
         } else {
@@ -162,13 +164,14 @@ export default async function handler(req, res) {
     if (body.method === 'mutation' && body.path === 'apps.generate') {
       const { prompt } = body.params.input;
       const result = await generateAppFromPrompt(prompt);
+      const data = {
+        success: true,
+        sessionId: 'temp-session',
+        ...result,
+      };
       return res.status(200).json({
         result: {
-          data: {
-            success: true,
-            sessionId: 'temp-session',
-            ...result,
-          },
+          data: superjson.serialize(data),
         },
       });
     }
