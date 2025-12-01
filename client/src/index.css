@@ -43,26 +43,26 @@
 }
 
 :root {
-  /* Modern vibrant color palette */
-  --primary: oklch(0.55 0.25 20); /* Rich Red to match background */
+  /* Brutalist/Industrial color palette */
+  --primary: oklch(0.55 0.25 20);
   --primary-foreground: oklch(0.98 0.001 0);
-  --secondary: oklch(0.65 0.22 20); /* Rich Red to match background */
+  --secondary: oklch(0.65 0.22 20);
   --secondary-foreground: oklch(0.98 0.001 0);
-  --accent: oklch(0.75 0.3 80); /* Gold/Yellow to match background */
+  --accent: oklch(0.75 0.3 80);
   --accent-foreground: oklch(0.12 0.01 0);
   --destructive: oklch(0.65 0.25 20);
   --destructive-foreground: oklch(0.98 0.001 0);
   
-  /* Light theme background and text */
-  --background: oklch(0.98 0.001 0);
+  /* Light theme - Clean white */
+  --background: oklch(1 0 0);
   --foreground: oklch(0.15 0.01 0);
   --card: oklch(0.99 0.001 0);
   --card-foreground: oklch(0.15 0.01 0);
   --popover: oklch(0.99 0.001 0);
   --popover-foreground: oklch(0.15 0.01 0);
-  --muted: oklch(0.92 0.005 0);
-  --muted-foreground: oklch(0.45 0.01 0);
-  --border: oklch(0.88 0.01 0);
+  --muted: oklch(0.96 0.005 0);
+  --muted-foreground: oklch(0.50 0.01 0);
+  --border: oklch(0.90 0.01 0);
   --input: oklch(0.95 0.005 0);
   --ring: oklch(0.55 0.25 20);
   
@@ -83,7 +83,7 @@
   --chart-4: oklch(0.60 0.20 180);
   --chart-5: oklch(0.75 0.18 120);
   
-  --radius: 0.65rem;
+  --radius: 0.5rem;
 }
 
 .dark {
@@ -140,11 +140,6 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rounding" 1;
-    background-image: url('/background.jpg');
-    background-size: cover;
-    background-position: center 20%;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
   }
   
   button:not(:disabled),
@@ -345,45 +340,4 @@
 }
 
 
-/* Elite gradient overlay with depth */
-body:before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 20% 20%, rgba(251, 146, 60, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.15) 0%, transparent 50%),
-    linear-gradient(
-      135deg,
-      rgba(0, 0, 0, 0.3) 0%,
-      rgba(0, 0, 0, 0.5) 50%,
-      rgba(0, 0, 0, 0.7) 100%
-    );
-  z-index: 0;
-  pointer-events: none;
-}
 
-/* Animated gradient mesh background */
-body:after {
-  content: "";
-  position: fixed;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: 
-    radial-gradient(circle at 30% 40%, rgba(251, 146, 60, 0.1) 0%, transparent 40%),
-    radial-gradient(circle at 70% 60%, rgba(249, 115, 22, 0.1) 0%, transparent 40%);
-  animation: meshMove 20s ease-in-out infinite;
-  z-index: 0;
-  pointer-events: none;
-}
-
-@keyframes meshMove {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  33% { transform: translate(5%, 5%) rotate(120deg); }
-  66% { transform: translate(-5%, 5%) rotate(240deg); }
-}
