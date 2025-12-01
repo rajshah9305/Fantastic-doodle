@@ -1,9 +1,10 @@
 {
   "buildCommand": "pnpm build",
   "devCommand": "pnpm dev",
-  "installCommand": "pnpm install && cd api && pnpm install && cd ..",
+  "installCommand": "pnpm install --no-frozen-lockfile && cd api && pnpm install && cd ..",
   "framework": null,
   "outputDirectory": "dist/public",
+  "crons": [],
   "rewrites": [
     {
       "source": "/api/trpc/:path*",
@@ -13,7 +14,8 @@
   "functions": {
     "api/trpc.js": {
       "memory": 1024,
-      "maxDuration": 30
+      "maxDuration": 30,
+      "runtime": "nodejs20.x"
     }
   }
 }
