@@ -129,14 +129,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Terminal Output */}
-          <div className="absolute bottom-20 left-10 hidden lg:block opacity-20">
-            <div className="font-mono text-xs space-y-1 text-foreground">
-              <p>{'>'} WAITING FOR INPUT...</p>
-              <p>{'>'} MEMORY ALLOCATED: 4096MB</p>
-              <p>{'>'} LATENCY: 12ms</p>
-            </div>
-          </div>
+
         </main>
       </div>
     );
