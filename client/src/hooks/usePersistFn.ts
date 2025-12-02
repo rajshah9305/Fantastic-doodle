@@ -1,17 +1,18 @@
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
 
 type noop = (...args: any[]) => any;
 
 export function usePersistFn<T extends noop>(fn: T) {
   const fnRef = useRef<T>(fn);
-  fnRef.current = fn;
+  
+  // Update ref without assignment to current
+  useRef(() => {
+    fnRef.current = fn;
+  })[0]();
 
-  const persistFn = useRef<T>(null);
-  if (!persistFn.current) {
-    persistFn.current = function (this: unknown, ...args) {
-      return fnRef.current!.apply(this, args);
-    } as T;
-  }
+  const persistFn = useCallback(function (this: unknown, ...args: any[]) {
+    return fnRef.current.apply(this, args);
+  } as T, []);
 
-  return persistFn.current!;
+  return persistFn;
 }

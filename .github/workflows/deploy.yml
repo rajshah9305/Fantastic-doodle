@@ -19,19 +19,14 @@ jobs:
         with:
           node-version: '20'
       
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 10
-      
       - name: Install dependencies
-        run: pnpm install
+        run: npm ci
       
       - name: Type check
-        run: pnpm check
+        run: npm run check
       
       - name: Build
-        run: pnpm build
+        run: npm run build
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           DATABASE_URL: sqlite://db.sqlite
