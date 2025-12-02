@@ -1,7 +1,6 @@
 {
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
-  "installCommand": "npm install --legacy-peer-deps && cd api && npm install && cd ..",
   "framework": null,
   "outputDirectory": "dist/public",
   "crons": [],
