@@ -16,9 +16,9 @@ Transform natural language descriptions into fully functional web applications i
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React 19, TypeScript, Tailwind CSS 4, shadcn/ui
-- **Backend**: Express.js, tRPC, Groq API (Llama 3.3 70B)
-- **Database**: SQLite with Drizzle ORM
+- **Frontend**: React 18, TypeScript, Tailwind CSS 4, Radix UI
+- **Backend**: Express.js, tRPC, Groq API (GPT-OSS-120B)
+- **Database**: SQLite with Drizzle ORM (optional)
 - **Build**: Vite, esbuild
 - **Deployment**: Vercel
 
@@ -26,7 +26,7 @@ Transform natural language descriptions into fully functional web applications i
 
 ### Prerequisites
 
-- Node.js 18+ and pnpm
+- Node.js 18+ and npm/pnpm
 - Groq API key ([Get one here](https://console.groq.com))
 
 ### Installation
@@ -37,17 +37,19 @@ git clone <your-repo-url>
 cd no-code-ai-app-builder
 
 # Install dependencies
+npm install
+# or
 pnpm install
 
 # Set up environment variables
 cp .env.example .env
 # Edit .env and add your GROQ_API_KEY
 
-# Initialize database
-pnpm db:push
+# (Optional) Initialize database for session persistence
+npm run db:push
 
 # Start development server
-pnpm dev
+npm run dev
 ```
 
 The app will be available at `http://localhost:3000`
@@ -60,11 +62,8 @@ The app will be available at `http://localhost:3000`
 
 1. Push your code to GitHub
 2. Import the project in Vercel
-3. Add environment variables:
-   - `GROQ_API_KEY`: Your Groq API key
-   - `DATABASE_URL`: `sqlite://db.sqlite`
-   - `JWT_SECRET`: Any random string
-   - `NODE_ENV`: `production`
+3. Add environment variable:
+   - `GROQ_API_KEY`: Your Groq API key (required)
 4. Deploy!
 
 ## 📝 Environment Variables
@@ -72,11 +71,15 @@ The app will be available at `http://localhost:3000`
 Create a `.env` file with:
 
 ```env
+# Required
 GROQ_API_KEY=your_groq_api_key_here
+
+# Optional (for local session persistence)
 DATABASE_URL=sqlite://db.sqlite
-JWT_SECRET=your_random_secret_key
 NODE_ENV=development
 ```
+
+**Note**: The app works without a database in serverless environments (Vercel). Sessions are stored in browser localStorage.
 
 ## 🎯 Usage
 
@@ -115,13 +118,13 @@ NODE_ENV=development
 ## 🔧 Available Scripts
 
 ```bash
-pnpm dev          # Start development server
-pnpm build        # Build for production
-pnpm start        # Start production server
-pnpm db:push      # Push database schema changes
-pnpm check        # TypeScript type checking
-pnpm format       # Format code with Prettier
-pnpm test         # Run tests
+npm run dev       # Start development server
+npm run build     # Build for production
+npm run start     # Start production server
+npm run db:push   # Push database schema changes (optional)
+npm run check     # TypeScript type checking
+npm run format    # Format code with Prettier
+npm test          # Run tests
 ```
 
 ## 🤝 Contributing
@@ -141,8 +144,9 @@ This project was built and developed by Raj Shah, showcasing the power of AI-dri
 ## 🙏 Acknowledgments
 
 - Powered by [Groq](https://groq.com) for lightning-fast AI inference
-- UI components from [shadcn/ui](https://ui.shadcn.com)
+- UI components from [Radix UI](https://www.radix-ui.com)
 - Icons from [Lucide](https://lucide.dev)
+- Code editor by [Monaco Editor](https://microsoft.github.io/monaco-editor/)
 
 ---
 

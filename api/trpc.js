@@ -2,8 +2,12 @@
 import Groq from 'groq-sdk';
 import superjson from 'superjson';
 
+if (!process.env.GROQ_API_KEY) {
+  throw new Error('❌ GROQ_API_KEY environment variable is required. Please add it to your Vercel environment variables.');
+}
+
 const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY || '',
+  apiKey: process.env.GROQ_API_KEY,
 });
 
 // Simple JSON parser for LLM responses

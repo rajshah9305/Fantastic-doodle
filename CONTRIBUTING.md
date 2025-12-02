@@ -13,6 +13,8 @@ Thank you for considering contributing to the No-Code AI App Builder!
 
 3. **Install dependencies**
    ```bash
+   npm install
+   # or
    pnpm install
    ```
 
@@ -22,14 +24,14 @@ Thank you for considering contributing to the No-Code AI App Builder!
    # Add your GROQ_API_KEY
    ```
 
-5. **Initialize database**
+5. **(Optional) Initialize database**
    ```bash
-   pnpm db:push
+   npm run db:push
    ```
 
 6. **Start development server**
    ```bash
-   pnpm dev
+   npm run dev
    ```
 
 ## Development Workflow
@@ -61,21 +63,18 @@ Example: `feat: add code export functionality`
 ### Code Style
 
 - **TypeScript**: Strict mode enabled
-- **Formatting**: Prettier (run `pnpm format`)
+- **Formatting**: Prettier (run `npm run format`)
 - **Linting**: ESLint rules enforced
-- **Type Checking**: Run `pnpm check` before committing
+- **Type Checking**: Run `npm run check` before committing
 
 ### Testing
 
 ```bash
 # Run tests
-pnpm test
-
-# Run tests in watch mode
-pnpm test:watch
+npm test
 
 # Type check
-pnpm check
+npm run check
 ```
 
 ## Pull Request Process
@@ -92,9 +91,9 @@ pnpm check
 
 3. **Test your changes**
    ```bash
-   pnpm check
-   pnpm test
-   pnpm build
+   npm run check
+   npm test
+   npm run build
    ```
 
 4. **Commit your changes**
