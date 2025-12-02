@@ -45,6 +45,7 @@
     "clsx": "^2.1.1",
     "dotenv": "^16.3.1",
     "drizzle-orm": "^0.44.5",
+    "esbuild": "^0.25.0",
     "express": "^4.21.2",
     "framer-motion": "^12.23.22",
     "groq-sdk": "^0.37.0",
@@ -56,6 +57,7 @@
     "superjson": "^1.13.3",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
+    "vite": "^7.1.7",
     "wouter": "^3.3.5",
     "zod": "^3.22.4"
   },
@@ -70,13 +72,11 @@
     "@vitejs/plugin-react": "^5.0.4",
     "autoprefixer": "^10.4.20",
     "drizzle-kit": "^0.31.4",
-    "esbuild": "^0.25.0",
     "postcss": "^8.4.47",
     "prettier": "^3.6.2",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.19.1",
     "typescript": "^5.3.3",
-    "vite": "^7.1.7",
     "vitest": "^2.1.4"
   }
 }
