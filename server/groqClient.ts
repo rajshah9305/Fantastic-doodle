@@ -115,11 +115,10 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
 
   try {
     const message = await groq.chat.completions.create({
-      model: "openai/gpt-oss-120b",
-      temperature: 1,
+      model: "llama-3.3-70b-versatile",
+      temperature: 0.7,
       max_completion_tokens: 8192,
       top_p: 1,
-      reasoning_effort: "medium",
       messages: [
         {
           role: "system",
@@ -155,155 +154,7 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
 }
 
 /**
- * Generate HTML/CSS/JS code from a natural language prompt using Groq API with streaming support
- * Yields chunks of the response as they arrive
- */
-export async function* generateAppFromPromptStreaming(
-  prompt: string
-): AsyncGenerator<string, void, unknown> {
-  const systemPrompt = `You are an expert web developer. When given a natural language description of a web application, generate clean, modern HTML, CSS, and JavaScript code that implements it.
-
-Your response MUST be ONLY a valid JSON object (no markdown, no extra text) with this exact structure:
-{
-  "title": "App Name",
-  "htmlCode": "complete HTML code here",
-  "cssCode": "CSS code here",
-  "jsCode": "JavaScript code here"
-}
-
-Guidelines:
-- Create responsive, modern designs using CSS Flexbox/Grid
-- Use semantic HTML5 elements
-- Include proper error handling in JavaScript
-- Make the app functional and interactive
-- Use inline styles or a <style> tag in HTML
-- Keep JavaScript modular and well-commented
-- Ensure the app is self-contained and works standalone
-- Use modern ES6+ JavaScript syntax
-- Do NOT use external CDN links or require npm packages
-- Make sure all code is production-ready
-- Escape all special characters properly in JSON strings`;
-
-  try {
-    const stream = await groq.chat.completions.create({
-      model: "openai/gpt-oss-120b",
-      temperature: 1,
-      max_completion_tokens: 8192,
-      top_p: 1,
-      reasoning_effort: "medium",
-      stream: true,
-      messages: [
-        {
-          role: "system",
-          content: systemPrompt,
-        },
-        {
-          role: "user",
-          content: `Create a web application with the following requirements:\n\n${prompt}`,
-        },
-      ],
-    });
-
-    for await (const chunk of stream) {
-      const content = chunk.choices[0]?.delta?.content || "";
-      if (content) {
-        yield content;
-      }
-    }
-  } catch (error) {
-    console.error("Error calling Groq API with streaming:", error);
-    throw new Error(
-      `Failed to generate app: ${error instanceof Error ? error.message : "Unknown error"}`
-    );
-  }
-}
-
-/**
- * Generate app code with tool use capabilities (browser search, code interpreter)
- * This implements the user's Python snippet pattern with streaming and tools
- */
-export async function* generateAppWithTools(
-  prompt: string,
-  tools: Array<{ type: "browser_search" | "code_interpreter" }> = [
-    { type: "browser_search" },
-    { type: "code_interpreter" },
-  ]
-): AsyncGenerator<string, void, unknown> {
-  const systemPrompt = `You are an expert web developer with access to tools for research and code execution. When given a natural language description of a web application, generate clean, modern HTML, CSS, and JavaScript code that implements it.
-
-Your response MUST be ONLY a valid JSON object (no markdown, no extra text) with this exact structure:
-{
-  "title": "App Name",
-  "htmlCode": "complete HTML code here",
-  "cssCode": "CSS code here",
-  "jsCode": "JavaScript code here"
-}
-
-Guidelines:
-- Create responsive, modern designs using CSS Flexbox/Grid
-- Use semantic HTML5 elements
-- Include proper error handling in JavaScript
-- Make the app functional and interactive
-- Use inline styles or a <style> tag in HTML
-- Keep JavaScript modular and well-commented
-- Ensure the app is self-contained and works standalone
-- Use modern ES6+ JavaScript syntax
-- Do NOT use external CDN links or require npm packages
-- Make sure all code is production-ready
-
-CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
-- Use a brutalist/industrial design aesthetic with sharp edges and bold typography
-- Primary color palette: Orange (#ea580c, #f97316, #fb923c) and Black (#000000, #0a0a0a, #171717)
-- Background colors: Use black (#000000), very dark gray (#0a0a0a, #171717), or white (#ffffff) for contrast
-- Accent colors: Orange shades for buttons, highlights, borders, and interactive elements
-- Typography: Use bold, sans-serif fonts with high contrast
-- Borders: Use thick borders (2-4px) with orange or black colors
-- Shadows: Use hard box-shadows like "4px 4px 0px 0px rgba(0,0,0,1)" for brutalist effect
-- Buttons: Orange background (#ea580c) with black text, thick borders, and hard shadows
-- Interactive states: On hover, shift shadows and translate elements slightly
-- Layout: Use grid patterns, sharp corners, no rounded edges (or minimal rounding)
-- Text: High contrast - white/light text on dark backgrounds, black text on light backgrounds
-- NO pastel colors, NO soft gradients, NO subtle shadows - keep it bold and industrial`;
-
-  try {
-    const stream = await groq.chat.completions.create({
-      model: "openai/gpt-oss-120b",
-      temperature: 1,
-      max_completion_tokens: 8192,
-      top_p: 1,
-      reasoning_effort: "medium",
-      stream: true,
-      messages: [
-        {
-          role: "system",
-          content: systemPrompt,
-        },
-        {
-          role: "user",
-          content: `Create a web application with the following requirements:\n\n${prompt}`,
-        },
-      ],
-      tools: tools.map((tool) => ({
-        type: tool.type,
-      })),
-    });
-
-    for await (const chunk of stream) {
-      const content = chunk.choices[0]?.delta?.content || "";
-      if (content) {
-        yield content;
-      }
-    }
-  } catch (error) {
-    console.error("Error calling Groq API with tools:", error);
-    throw new Error(
-      `Failed to generate app: ${error instanceof Error ? error.message : "Unknown error"}`
-    );
-  }
-}
-
-/**
- * Modify existing app code based on user instructions
+ * Modify existing app code based on user instruction
  */
 export async function modifyAppWithAI(
   currentCode: string,
@@ -348,11 +199,10 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
 
   try {
     const message = await groq.chat.completions.create({
-      model: "openai/gpt-oss-120b",
-      temperature: 1,
+      model: "llama-3.3-70b-versatile",
+      temperature: 0.7,
       max_completion_tokens: 8192,
       top_p: 1,
-      reasoning_effort: "medium",
       messages: [
         {
           role: "system",
@@ -385,84 +235,13 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
 }
 
 /**
- * Modify existing app code with streaming support
- */
-export async function* modifyAppWithAIStreaming(
-  currentCode: string,
-  instruction: string,
-  originalPrompt: string
-): AsyncGenerator<string, void, unknown> {
-  const systemPrompt = `You are an expert web developer. You will receive existing HTML/CSS/JavaScript code and a modification instruction. Update the code according to the instruction while maintaining functionality.
-
-Your response MUST be ONLY a valid JSON object (no markdown, no extra text) with this exact structure:
-{
-  "title": "App Name",
-  "htmlCode": "updated HTML code here",
-  "cssCode": "updated CSS code here",
-  "jsCode": "updated JavaScript code here"
-}
-
-Guidelines:
-- Preserve the overall structure and functionality
-- Make only the requested changes
-- Ensure the code remains self-contained
-- Use modern ES6+ JavaScript syntax
-- Do NOT use external CDN links or require npm packages
-
-CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
-- Maintain brutalist/industrial design aesthetic with sharp edges and bold typography
-- Primary color palette: Orange (#ea580c, #f97316, #fb923c) and Black (#000000, #0a0a0a, #171717)
-- Background colors: Use black (#000000), very dark gray (#0a0a0a, #171717), or white (#ffffff) for contrast
-- Accent colors: Orange shades for buttons, highlights, borders, and interactive elements
-- Typography: Use bold, sans-serif fonts with high contrast
-- Borders: Use thick borders (2-4px) with orange or black colors
-- Shadows: Use hard box-shadows like "4px 4px 0px 0px rgba(0,0,0,1)" for brutalist effect
-- Buttons: Orange background (#ea580c) with black text, thick borders, and hard shadows
-- Interactive states: On hover, shift shadows and translate elements slightly
-- NO pastel colors, NO soft gradients, NO subtle shadows - keep it bold and industrial`;
-
-  try {
-    const stream = await groq.chat.completions.create({
-      model: "openai/gpt-oss-120b",
-      temperature: 1,
-      max_completion_tokens: 8192,
-      top_p: 1,
-      reasoning_effort: "medium",
-      stream: true,
-      messages: [
-        {
-          role: "system",
-          content: systemPrompt,
-        },
-        {
-          role: "user",
-          content: `Original app requirements: ${originalPrompt}\n\nCurrent code:\n${currentCode}\n\nModification instruction: ${instruction}`,
-        },
-      ],
-    });
-
-    for await (const chunk of stream) {
-      const content = chunk.choices[0]?.delta?.content || "";
-      if (content) {
-        yield content;
-      }
-    }
-  } catch (error) {
-    console.error("Error modifying app with Groq API (streaming):", error);
-    throw new Error(
-      `Failed to modify app: ${error instanceof Error ? error.message : "Unknown error"}`
-    );
-  }
-}
-
-/**
  * Validate that the Groq API is accessible and working
  */
 export async function validateGroqConnection(): Promise<boolean> {
   try {
     const message = await groq.chat.completions.create({
-      model: "openai/gpt-oss-120b",
-      max_tokens: 100,
+      model: "llama-3.3-70b-versatile",
+      max_tokens: 10,
       messages: [
         {
           role: "system",
@@ -489,8 +268,8 @@ export async function validateGroqConnection(): Promise<boolean> {
 export async function testGroqAPI(): Promise<string> {
   try {
     const message = await groq.chat.completions.create({
-      model: "openai/gpt-oss-120b",
-      max_tokens: 100,
+      model: "llama-3.3-70b-versatile",
+      max_tokens: 50,
       messages: [
         {
           role: "user",
