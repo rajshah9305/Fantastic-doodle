@@ -1,25 +1,142 @@
 {
   "version": 2,
-  "installCommand": "npm install",
-  "buildCommand": "npm run build",
+  "installCommand": "npm install --include=dev",
+  "buildCommand": "npm install --include=dev && npm run build",
   "outputDirectory": "dist/public",
+  "framework": "vite",
+  "devCommand": "npm run dev",
+  
+  "functions": {
+    "api/trpc.js": {
+      "runtime": "nodejs20.x",
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  },
+  
+  "env": {
+    "NODE_ENV": "production",
+    "GROQ_API_KEY": "@groq-api-key",
+    "DATABASE_URL": "sqlite://data.db",
+    "VITE_TRPC_URL": "/api/trpc"
+  },
+  
+  "build": {
+    "env": {
+      "NODE_ENV": "production",
+      "VITE_TRPC_URL": "/api/trpc",
+      "DATABASE_URL": "sqlite://data.db"
+    }
+  },
+  
   "rewrites": [
     {
       "source": "/api/trpc/:path*",
-      "destination": "/api/trpc"
+      "destination": "/api/trpc.js"
     },
     {
       "source": "/(.*)",
-      "destination": "/"
+      "destination": "/index.html"
     }
   ],
-  "functions": {
-    "api/trpc.js": {
-      "memory": 1024,
-      "maxDuration": 30
+  
+  "routes": [
+    {
+      "src": "/api/trpc/(.*)",
+      "dest": "/api/trpc.js",
+      "methods": ["POST", "OPTIONS"]
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "POST, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
+        },
+        {
+          "key": "Access-Control-Max-Age",
+          "value": "86400"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    }
+  ],
+  
+  "cleanUrls": true,
+  "trailingSlash": false,
+  
+  "ignore": {
+    "files": [
+      "**/.git/**",
+      "**/.github/**",
+      "**/.vscode/**",
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/.env*",
+      "**/*.test.ts",
+      "**/*.test.tsx",
+      "**/tests/**",
+      "**/docs/**",
+      "**/.cursorrules",
+      "**/.eslintrc*",
+      "**/drizzle/**"
+    ]
+  },
+  
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "master": true,
+      "develop": false,
+      "staging": false
     }
   },
-  "env": {
-    "NODE_ENV": "production"
-  }
+  
+  "regions": ["iad1"],
+  
+  "install": {
+    "includeDevDependencies": true,
+    "peerDependencies": true,
+    "runtime": "nodejs20.x"
+  },
+  
+  "crons": []
 }
