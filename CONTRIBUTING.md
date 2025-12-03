@@ -6,12 +6,14 @@ Thank you for considering contributing to the No-Code AI App Builder!
 
 1. **Fork the repository**
 2. **Clone your fork**
+
    ```bash
    git clone https://github.com/your-username/no-code-ai-app-builder.git
    cd no-code-ai-app-builder
    ```
 
 3. **Install dependencies**
+
    ```bash
    npm install
    # or
@@ -19,12 +21,14 @@ Thank you for considering contributing to the No-Code AI App Builder!
    ```
 
 4. **Set up environment**
+
    ```bash
    cp .env.example .env
    # Add your GROQ_API_KEY
    ```
 
 5. **(Optional) Initialize database**
+
    ```bash
    npm run db:push
    ```
@@ -80,6 +84,7 @@ npm run check
 ## Pull Request Process
 
 1. **Create a feature branch**
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -90,6 +95,7 @@ npm run check
    - Update documentation
 
 3. **Test your changes**
+
    ```bash
    npm run check
    npm test
@@ -97,12 +103,14 @@ npm run check
    ```
 
 4. **Commit your changes**
+
    ```bash
    git add .
    git commit -m "feat: your feature description"
    ```
 
 5. **Push to your fork**
+
    ```bash
    git push origin feature/your-feature-name
    ```
@@ -117,16 +125,20 @@ npm run check
 ## PR Guidelines
 
 ### Title
+
 Clear and descriptive: `feat: add dark mode toggle`
 
 ### Description
+
 Include:
+
 - What changes were made
 - Why the changes were necessary
 - How to test the changes
 - Screenshots (if UI changes)
 
 ### Checklist
+
 - [ ] Code follows project style guidelines
 - [ ] Tests pass locally
 - [ ] Documentation updated
@@ -143,6 +155,7 @@ Include:
 ## Areas for Contribution
 
 ### High Priority
+
 - [ ] Add user authentication (optional)
 - [ ] Implement app templates
 - [ ] Add more export formats (React, Vue, etc.)
@@ -150,6 +163,7 @@ Include:
 - [ ] Add code syntax highlighting in preview
 
 ### Medium Priority
+
 - [ ] Add app versioning
 - [ ] Implement undo/redo functionality
 - [ ] Add collaborative editing
@@ -157,6 +171,7 @@ Include:
 - [ ] Add analytics dashboard
 
 ### Low Priority
+
 - [ ] Add more themes
 - [ ] Implement keyboard shortcuts
 - [ ] Add tutorial/onboarding
@@ -166,6 +181,7 @@ Include:
 ## Bug Reports
 
 Use GitHub Issues with:
+
 - Clear title
 - Steps to reproduce
 - Expected vs actual behavior
@@ -175,6 +191,7 @@ Use GitHub Issues with:
 ## Feature Requests
 
 Use GitHub Issues with:
+
 - Clear description
 - Use case/motivation
 - Proposed solution

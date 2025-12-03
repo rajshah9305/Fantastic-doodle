@@ -1,47 +1,55 @@
-import { useState, useEffect } from 'react'
-import { useParams, useLocation } from 'wouter'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Button } from '@/components/ui/button'
-import { toast } from 'sonner'
-import { trpc } from '@/lib/trpc'
-import CodeEditor from '@/components/CodeEditor'
-import LivePreview from '@/components/LivePreview'
-import AIChat from '@/components/AIChat'
-import { Download, Save, Play, ArrowLeft, Loader2, Code, Eye } from 'lucide-react'
+import { useState, useEffect } from "react";
+import { useParams, useLocation } from "wouter";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { trpc } from "@/lib/trpc";
+import CodeEditor from "@/components/CodeEditor";
+import LivePreview from "@/components/LivePreview";
+import AIChat from "@/components/AIChat";
+import {
+  Download,
+  Save,
+  Play,
+  ArrowLeft,
+  Loader2,
+  Code,
+  Eye,
+} from "lucide-react";
 
 interface Message {
-  role: 'user' | 'assistant'
-  content: string
+  role: "user" | "assistant";
+  content: string;
 }
 
 export default function Editor() {
-  const { id } = useParams<{ id: string }>()
-  const [, navigate] = useLocation()
-  const [code, setCode] = useState('')
-  const [chatMessages, setChatMessages] = useState<Message[]>([])
-  const [activeTab, setActiveTab] = useState<'editor' | 'preview'>('editor')
+  const { id } = useParams<{ id: string }>();
+  const [, navigate] = useLocation();
+  const [code, setCode] = useState("");
+  const [chatMessages, setChatMessages] = useState<Message[]>([]);
+  const [activeTab, setActiveTab] = useState<"editor" | "preview">("editor");
 
-  const appId = parseInt(id || '0', 10)
+  const appId = parseInt(id || "0", 10);
 
   // Fetch app data
   const { data: app, isLoading } = trpc.apps.get.useQuery(
     { id: appId },
     { enabled: appId > 0 }
-  )
+  );
 
   // Update app mutation
   const updateApp = trpc.apps.update.useMutation({
     onSuccess: () => {
-      toast.success('App saved successfully')
+      toast.success("App saved successfully");
     },
-    onError: (error) => {
-      toast.error(`Error: ${error.message}`)
+    onError: error => {
+      toast.error(`Error: ${error.message}`);
     },
-  })
+  });
 
   // Modify app with AI
   const modifyApp = trpc.apps.modify.useMutation({
-    onSuccess: (data) => {
+    onSuccess: data => {
       const fullCode = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,29 +57,36 @@ export default function Editor() {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${data.title}</title>
   <style>
-    ${data.cssCode || ''}
+    ${data.cssCode || ""}
   </style>
 </head>
 <body>
-  ${data.htmlCode || ''}
+  ${data.htmlCode || ""}
   <script>
-    ${data.jsCode || ''}
+    ${data.jsCode || ""}
   </script>
 </body>
-</html>`
-      setCode(fullCode)
-      setChatMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: 'App updated successfully! Check the preview to see the changes.' 
-      }])
+</html>`;
+      setCode(fullCode);
+      setChatMessages(prev => [
+        ...prev,
+        {
+          role: "assistant",
+          content:
+            "App updated successfully! Check the preview to see the changes.",
+        },
+      ]);
     },
-    onError: (error) => {
-      setChatMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: `Sorry, I couldn't update the app: ${error.message}` 
-      }])
+    onError: error => {
+      setChatMessages(prev => [
+        ...prev,
+        {
+          role: "assistant",
+          content: `Sorry, I couldn't update the app: ${error.message}`,
+        },
+      ]);
     },
-  })
+  });
 
   useEffect(() => {
     if (app) {
@@ -82,56 +97,56 @@ export default function Editor() {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${app.title}</title>
   <style>
-    ${app.cssCode || ''}
+    ${app.cssCode || ""}
   </style>
 </head>
 <body>
-  ${app.htmlCode || ''}
+  ${app.htmlCode || ""}
   <script>
-    ${app.jsCode || ''}
+    ${app.jsCode || ""}
   </script>
 </body>
-</html>`
-      setCode(fullCode)
+</html>`;
+      setCode(fullCode);
     }
-  }, [app])
+  }, [app]);
 
   const handleSave = async () => {
-    if (!appId) return
-    
+    if (!appId) return;
+
     // Parse the code to extract HTML, CSS, and JS
-    const htmlMatch = code.match(/<body>([\s\S]*?)<\/body>/)
-    const cssMatch = code.match(/<style>([\s\S]*?)<\/style>/)
-    const jsMatch = code.match(/<script>([\s\S]*?)<\/script>/)
+    const htmlMatch = code.match(/<body>([\s\S]*?)<\/body>/);
+    const cssMatch = code.match(/<style>([\s\S]*?)<\/style>/);
+    const jsMatch = code.match(/<script>([\s\S]*?)<\/script>/);
 
     await updateApp.mutateAsync({
       id: appId,
-      htmlCode: htmlMatch ? htmlMatch[1].trim() : '',
-      cssCode: cssMatch ? cssMatch[1].trim() : '',
-      jsCode: jsMatch ? jsMatch[1].trim() : '',
-    })
-  }
+      htmlCode: htmlMatch ? htmlMatch[1].trim() : "",
+      cssCode: cssMatch ? cssMatch[1].trim() : "",
+      jsCode: jsMatch ? jsMatch[1].trim() : "",
+    });
+  };
 
   const handleAIChat = async (message: string) => {
-    if (!appId) return
+    if (!appId) return;
 
-    setChatMessages(prev => [...prev, { role: 'user', content: message }])
+    setChatMessages(prev => [...prev, { role: "user", content: message }]);
 
-    await modifyApp.mutateAsync({ id: appId, prompt: message })
-  }
+    await modifyApp.mutateAsync({ id: appId, prompt: message });
+  };
 
   const handleDownload = () => {
-    if (!app) return
+    if (!app) return;
 
-    const blob = new Blob([code], { type: 'text/html' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `${app.title.replace(/\s+/g, '-').toLowerCase()}.html`
-    a.click()
-    URL.revokeObjectURL(url)
-    toast.success('App downloaded successfully')
-  }
+    const blob = new Blob([code], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${app.title.replace(/\s+/g, "-").toLowerCase()}.html`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("App downloaded successfully");
+  };
 
   if (isLoading) {
     return (
@@ -141,7 +156,7 @@ export default function Editor() {
           <p className="text-muted-foreground">Loading editor...</p>
         </div>
       </div>
-    )
+    );
   }
 
   if (!app) {
@@ -149,13 +164,13 @@ export default function Editor() {
       <div className="h-screen flex items-center justify-center bg-background">
         <div className="text-center">
           <p className="text-muted-foreground mb-4">App not found</p>
-          <Button onClick={() => navigate('/dashboard')}>
+          <Button onClick={() => navigate("/dashboard")}>
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Dashboard
           </Button>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -166,7 +181,7 @@ export default function Editor() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigate('/dashboard')}
+            onClick={() => navigate("/dashboard")}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
@@ -175,9 +190,9 @@ export default function Editor() {
           <h1 className="text-lg font-semibold">{app.title}</h1>
         </div>
         <div className="flex gap-2">
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             onClick={handleSave}
             disabled={updateApp.isPending}
           >
@@ -198,7 +213,11 @@ export default function Editor() {
       <div className="flex-1 flex overflow-hidden">
         {/* Main Content */}
         <div className="flex-1 flex flex-col">
-          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="flex-1 flex flex-col">
+          <Tabs
+            value={activeTab}
+            onValueChange={(v: string) => setActiveTab(v as any)}
+            className="flex-1 flex flex-col"
+          >
             <div className="border-b px-4">
               <TabsList className="h-12">
                 <TabsTrigger value="editor" className="gap-2">
@@ -234,5 +253,5 @@ export default function Editor() {
         </div>
       </div>
     </div>
-  )
+  );
 }

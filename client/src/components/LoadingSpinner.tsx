@@ -1,4 +1,4 @@
-import { Loader2 } from 'lucide-react'
+import { Loader2 } from "lucide-react";
 
 export default function LoadingSpinner() {
   return (
@@ -8,5 +8,5 @@ export default function LoadingSpinner() {
         <p className="text-muted-foreground">Loading...</p>
       </div>
     </div>
-  )
+  );
 }

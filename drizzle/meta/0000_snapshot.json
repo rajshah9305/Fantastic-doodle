@@ -119,9 +119,7 @@
       "indexes": {
         "sessions_sessionId_unique": {
           "name": "sessions_sessionId_unique",
-          "columns": [
-            "sessionId"
-          ],
+          "columns": ["sessionId"],
           "isUnique": true
         }
       },

@@ -1,7 +1,9 @@
 import Groq from "groq-sdk";
 
 if (!process.env.GROQ_API_KEY) {
-  throw new Error("❌ GROQ_API_KEY environment variable is required. Please add it to your .env file.");
+  throw new Error(
+    "❌ GROQ_API_KEY environment variable is required. Please add it to your .env file."
+  );
 }
 
 const groq = new Groq({
@@ -34,7 +36,10 @@ function parseJsonResponse(text: string): Record<string, string> {
       const endIdx = cleaned.lastIndexOf("}");
 
       if (startIdx === -1 || endIdx === -1) {
-        console.error("Failed to parse JSON. Response text:", cleaned.substring(0, 200));
+        console.error(
+          "Failed to parse JSON. Response text:",
+          cleaned.substring(0, 200)
+        );
         throw new Error("No JSON object found in response");
       }
 
@@ -283,7 +288,7 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
           content: `Create a web application with the following requirements:\n\n${prompt}`,
         },
       ],
-      tools: tools.map((tool) => ({
+      tools: tools.map(tool => ({
         type: tool.type,
       })),
     });

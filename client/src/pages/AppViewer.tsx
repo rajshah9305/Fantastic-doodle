@@ -1,7 +1,13 @@
 import { useParams, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Loader2, ArrowLeft, Copy, Download, Trash2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -24,7 +30,7 @@ export default function AppViewer() {
       toast.success("App deleted successfully");
       navigate("/");
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(`Error deleting app: ${error.message}`);
     },
   });
@@ -172,19 +178,11 @@ ${app.jsCode}
             </div>
 
             <div className="flex gap-2 flex-wrap">
-              <Button
-                onClick={handleCopyCode}
-                variant="outline"
-                size="sm"
-              >
+              <Button onClick={handleCopyCode} variant="outline" size="sm">
                 <Copy className="w-4 h-4 mr-2" />
                 {copied ? "Copied!" : "Copy Code"}
               </Button>
-              <Button
-                onClick={handleDownload}
-                variant="outline"
-                size="sm"
-              >
+              <Button onClick={handleDownload} variant="outline" size="sm">
                 <Download className="w-4 h-4 mr-2" />
                 Download
               </Button>
@@ -206,7 +204,9 @@ ${app.jsCode}
             <Card>
               <CardHeader>
                 <CardTitle>Preview</CardTitle>
-                <CardDescription>Live preview of your generated app</CardDescription>
+                <CardDescription>
+                  Live preview of your generated app
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="border rounded-lg overflow-hidden bg-white">
@@ -229,7 +229,9 @@ ${app.jsCode}
               <CardContent className="space-y-3 text-sm">
                 <div>
                   <p className="text-slate-600 font-medium">Prompt</p>
-                  <p className="text-slate-700 mt-1 line-clamp-3">{app.prompt}</p>
+                  <p className="text-slate-700 mt-1 line-clamp-3">
+                    {app.prompt}
+                  </p>
                 </div>
                 <div>
                   <p className="text-slate-600 font-medium">Code Stats</p>

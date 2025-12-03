@@ -1,47 +1,54 @@
-import { useState } from 'react'
-import { useLocation } from 'wouter'
-import { trpc } from '@/lib/trpc'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { 
-  Plus, 
-  Search, 
-  Code, 
-  Calendar, 
-  Trash2, 
+import { useState } from "react";
+import { useLocation } from "wouter";
+import { trpc } from "@/lib/trpc";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Plus,
+  Search,
+  Code,
+  Calendar,
+  Trash2,
   ExternalLink,
   Loader2,
-  Sparkles
-} from 'lucide-react'
-import { toast } from 'sonner'
+  Sparkles,
+} from "lucide-react";
+import { toast } from "sonner";
 
 export default function Dashboard() {
-  const [, navigate] = useLocation()
-  const [searchQuery, setSearchQuery] = useState('')
+  const [, navigate] = useLocation();
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const { data: apps, isLoading, refetch } = trpc.apps.list.useQuery()
+  const { data: apps, isLoading, refetch } = trpc.apps.list.useQuery();
 
   const deleteMutation = trpc.apps.delete.useMutation({
     onSuccess: () => {
-      toast.success('App deleted successfully')
-      refetch()
+      toast.success("App deleted successfully");
+      refetch();
     },
-    onError: (error) => {
-      toast.error(`Error: ${error.message}`)
+    onError: error => {
+      toast.error(`Error: ${error.message}`);
     },
-  })
+  });
 
-  const filteredApps = apps?.filter((app: any) =>
-    app.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    app.prompt.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  const filteredApps = apps?.filter(
+    (app: any) =>
+      app.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      app.prompt.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleDelete = (id: number, title: string) => {
     if (confirm(`Are you sure you want to delete "${title}"?`)) {
-      deleteMutation.mutate({ id })
+      deleteMutation.mutate({ id });
     }
-  }
+  };
 
   if (isLoading) {
     return (
@@ -51,7 +58,7 @@ export default function Dashboard() {
           <p className="text-muted-foreground">Loading your apps...</p>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -66,7 +73,7 @@ export default function Dashboard() {
                 Manage and view all your AI-generated applications
               </p>
             </div>
-            <Button onClick={() => navigate('/')} size="lg">
+            <Button onClick={() => navigate("/")} size="lg">
               <Plus className="w-4 h-4 mr-2" />
               Create New App
             </Button>
@@ -78,7 +85,7 @@ export default function Dashboard() {
             <Input
               placeholder="Search apps..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={e => setSearchQuery(e.target.value)}
               className="pl-10"
             />
           </div>
@@ -104,10 +111,12 @@ export default function Dashboard() {
             <CardContent>
               <div className="text-2xl font-bold">
                 {apps?.filter((app: any) => {
-                  const date = new Date(app.generatedAt)
-                  const now = new Date()
-                  return date.getMonth() === now.getMonth() && 
-                         date.getFullYear() === now.getFullYear()
+                  const date = new Date(app.generatedAt);
+                  const now = new Date();
+                  return (
+                    date.getMonth() === now.getMonth() &&
+                    date.getFullYear() === now.getFullYear()
+                  );
                 }).length || 0}
               </div>
             </CardContent>
@@ -181,10 +190,10 @@ export default function Dashboard() {
               <h3 className="text-xl font-semibold mb-2">No apps found</h3>
               <p className="text-muted-foreground mb-6 text-center max-w-md">
                 {searchQuery
-                  ? 'No apps match your search. Try a different query.'
-                  : 'Get started by creating your first AI-generated app!'}
+                  ? "No apps match your search. Try a different query."
+                  : "Get started by creating your first AI-generated app!"}
               </p>
-              <Button onClick={() => navigate('/')}>
+              <Button onClick={() => navigate("/")}>
                 <Plus className="w-4 h-4 mr-2" />
                 Create Your First App
               </Button>
@@ -193,5 +202,5 @@ export default function Dashboard() {
         )}
       </div>
     </div>
-  )
+  );
 }

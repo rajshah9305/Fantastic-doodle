@@ -1,25 +1,31 @@
-import { useState } from 'react'
-import { useLocation } from 'wouter'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Switch } from '@/components/ui/switch'
-import { ArrowLeft, Save, User, Bell, Palette, Shield } from 'lucide-react'
-import { toast } from 'sonner'
-import { useTheme } from '@/contexts/ThemeContext'
+import { useState } from "react";
+import { useLocation } from "wouter";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { ArrowLeft, Save, User, Bell, Palette, Shield } from "lucide-react";
+import { toast } from "sonner";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Settings() {
-  const [, navigate] = useLocation()
-  const { theme, toggleTheme } = useTheme()
-  const [name, setName] = useState('User')
-  const [email, setEmail] = useState('user@example.com')
-  const [notifications, setNotifications] = useState(true)
-  const [autoSave, setAutoSave] = useState(true)
+  const [, navigate] = useLocation();
+  const { theme, toggleTheme } = useTheme();
+  const [name, setName] = useState("User");
+  const [email, setEmail] = useState("user@example.com");
+  const [notifications, setNotifications] = useState(true);
+  const [autoSave, setAutoSave] = useState(true);
 
   const handleSave = () => {
-    toast.success('Settings saved successfully')
-  }
+    toast.success("Settings saved successfully");
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -28,7 +34,7 @@ export default function Settings() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigate('/dashboard')}
+            onClick={() => navigate("/dashboard")}
             className="mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -58,7 +64,7 @@ export default function Settings() {
                 <Input
                   id="name"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={e => setName(e.target.value)}
                   placeholder="Your name"
                 />
               </div>
@@ -68,7 +74,7 @@ export default function Settings() {
                   id="email"
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={e => setEmail(e.target.value)}
                   placeholder="your.email@example.com"
                 />
               </div>
@@ -82,9 +88,7 @@ export default function Settings() {
                 <Palette className="w-5 h-5" />
                 <CardTitle>Appearance</CardTitle>
               </div>
-              <CardDescription>
-                Customize how the app looks
-              </CardDescription>
+              <CardDescription>Customize how the app looks</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
@@ -113,9 +117,7 @@ export default function Settings() {
                 <Bell className="w-5 h-5" />
                 <CardTitle>Preferences</CardTitle>
               </div>
-              <CardDescription>
-                Configure your app preferences
-              </CardDescription>
+              <CardDescription>Configure your app preferences</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
@@ -154,9 +156,7 @@ export default function Settings() {
                 <Shield className="w-5 h-5" />
                 <CardTitle>Security</CardTitle>
               </div>
-              <CardDescription>
-                Manage your security settings
-              </CardDescription>
+              <CardDescription>Manage your security settings</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <Button variant="outline">Change Password</Button>
@@ -174,5 +174,5 @@ export default function Settings() {
         </div>
       </div>
     </div>
-  )
+  );
 }

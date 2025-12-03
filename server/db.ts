@@ -1,5 +1,10 @@
 import { desc, eq } from "drizzle-orm";
-import { generatedApps, InsertGeneratedApp, sessions, InsertSession } from "../drizzle/schema";
+import {
+  generatedApps,
+  InsertGeneratedApp,
+  sessions,
+  InsertSession,
+} from "../drizzle/schema";
 
 let _db: any = null;
 
@@ -15,8 +20,11 @@ export async function getDb() {
       // Dynamically import better-sqlite3 only when needed
       const { drizzle } = await import("drizzle-orm/better-sqlite3");
       const Database = (await import("better-sqlite3")).default;
-      
-      const dbPath = process.env.DATABASE_URL.replace('sqlite://', '').replace('file:', '');
+
+      const dbPath = process.env.DATABASE_URL.replace("sqlite://", "").replace(
+        "file:",
+        ""
+      );
       const sqlite = new Database(dbPath);
       _db = drizzle(sqlite);
       console.log("[Database] Connected successfully to:", dbPath);
@@ -45,7 +53,11 @@ export async function getSessionById(sessionId: string) {
   if (!db) {
     return null;
   }
-  const result = await db.select().from(sessions).where(eq(sessions.sessionId, sessionId)).limit(1);
+  const result = await db
+    .select()
+    .from(sessions)
+    .where(eq(sessions.sessionId, sessionId))
+    .limit(1);
   return result.length > 0 ? result[0] : null;
 }
 
@@ -54,7 +66,10 @@ export async function updateSessionActivity(sessionId: string) {
   if (!db) {
     return;
   }
-  await db.update(sessions).set({ lastActiveAt: new Date() }).where(eq(sessions.sessionId, sessionId));
+  await db
+    .update(sessions)
+    .set({ lastActiveAt: new Date() })
+    .where(eq(sessions.sessionId, sessionId));
 }
 
 // Generated apps management
@@ -75,7 +90,10 @@ export async function getAllGeneratedApps() {
     // Return empty array if no database
     return [];
   }
-  return db.select().from(generatedApps).orderBy(desc(generatedApps.generatedAt));
+  return db
+    .select()
+    .from(generatedApps)
+    .orderBy(desc(generatedApps.generatedAt));
 }
 
 export async function getGeneratedAppsBySessionId(sessionId: string) {
@@ -84,7 +102,11 @@ export async function getGeneratedAppsBySessionId(sessionId: string) {
     // Return empty array if no database
     return [];
   }
-  return db.select().from(generatedApps).where(eq(generatedApps.sessionId, sessionId)).orderBy(desc(generatedApps.generatedAt));
+  return db
+    .select()
+    .from(generatedApps)
+    .where(eq(generatedApps.sessionId, sessionId))
+    .orderBy(desc(generatedApps.generatedAt));
 }
 
 export async function getGeneratedAppById(id: number) {
@@ -92,16 +114,26 @@ export async function getGeneratedAppById(id: number) {
   if (!db) {
     return null;
   }
-  const result = await db.select().from(generatedApps).where(eq(generatedApps.id, id)).limit(1);
+  const result = await db
+    .select()
+    .from(generatedApps)
+    .where(eq(generatedApps.id, id))
+    .limit(1);
   return result.length > 0 ? result[0] : null;
 }
 
-export async function updateGeneratedApp(id: number, updates: Partial<InsertGeneratedApp>) {
+export async function updateGeneratedApp(
+  id: number,
+  updates: Partial<InsertGeneratedApp>
+) {
   const db = await getDb();
   if (!db) {
     return { success: true };
   }
-  return db.update(generatedApps).set({ ...updates, updatedAt: new Date() }).where(eq(generatedApps.id, id));
+  return db
+    .update(generatedApps)
+    .set({ ...updates, updatedAt: new Date() })
+    .where(eq(generatedApps.id, id));
 }
 
 export async function deleteGeneratedApp(id: number) {

@@ -7,8 +7,12 @@ import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 export const sessions = sqliteTable("sessions", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   sessionId: text("sessionId").notNull().unique(),
-  createdAt: integer("createdAt", { mode: "timestamp" }).notNull().$defaultFn(() => new Date()),
-  lastActiveAt: integer("lastActiveAt", { mode: "timestamp" }).notNull().$defaultFn(() => new Date()),
+  createdAt: integer("createdAt", { mode: "timestamp" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+  lastActiveAt: integer("lastActiveAt", { mode: "timestamp" })
+    .notNull()
+    .$defaultFn(() => new Date()),
 });
 
 export type Session = typeof sessions.$inferSelect;
@@ -27,8 +31,12 @@ export const generatedApps = sqliteTable("generatedApps", {
   htmlCode: text("htmlCode").notNull(),
   cssCode: text("cssCode"),
   jsCode: text("jsCode"),
-  generatedAt: integer("generatedAt", { mode: "timestamp" }).notNull().$defaultFn(() => new Date()),
-  updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull().$defaultFn(() => new Date()),
+  generatedAt: integer("generatedAt", { mode: "timestamp" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+  updatedAt: integer("updatedAt", { mode: "timestamp" })
+    .notNull()
+    .$defaultFn(() => new Date()),
 });
 
 export type GeneratedApp = typeof generatedApps.$inferSelect;

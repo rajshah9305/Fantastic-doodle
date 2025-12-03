@@ -1,9 +1,11 @@
 // Vercel serverless function for tRPC API
-import Groq from 'groq-sdk';
-import superjson from 'superjson';
+import Groq from "groq-sdk";
+import superjson from "superjson";
 
 if (!process.env.GROQ_API_KEY) {
-  throw new Error('❌ GROQ_API_KEY environment variable is required. Please add it to your Vercel environment variables.');
+  throw new Error(
+    "❌ GROQ_API_KEY environment variable is required. Please add it to your Vercel environment variables."
+  );
 }
 
 const groq = new Groq({
@@ -16,25 +18,25 @@ function parseJsonResponse(text) {
     return JSON.parse(text);
   } catch (error) {
     let cleaned = text.trim();
-    cleaned = cleaned.replace(/^```json\n?/g, '').replace(/\n?```$/g, '');
-    cleaned = cleaned.replace(/^```\n?/g, '').replace(/\n?```$/g, '');
+    cleaned = cleaned.replace(/^```json\n?/g, "").replace(/\n?```$/g, "");
+    cleaned = cleaned.replace(/^```\n?/g, "").replace(/\n?```$/g, "");
     cleaned = cleaned.trim();
 
     try {
       return JSON.parse(cleaned);
     } catch {
-      const startIdx = cleaned.indexOf('{');
-      const endIdx = cleaned.lastIndexOf('}');
+      const startIdx = cleaned.indexOf("{");
+      const endIdx = cleaned.lastIndexOf("}");
       if (startIdx === -1 || endIdx === -1) {
-        throw new Error('No JSON object found in response');
+        throw new Error("No JSON object found in response");
       }
       let jsonStr = cleaned.substring(startIdx, endIdx + 1);
       const parts = jsonStr.split('"');
       for (let i = 1; i < parts.length; i += 2) {
-        parts[i] = parts[i].replace(/\n/g, '\\n').replace(/\r/g, '\\r');
+        parts[i] = parts[i].replace(/\n/g, "\\n").replace(/\r/g, "\\r");
       }
       jsonStr = parts.join('"');
-      jsonStr = jsonStr.replace(/,\s*([}\]])/g, '$1');
+      jsonStr = jsonStr.replace(/,\s*([}\]])/g, "$1");
       return JSON.parse(jsonStr);
     }
   }
@@ -82,34 +84,36 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
 
   try {
     const message = await groq.chat.completions.create({
-      model: 'openai/gpt-oss-120b',
+      model: "openai/gpt-oss-120b",
       temperature: 1,
       max_completion_tokens: 8192,
       top_p: 1,
-      reasoning_effort: 'medium',
+      reasoning_effort: "medium",
       messages: [
         {
-          role: 'system',
+          role: "system",
           content: systemPrompt,
         },
         {
-          role: 'user',
+          role: "user",
           content: `Create a web application with the following requirements:\n\n${prompt}`,
         },
       ],
     });
 
-    const responseText = message.choices[0].message.content || '';
+    const responseText = message.choices[0].message.content || "";
     const parsedResponse = parseJsonResponse(responseText);
 
     return {
-      title: parsedResponse.title || 'Generated App',
-      htmlCode: parsedResponse.htmlCode || '<html><body>Error generating HTML</body></html>',
-      cssCode: parsedResponse.cssCode || '',
-      jsCode: parsedResponse.jsCode || '',
+      title: parsedResponse.title || "Generated App",
+      htmlCode:
+        parsedResponse.htmlCode ||
+        "<html><body>Error generating HTML</body></html>",
+      cssCode: parsedResponse.cssCode || "",
+      jsCode: parsedResponse.jsCode || "",
     };
   } catch (error) {
-    console.error('Error calling Groq API:', error);
+    console.error("Error calling Groq API:", error);
     throw new Error(`Failed to generate app: ${error.message}`);
   }
 }
@@ -117,35 +121,35 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
 // Main handler
 export default async function handler(req, res) {
   // Set CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
 
   // Handle preflight
-  if (req.method === 'OPTIONS') {
+  if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
 
   // Only accept POST
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
     // Parse the tRPC request
     const body = req.body;
-    
+
     // Handle batch requests (tRPC sends batched requests)
     if (Array.isArray(body)) {
       const results = [];
       for (const request of body) {
-        if (request.method === 'mutation' && request.path === 'apps.generate') {
+        if (request.method === "mutation" && request.path === "apps.generate") {
           const { prompt } = request.params.input;
           const result = await generateAppFromPrompt(prompt);
           const data = {
             success: true,
-            sessionId: 'temp-session',
+            sessionId: "temp-session",
             ...result,
           };
           results.push({
@@ -156,7 +160,7 @@ export default async function handler(req, res) {
         } else {
           results.push({
             error: {
-              message: 'Endpoint not implemented',
+              message: "Endpoint not implemented",
               code: -32601,
             },
           });
@@ -166,12 +170,12 @@ export default async function handler(req, res) {
     }
 
     // Handle single request
-    if (body.method === 'mutation' && body.path === 'apps.generate') {
+    if (body.method === "mutation" && body.path === "apps.generate") {
       const { prompt } = body.params.input;
       const result = await generateAppFromPrompt(prompt);
       const data = {
         success: true,
-        sessionId: 'temp-session',
+        sessionId: "temp-session",
         ...result,
       };
       return res.status(200).json({
@@ -184,15 +188,15 @@ export default async function handler(req, res) {
     // Default response for unimplemented endpoints
     return res.status(200).json({
       error: {
-        message: 'Endpoint not implemented',
+        message: "Endpoint not implemented",
         code: -32601,
       },
     });
   } catch (error) {
-    console.error('Handler error:', error);
+    console.error("Handler error:", error);
     return res.status(500).json({
       error: {
-        message: error.message || 'Internal server error',
+        message: error.message || "Internal server error",
         code: -32603,
       },
     });

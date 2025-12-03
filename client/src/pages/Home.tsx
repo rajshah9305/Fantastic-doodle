@@ -1,5 +1,13 @@
-import { 
-  Loader2, Copy, Code2, Smartphone, Monitor, Zap, ArrowRight, Save, CheckCircle2
+import {
+  Loader2,
+  Copy,
+  Code2,
+  Smartphone,
+  Monitor,
+  Zap,
+  ArrowRight,
+  Save,
+  CheckCircle2,
 } from "lucide-react";
 import { useState } from "react";
 import { trpc } from "@/lib/trpc";
@@ -12,16 +20,16 @@ export default function Home() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedApp, setGeneratedApp] = useState<any>(null);
   const [showEditor, setShowEditor] = useState(false);
-  const [device, setDevice] = useState<'mobile' | 'desktop'>('mobile');
+  const [device, setDevice] = useState<"mobile" | "desktop">("mobile");
 
   const generateMutation = trpc.apps.generate.useMutation({
-    onSuccess: (data) => {
+    onSuccess: data => {
       setIsGenerating(false);
       setGeneratedApp(data);
       setShowEditor(true);
       toast.success("✨ App generated successfully!");
     },
-    onError: (error) => {
+    onError: error => {
       setIsGenerating(false);
       console.error("Generation error:", error);
       toast.error(`Error: ${error.message}`);
@@ -51,9 +59,14 @@ export default function Home() {
     return (
       <div className="min-h-screen bg-background flex flex-col relative overflow-hidden selection:bg-orange-200">
         {/* Grid Pattern */}
-        <div className="absolute inset-0 z-0 opacity-[0.03]" 
-             style={{ backgroundImage: 'linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
-        </div>
+        <div
+          className="absolute inset-0 z-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+          }}
+        ></div>
 
         {/* Header */}
         <header className="relative z-10 p-8 flex justify-between items-center">
@@ -61,12 +74,15 @@ export default function Home() {
             <div className="w-10 h-10 bg-orange-600 flex items-center justify-center text-white font-bold text-xl shadow-[4px_4px_0px_0px_#000]">
               A
             </div>
-            <span className="font-sans font-bold text-2xl tracking-tighter text-foreground">AI STUDIO</span>
+            <span className="font-sans font-bold text-2xl tracking-tighter text-foreground">
+              AI STUDIO
+            </span>
           </div>
           <div className="hidden md:flex gap-6 text-sm font-mono text-muted-foreground">
             <span>v2.4.0-STABLE</span>
             <span className="text-orange-600 flex items-center gap-1">
-              <div className="w-2 h-2 bg-orange-600 rounded-full animate-pulse"/> SYSTEM ONLINE
+              <div className="w-2 h-2 bg-orange-600 rounded-full animate-pulse" />{" "}
+              SYSTEM ONLINE
             </span>
           </div>
         </header>
@@ -79,13 +95,17 @@ export default function Home() {
               <span>POWERED BY GROQ AI</span>
             </div>
             <h1 className="text-6xl md:text-8xl font-black text-foreground tracking-tighter leading-[0.9]">
-              IMAGINE.<br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600">CONSTRUCT.</span><br/>
+              IMAGINE.
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600">
+                CONSTRUCT.
+              </span>
+              <br />
               DEPLOY.
             </h1>
             <p className="max-w-xl mx-auto text-lg text-muted-foreground font-medium leading-relaxed">
-              Turn natural language into production-grade applications. 
-              No visual clutter. Just pure semantic creation.
+              Turn natural language into production-grade applications. No
+              visual clutter. Just pure semantic creation.
             </p>
           </div>
 
@@ -96,7 +116,7 @@ export default function Home() {
               <input
                 type="text"
                 value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
+                onChange={e => setPrompt(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Describe your app (e.g., 'A minimalist kanban board for remote teams')..."
                 className="flex-1 bg-transparent px-6 py-4 text-lg outline-none text-foreground placeholder:text-muted-foreground font-medium"
@@ -140,27 +160,39 @@ export default function Home() {
   }
 
   // Builder Workspace View
-  const fullCode = `${generatedApp.htmlCode || ''}\n\n<style>\n${generatedApp.cssCode || ''}\n</style>\n\n<script>\n${generatedApp.jsCode || ''}\n</script>`;
+  const fullCode = `${generatedApp.htmlCode || ""}\n\n<style>\n${generatedApp.cssCode || ""}\n</style>\n\n<script>\n${generatedApp.jsCode || ""}\n</script>`;
 
   return (
     <div className="h-screen flex flex-col bg-black text-slate-300 overflow-hidden font-sans relative">
       {/* Grid Pattern Background */}
-      <div className="absolute inset-0 z-0 opacity-[0.03]" 
-           style={{ backgroundImage: 'linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
-      </div>
+      <div
+        className="absolute inset-0 z-0 opacity-[0.03]"
+        style={{
+          backgroundImage:
+            "linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+        }}
+      ></div>
 
       {/* Header */}
       <header className="h-16 border-b border-orange-900/30 bg-black/80 backdrop-blur-sm flex items-center justify-between px-6 z-20 relative">
         <div className="flex items-center gap-4">
-          <button onClick={() => setShowEditor(false)} className="hover:text-white transition-colors">
+          <button
+            onClick={() => setShowEditor(false)}
+            className="hover:text-white transition-colors"
+          >
             <div className="w-8 h-8 bg-orange-600 flex items-center justify-center text-white font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
               A
             </div>
           </button>
           <div className="h-6 w-px bg-orange-900/30"></div>
           <div>
-            <h2 className="text-sm font-bold text-white tracking-wide uppercase">Workspace</h2>
-            <p className="text-xs text-orange-400 truncate max-w-[200px]">{generatedApp.title}</p>
+            <h2 className="text-sm font-bold text-white tracking-wide uppercase">
+              Workspace
+            </h2>
+            <p className="text-xs text-orange-400 truncate max-w-[200px]">
+              {generatedApp.title}
+            </p>
           </div>
           <div className="h-6 w-px bg-orange-900/30 ml-4"></div>
           <div className="hidden md:block">
@@ -174,7 +206,7 @@ export default function Home() {
             <CheckCircle2 size={12} />
             BUILD COMPLETE
           </div>
-          
+
           <button
             onClick={() => {
               const code = fullCode;
@@ -186,7 +218,7 @@ export default function Home() {
             <Copy size={14} />
             Copy
           </button>
-          
+
           <button
             onClick={() => {
               try {
@@ -220,10 +252,12 @@ export default function Home() {
           <div className="h-10 bg-zinc-950 border-b border-orange-900/30 flex items-center px-4 justify-between">
             <div className="flex items-center gap-2">
               <Code2 size={14} className="text-orange-600" />
-              <span className="text-xs font-mono font-bold text-orange-400">GENERATED_SOURCE.html</span>
+              <span className="text-xs font-mono font-bold text-orange-400">
+                GENERATED_SOURCE.html
+              </span>
             </div>
           </div>
-          
+
           <div className="flex-1 overflow-hidden">
             <Editor
               defaultLanguage="html"
@@ -235,7 +269,7 @@ export default function Home() {
                 fontFamily: "'Fira Code', 'Monaco', 'Menlo', monospace",
                 readOnly: true,
                 scrollBeyondLastLine: false,
-                lineNumbers: 'on',
+                lineNumbers: "on",
                 padding: { top: 16, bottom: 16 },
               }}
             />
@@ -245,30 +279,34 @@ export default function Home() {
         {/* Preview Panel */}
         <div className="w-1/2 bg-zinc-950/50 backdrop-blur-sm relative flex flex-col">
           <div className="h-12 border-b border-orange-900/30 flex justify-center items-center gap-4 bg-black/80 backdrop-blur-sm shadow-md z-10">
-            <button 
-              onClick={() => setDevice('mobile')}
-              className={`p-2 rounded transition-colors ${device === 'mobile' ? 'text-orange-500 bg-zinc-900 border border-orange-600' : 'text-slate-400 hover:text-orange-400 border border-transparent'}`}
+            <button
+              onClick={() => setDevice("mobile")}
+              className={`p-2 rounded transition-colors ${device === "mobile" ? "text-orange-500 bg-zinc-900 border border-orange-600" : "text-slate-400 hover:text-orange-400 border border-transparent"}`}
             >
               <Smartphone size={16} />
             </button>
-            <button 
-              onClick={() => setDevice('desktop')}
-              className={`p-2 rounded transition-colors ${device === 'desktop' ? 'text-orange-500 bg-zinc-900 border border-orange-600' : 'text-slate-400 hover:text-orange-400 border border-transparent'}`}
+            <button
+              onClick={() => setDevice("desktop")}
+              className={`p-2 rounded transition-colors ${device === "desktop" ? "text-orange-500 bg-zinc-900 border border-orange-600" : "text-slate-400 hover:text-orange-400 border border-transparent"}`}
             >
               <Monitor size={16} />
             </button>
           </div>
 
           <div className="flex-1 flex items-center justify-center p-8 bg-[radial-gradient(rgba(234,88,12,0.1)_1px,transparent_1px)] [background-size:20px_20px] overflow-hidden relative">
-            <div className={`
+            <div
+              className={`
               bg-white relative transition-all duration-500 ease-in-out shadow-[0_25px_50px_-12px_rgba(234,88,12,0.3)] border-[8px] border-orange-900
-              ${device === 'mobile' ? 'w-[375px] h-[750px] rounded-[3rem]' : 'w-full h-full max-h-[800px] rounded-lg'}
-            `}>
-              {device === 'mobile' && (
+              ${device === "mobile" ? "w-[375px] h-[750px] rounded-[3rem]" : "w-full h-full max-h-[800px] rounded-lg"}
+            `}
+            >
+              {device === "mobile" && (
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 h-6 w-32 bg-orange-900 rounded-b-xl z-20"></div>
               )}
 
-              <div className={`w-full h-full overflow-y-auto ${device === 'mobile' ? 'rounded-[2.5rem]' : ''}`}>
+              <div
+                className={`w-full h-full overflow-y-auto ${device === "mobile" ? "rounded-[2.5rem]" : ""}`}
+              >
                 <iframe
                   srcDoc={`<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>${generatedApp.title}</title>\n  <style>\n    * {\n      margin: 0;\n      padding: 0;\n      box-sizing: border-box;\n    }\n    body {\n      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;\n    }\n    ${generatedApp.cssCode || ""}\n  </style>\n</head>\n<body>\n  ${generatedApp.htmlCode || ""}\n  <script>\n    ${generatedApp.jsCode || ""}\n  </script>\n</body>\n</html>`}
                   className="w-full h-full border-none"

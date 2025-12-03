@@ -1,13 +1,9 @@
-import { ReactNode } from 'react'
+import { ReactNode } from "react";
 
 interface LayoutProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export default function Layout({ children }: LayoutProps) {
-  return (
-    <div className="min-h-screen bg-background">
-      {children}
-    </div>
-  )
+  return <div className="min-h-screen bg-background">{children}</div>;
 }

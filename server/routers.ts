@@ -7,14 +7,19 @@ export const appRouter = router({
   apps: router({
     generate: publicProcedure
       .input((val: unknown) => {
-        if (typeof val === "object" && val !== null && "prompt" in val && typeof (val as any).prompt === "string") {
+        if (
+          typeof val === "object" &&
+          val !== null &&
+          "prompt" in val &&
+          typeof (val as any).prompt === "string"
+        ) {
           return val as { prompt: string; sessionId?: string };
         }
         throw new Error("Invalid input: prompt is required");
       })
       .mutation(async ({ input }) => {
         const sessionId = input.sessionId || nanoid();
-        
+
         // Ensure session exists
         const existingSession = await db.getSessionById(sessionId);
         if (!existingSession) {
@@ -24,7 +29,7 @@ export const appRouter = router({
         }
 
         const generated = await generateAppFromPrompt(input.prompt);
-        
+
         // Save to database
         await db.createGeneratedApp({
           sessionId,
@@ -63,7 +68,7 @@ export const appRouter = router({
           throw new Error("App not found");
         }
 
-        const currentCode = `${app.htmlCode}\n\n<style>\n${app.cssCode || ''}\n</style>\n\n<script>\n${app.jsCode || ''}\n</script>`;
+        const currentCode = `${app.htmlCode}\n\n<style>\n${app.cssCode || ""}\n</style>\n\n<script>\n${app.jsCode || ""}\n</script>`;
 
         const modified = await modifyAppWithAI(
           currentCode,
@@ -96,7 +101,12 @@ export const appRouter = router({
           "id" in val &&
           typeof (val as any).id === "number"
         ) {
-          return val as { id: number; htmlCode?: string; cssCode?: string; jsCode?: string };
+          return val as {
+            id: number;
+            htmlCode?: string;
+            cssCode?: string;
+            jsCode?: string;
+          };
         }
         throw new Error("Invalid input: id is required");
       })
@@ -106,14 +116,18 @@ export const appRouter = router({
         return { success: true };
       }),
 
-    list: publicProcedure
-      .query(async () => {
-        return db.getAllGeneratedApps();
-      }),
+    list: publicProcedure.query(async () => {
+      return db.getAllGeneratedApps();
+    }),
 
     get: publicProcedure
       .input((val: unknown) => {
-        if (typeof val === "object" && val !== null && "id" in val && typeof (val as any).id === "number") {
+        if (
+          typeof val === "object" &&
+          val !== null &&
+          "id" in val &&
+          typeof (val as any).id === "number"
+        ) {
           return val as { id: number };
         }
         throw new Error("Invalid input: id is required");
@@ -128,7 +142,12 @@ export const appRouter = router({
 
     delete: publicProcedure
       .input((val: unknown) => {
-        if (typeof val === "object" && val !== null && "id" in val && typeof (val as any).id === "number") {
+        if (
+          typeof val === "object" &&
+          val !== null &&
+          "id" in val &&
+          typeof (val as any).id === "number"
+        ) {
           return val as { id: number };
         }
         throw new Error("Invalid input: id is required");

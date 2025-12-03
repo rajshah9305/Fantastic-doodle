@@ -5,6 +5,7 @@ Transform natural language descriptions into fully functional web applications u
 ## 🚀 Features
 
 ### Core Features
+
 - **AI-Powered Generation**: Describe your app idea and get complete HTML, CSS, and JavaScript code
 - **Live Code Editor**: Full-featured Monaco editor with syntax highlighting and auto-completion
 - **Real-Time Preview**: See your app running instantly with mobile/desktop device switching
@@ -12,6 +13,7 @@ Transform natural language descriptions into fully functional web applications u
 - **Export & Download**: Download your app as a standalone, production-ready HTML file
 
 ### New Production Features
+
 - **Dashboard**: Manage all your generated apps in one centralized location
 - **Advanced Editor**: Professional code editing experience with AI-powered modifications
 - **Settings Panel**: Customize your experience with theme preferences and app settings
