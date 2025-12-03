@@ -2,19 +2,35 @@ import { publicProcedure, router } from "./_core/trpc";
 import { generateAppFromPrompt, modifyAppWithAI } from "./groqClient";
 import * as db from "./db";
 import { nanoid } from "nanoid";
+import { z } from "zod";
+
+// Input validation schemas
+const generateInputSchema = z.object({
+  prompt: z.string().min(1, "Prompt cannot be empty"),
+  sessionId: z.string().optional(),
+});
+
+const modifyInputSchema = z.object({
+  appId: z.number().positive(),
+  instruction: z.string().min(1, "Instruction cannot be empty"),
+  currentCode: z.string(),
+});
+
+const getByIdSchema = z.object({
+  id: z.number().positive(),
+});
+
+const getBySessionSchema = z.object({
+  sessionId: z.string().min(1),
+});
 
 export const appRouter = router({
   apps: router({
     generate: publicProcedure
-      .input((val: unknown) => {
-        if (typeof val === "object" && val !== null && "prompt" in val && typeof (val as any).prompt === "string") {
-          return val as { prompt: string; sessionId?: string };
-        }
-        throw new Error("Invalid input: prompt is required");
-      })
+      .input(generateInputSchema)
       .mutation(async ({ input }) => {
         const sessionId = input.sessionId || nanoid();
-        
+
         // Ensure session exists
         const existingSession = await db.getSessionById(sessionId);
         if (!existingSession) {
@@ -24,9 +40,9 @@ export const appRouter = router({
         }
 
         const generated = await generateAppFromPrompt(input.prompt);
-        
+
         // Save to database
-        await db.createGeneratedApp({
+        const result = await db.createGeneratedApp({
           sessionId,
           title: generated.title || "Untitled App",
           description: null,
@@ -39,40 +55,27 @@ export const appRouter = router({
         return {
           success: true,
           sessionId,
+          appId: result.id,
           ...generated,
         };
       }),
 
     modify: publicProcedure
-      .input((val: unknown) => {
-        if (
-          typeof val === "object" &&
-          val !== null &&
-          "id" in val &&
-          typeof (val as any).id === "number" &&
-          "prompt" in val &&
-          typeof (val as any).prompt === "string"
-        ) {
-          return val as { id: number; prompt: string };
-        }
-        throw new Error("Invalid input: id and prompt are required");
-      })
+      .input(modifyInputSchema)
       .mutation(async ({ input }) => {
-        const app = await db.getGeneratedAppById(input.id);
+        const app = await db.getGeneratedAppById(input.appId);
         if (!app) {
           throw new Error("App not found");
         }
 
-        const currentCode = `${app.htmlCode}\n\n<style>\n${app.cssCode || ''}\n</style>\n\n<script>\n${app.jsCode || ''}\n</script>`;
-
         const modified = await modifyAppWithAI(
-          currentCode,
-          input.prompt,
+          input.currentCode,
+          input.instruction,
           app.prompt
         );
 
         // Update the app in database
-        await db.updateGeneratedApp(input.id, {
+        await db.updateGeneratedApp(input.appId, {
           htmlCode: modified.htmlCode,
           cssCode: modified.cssCode || null,
           jsCode: modified.jsCode || null,
@@ -80,44 +83,21 @@ export const appRouter = router({
 
         return {
           success: true,
-          id: input.id,
-          title: modified.title || app.title,
-          htmlCode: modified.htmlCode,
-          cssCode: modified.cssCode,
-          jsCode: modified.jsCode,
+          ...modified,
         };
       }),
 
-    update: publicProcedure
-      .input((val: unknown) => {
-        if (
-          typeof val === "object" &&
-          val !== null &&
-          "id" in val &&
-          typeof (val as any).id === "number"
-        ) {
-          return val as { id: number; htmlCode?: string; cssCode?: string; jsCode?: string };
-        }
-        throw new Error("Invalid input: id is required");
-      })
-      .mutation(async ({ input }) => {
-        const { id, ...updates } = input;
-        await db.updateGeneratedApp(id, updates);
-        return { success: true };
-      }),
-
     list: publicProcedure
-      .query(async () => {
-        return db.getAllGeneratedApps();
+      .input(getBySessionSchema)
+      .query(async ({ input }) => {
+        if (!input.sessionId) {
+          return [];
+        }
+        return db.getGeneratedAppsBySessionId(input.sessionId);
       }),
 
     get: publicProcedure
-      .input((val: unknown) => {
-        if (typeof val === "object" && val !== null && "id" in val && typeof (val as any).id === "number") {
-          return val as { id: number };
-        }
-        throw new Error("Invalid input: id is required");
-      })
+      .input(getByIdSchema)
       .query(async ({ input }) => {
         const app = await db.getGeneratedAppById(input.id);
         if (!app) {
@@ -127,12 +107,7 @@ export const appRouter = router({
       }),
 
     delete: publicProcedure
-      .input((val: unknown) => {
-        if (typeof val === "object" && val !== null && "id" in val && typeof (val as any).id === "number") {
-          return val as { id: number };
-        }
-        throw new Error("Invalid input: id is required");
-      })
+      .input(getByIdSchema)
       .mutation(async ({ input }) => {
         await db.deleteGeneratedApp(input.id);
         return { success: true };
