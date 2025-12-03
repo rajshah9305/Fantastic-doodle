@@ -4,15 +4,24 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { AuthProvider } from "./contexts/auth-context";
+import { AppProvider } from "./contexts/app-context";
+import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import AppViewer from "./pages/AppViewer";
 import Examples from "./pages/Examples";
 import Templates from "./pages/Templates";
+import Dashboard from "./pages/Dashboard";
+import Editor from "./pages/Editor";
+import Settings from "./pages/Settings";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/editor/:id" component={Editor} />
+      <Route path="/settings" component={Settings} />
       <Route path="/examples" component={Examples} />
       <Route path="/templates" component={Templates} />
       <Route path="/app/:id" component={AppViewer} />
@@ -35,10 +44,16 @@ function App() {
         defaultTheme="light"
         // switchable
       >
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+        <AuthProvider>
+          <AppProvider>
+            <TooltipProvider>
+              <Layout>
+                <Toaster />
+                <Router />
+              </Layout>
+            </TooltipProvider>
+          </AppProvider>
+        </AuthProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );

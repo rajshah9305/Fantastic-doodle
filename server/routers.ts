@@ -1,11 +1,9 @@
-// import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
 import { generateAppFromPrompt, modifyAppWithAI } from "./groqClient";
 import * as db from "./db";
 import { nanoid } from "nanoid";
 
 export const appRouter = router({
-  // system: systemRouter,
   apps: router({
     generate: publicProcedure
       .input((val: unknown) => {
@@ -50,31 +48,31 @@ export const appRouter = router({
         if (
           typeof val === "object" &&
           val !== null &&
-          "appId" in val &&
-          typeof (val as any).appId === "number" &&
-          "instruction" in val &&
-          typeof (val as any).instruction === "string" &&
-          "currentCode" in val &&
-          typeof (val as any).currentCode === "string"
+          "id" in val &&
+          typeof (val as any).id === "number" &&
+          "prompt" in val &&
+          typeof (val as any).prompt === "string"
         ) {
-          return val as { appId: number; instruction: string; currentCode: string };
+          return val as { id: number; prompt: string };
         }
-        throw new Error("Invalid input: appId, instruction, and currentCode are required");
+        throw new Error("Invalid input: id and prompt are required");
       })
       .mutation(async ({ input }) => {
-        const app = await db.getGeneratedAppById(input.appId);
+        const app = await db.getGeneratedAppById(input.id);
         if (!app) {
           throw new Error("App not found");
         }
 
+        const currentCode = `${app.htmlCode}\n\n<style>\n${app.cssCode || ''}\n</style>\n\n<script>\n${app.jsCode || ''}\n</script>`;
+
         const modified = await modifyAppWithAI(
-          input.currentCode,
-          input.instruction,
+          currentCode,
+          input.prompt,
           app.prompt
         );
 
         // Update the app in database
-        await db.updateGeneratedApp(input.appId, {
+        await db.updateGeneratedApp(input.id, {
           htmlCode: modified.htmlCode,
           cssCode: modified.cssCode || null,
           jsCode: modified.jsCode || null,
@@ -82,22 +80,35 @@ export const appRouter = router({
 
         return {
           success: true,
-          ...modified,
+          id: input.id,
+          title: modified.title || app.title,
+          htmlCode: modified.htmlCode,
+          cssCode: modified.cssCode,
+          jsCode: modified.jsCode,
         };
       }),
 
-    list: publicProcedure
+    update: publicProcedure
       .input((val: unknown) => {
-        if (typeof val === "object" && val !== null && "sessionId" in val && typeof (val as any).sessionId === "string") {
-          return val as { sessionId: string };
+        if (
+          typeof val === "object" &&
+          val !== null &&
+          "id" in val &&
+          typeof (val as any).id === "number"
+        ) {
+          return val as { id: number; htmlCode?: string; cssCode?: string; jsCode?: string };
         }
-        return { sessionId: "" };
+        throw new Error("Invalid input: id is required");
       })
-      .query(async ({ input }) => {
-        if (!input.sessionId) {
-          return [];
-        }
-        return db.getGeneratedAppsBySessionId(input.sessionId);
+      .mutation(async ({ input }) => {
+        const { id, ...updates } = input;
+        await db.updateGeneratedApp(id, updates);
+        return { success: true };
+      }),
+
+    list: publicProcedure
+      .query(async () => {
+        return db.getAllGeneratedApps();
       }),
 
     get: publicProcedure

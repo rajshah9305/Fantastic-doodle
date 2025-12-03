@@ -1,14 +1,16 @@
 {
+  "version": 2,
   "installCommand": "npm install",
   "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
-  "framework": null,
   "outputDirectory": "dist/public",
-  "crons": [],
   "rewrites": [
     {
       "source": "/api/trpc/:path*",
       "destination": "/api/trpc"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
     }
   ],
   "functions": {
@@ -16,5 +18,8 @@
       "memory": 1024,
       "maxDuration": 30
     }
+  },
+  "env": {
+    "NODE_ENV": "production"
   }
 }

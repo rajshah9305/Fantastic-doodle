@@ -115,10 +115,11 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
 
   try {
     const message = await groq.chat.completions.create({
-      model: "GPT-OSS-120B",
+      model: "openai/gpt-oss-120b",
       temperature: 1,
       max_completion_tokens: 8192,
       top_p: 1,
+      reasoning_effort: "medium",
       messages: [
         {
           role: "system",
@@ -185,10 +186,11 @@ Guidelines:
 
   try {
     const stream = await groq.chat.completions.create({
-      model: "GPT-OSS-120B",
+      model: "openai/gpt-oss-120b",
       temperature: 1,
       max_completion_tokens: 8192,
       top_p: 1,
+      reasoning_effort: "medium",
       stream: true,
       messages: [
         {
@@ -265,10 +267,11 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
 
   try {
     const stream = await groq.chat.completions.create({
-      model: "GPT-OSS-120B",
+      model: "openai/gpt-oss-120b",
       temperature: 1,
       max_completion_tokens: 8192,
       top_p: 1,
+      reasoning_effort: "medium",
       stream: true,
       messages: [
         {
@@ -345,10 +348,11 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
 
   try {
     const message = await groq.chat.completions.create({
-      model: "GPT-OSS-120B",
+      model: "openai/gpt-oss-120b",
       temperature: 1,
       max_completion_tokens: 8192,
       top_p: 1,
+      reasoning_effort: "medium",
       messages: [
         {
           role: "system",
@@ -419,10 +423,11 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
 
   try {
     const stream = await groq.chat.completions.create({
-      model: "GPT-OSS-120B",
+      model: "openai/gpt-oss-120b",
       temperature: 1,
       max_completion_tokens: 8192,
       top_p: 1,
+      reasoning_effort: "medium",
       stream: true,
       messages: [
         {
@@ -456,7 +461,7 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
 export async function validateGroqConnection(): Promise<boolean> {
   try {
     const message = await groq.chat.completions.create({
-      model: "GPT-OSS-120B",
+      model: "openai/gpt-oss-120b",
       max_tokens: 100,
       messages: [
         {
@@ -484,7 +489,7 @@ export async function validateGroqConnection(): Promise<boolean> {
 export async function testGroqAPI(): Promise<string> {
   try {
     const message = await groq.chat.completions.create({
-      model: "GPT-OSS-120B",
+      model: "openai/gpt-oss-120b",
       max_tokens: 100,
       messages: [
         {
