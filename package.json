@@ -13,25 +13,6 @@
     "db:push": "drizzle-kit generate && drizzle-kit migrate",
     "db:studio": "drizzle-kit studio"
   },
-  "description": "Transform natural language descriptions into fully functional web applications using AI - Built by RAJ SHAH",
-  "author": {
-    "name": "RAJ SHAH",
-    "email": "rajshah9305@gmail.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/rajshah9305/Fantastic-doodle"
-  },
-  "keywords": [
-    "ai",
-    "no-code",
-    "app-builder",
-    "groq",
-    "llama",
-    "code-generation",
-    "react",
-    "typescript"
-  ],
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
     "@monaco-editor/react": "^4.6.0",
