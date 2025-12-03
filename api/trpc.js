@@ -1,5 +1,8 @@
 // Vercel serverless function for tRPC API
+import { initTRPC } from '@trpc/server';
+import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 import Groq from 'groq-sdk';
+import { z } from 'zod';
 import superjson from 'superjson';
 
 if (!process.env.GROQ_API_KEY) {
@@ -9,6 +12,13 @@ if (!process.env.GROQ_API_KEY) {
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
+
+const t = initTRPC.create({
+  transformer: superjson,
+});
+
+const publicProcedure = t.procedure;
+const router = t.router;
 
 // Simple JSON parser for LLM responses
 function parseJsonResponse(text) {
@@ -82,119 +92,173 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
 
   try {
     const message = await groq.chat.completions.create({
-      model: 'openai/gpt-oss-120b',
-      temperature: 1,
+      model: "llama-3.3-70b-versatile",
+      temperature: 0.7,
       max_completion_tokens: 8192,
       top_p: 1,
-      reasoning_effort: 'medium',
       messages: [
         {
-          role: 'system',
+          role: "system",
           content: systemPrompt,
         },
         {
-          role: 'user',
+          role: "user",
           content: `Create a web application with the following requirements:\n\n${prompt}`,
         },
       ],
     });
 
-    const responseText = message.choices[0].message.content || '';
+    const responseText = message.choices[0].message.content || "";
     const parsedResponse = parseJsonResponse(responseText);
 
     return {
-      title: parsedResponse.title || 'Generated App',
-      htmlCode: parsedResponse.htmlCode || '<html><body>Error generating HTML</body></html>',
-      cssCode: parsedResponse.cssCode || '',
-      jsCode: parsedResponse.jsCode || '',
+      title: parsedResponse.title || "Generated App",
+      htmlCode: parsedResponse.htmlCode || "<html><body>Error generating HTML</body></html>",
+      cssCode: parsedResponse.cssCode || "",
+      jsCode: parsedResponse.jsCode || "",
     };
   } catch (error) {
-    console.error('Error calling Groq API:', error);
+    console.error("Error calling Groq API:", error);
     throw new Error(`Failed to generate app: ${error.message}`);
   }
 }
 
-// Main handler
+// Modify app with AI
+async function modifyAppWithAI(currentCode, instruction, originalPrompt) {
+  const systemPrompt = `You are an expert web developer. You will receive existing HTML/CSS/JavaScript code and a modification instruction. Update the code according to the instruction while maintaining functionality.
+
+Your response MUST be ONLY a valid JSON object (no markdown, no extra text) with this exact structure:
+{
+  "title": "App Name",
+  "htmlCode": "updated HTML code here",
+  "cssCode": "updated CSS code here",
+  "jsCode": "updated JavaScript code here"
+}
+
+Guidelines:
+- Preserve the overall structure and functionality
+- Make only the requested changes
+- Ensure the code remains self-contained
+- Use modern ES6+ JavaScript syntax
+- Do NOT use external CDN links or require npm packages
+- Escape all special characters properly in JSON strings
+- For code strings, use actual newlines (do not escape them in the JSON - the parser will handle it)
+
+CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
+- Maintain brutalist/industrial design aesthetic with sharp edges and bold typography
+- Primary color palette: Orange (#ea580c, #f97316, #fb923c) and Black (#000000, #0a0a0a, #171717)
+- Background colors: Use black (#000000), very dark gray (#0a0a0a, #171717), or white (#ffffff) for contrast
+- Accent colors: Orange shades for buttons, highlights, borders, and interactive elements
+- Typography: Use bold, sans-serif fonts with high contrast
+- Borders: Use thick borders (2-4px) with orange or black colors
+- Shadows: Use hard box-shadows like "4px 4px 0px 0px rgba(0,0,0,1)" for brutalist effect
+- Buttons: Orange background (#ea580c) with black text, thick borders, and hard shadows
+- Interactive states: On hover, shift shadows and translate elements slightly
+- NO pastel colors, NO soft gradients, NO subtle shadows - keep it bold and industrial`;
+
+  try {
+    const message = await groq.chat.completions.create({
+      model: "llama-3.3-70b-versatile",
+      temperature: 0.7,
+      max_completion_tokens: 8192,
+      top_p: 1,
+      messages: [
+        {
+          role: "system",
+          content: systemPrompt,
+        },
+        {
+          role: "user",
+          content: `Original app requirements: ${originalPrompt}\n\nCurrent code:\n${currentCode}\n\nModification instruction: ${instruction}`,
+        },
+      ],
+    });
+
+    const responseText = message.choices[0].message.content || "";
+    const parsedResponse = parseJsonResponse(responseText);
+
+    return {
+      title: parsedResponse.title || "Modified App",
+      htmlCode: parsedResponse.htmlCode || "<html><body>Error generating HTML</body></html>",
+      cssCode: parsedResponse.cssCode || "",
+      jsCode: parsedResponse.jsCode || "",
+    };
+  } catch (error) {
+    console.error("Error modifying app with Groq API:", error);
+    throw new Error(`Failed to modify app: ${error.message}`);
+  }
+}
+
+// tRPC router
+const appRouter = router({
+  apps: router({
+    generate: publicProcedure
+      .input(z.object({
+        prompt: z.string().min(1),
+      }))
+      .mutation(async ({ input }) => {
+        const generated = await generateAppFromPrompt(input.prompt);
+        return {
+          success: true,
+          sessionId: `vercel-${Date.now()}`,
+          ...generated,
+        };
+      }),
+    
+    modify: publicProcedure
+      .input(z.object({
+        currentCode: z.string(),
+        instruction: z.string().min(1),
+      }))
+      .mutation(async ({ input }) => {
+        const modified = await modifyAppWithAI(
+          input.currentCode,
+          input.instruction,
+          "Modification Request"
+        );
+        return {
+          success: true,
+          ...modified,
+        };
+      }),
+  }),
+});
+
+export const config = {
+  runtime: 'nodejs',
+  maxDuration: 60,
+};
+
 export default async function handler(req, res) {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // Handle preflight
+  // Handle OPTIONS request for CORS preflight
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    res.status(200).end();
+    return;
   }
 
-  // Only accept POST
+  // Only allow POST requests
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).json({ error: 'Method Not Allowed' });
+    return;
   }
 
   try {
-    // Parse the tRPC request
-    const body = req.body;
-    
-    // Handle batch requests (tRPC sends batched requests)
-    if (Array.isArray(body)) {
-      const results = [];
-      for (const request of body) {
-        if (request.method === 'mutation' && request.path === 'apps.generate') {
-          const { prompt } = request.params.input;
-          const result = await generateAppFromPrompt(prompt);
-          const data = {
-            success: true,
-            sessionId: 'temp-session',
-            ...result,
-          };
-          results.push({
-            result: {
-              data: superjson.serialize(data),
-            },
-          });
-        } else {
-          results.push({
-            error: {
-              message: 'Endpoint not implemented',
-              code: -32601,
-            },
-          });
-        }
-      }
-      return res.status(200).json(results);
-    }
-
-    // Handle single request
-    if (body.method === 'mutation' && body.path === 'apps.generate') {
-      const { prompt } = body.params.input;
-      const result = await generateAppFromPrompt(prompt);
-      const data = {
-        success: true,
-        sessionId: 'temp-session',
-        ...result,
-      };
-      return res.status(200).json({
-        result: {
-          data: superjson.serialize(data),
-        },
-      });
-    }
-
-    // Default response for unimplemented endpoints
-    return res.status(200).json({
-      error: {
-        message: 'Endpoint not implemented',
-        code: -32601,
-      },
+    const response = await fetchRequestHandler({
+      endpoint: '/api/trpc',
+      req,
+      router: appRouter,
+      createContext: () => ({}),
     });
+
+    const body = await response.json();
+    res.status(response.status).json(body);
   } catch (error) {
-    console.error('Handler error:', error);
-    return res.status(500).json({
-      error: {
-        message: error.message || 'Internal server error',
-        code: -32603,
-      },
-    });
+    console.error('tRPC handler error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 }
