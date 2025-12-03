@@ -1,5 +1,11 @@
 import { desc, eq } from "drizzle-orm";
-import { generatedApps, InsertGeneratedApp, sessions, InsertSession } from "../drizzle/schema";
+import { 
+  generatedApps, 
+  InsertGeneratedApp, 
+  sessions, 
+  InsertSession 
+} from "../drizzle/schema";
+import type { Database } from "better-sqlite3";
 
 let _db: any = null;
 
@@ -15,7 +21,7 @@ export async function getDb() {
       // Dynamically import better-sqlite3 only when needed
       const { drizzle } = await import("drizzle-orm/better-sqlite3");
       const Database = (await import("better-sqlite3")).default;
-      
+
       const dbPath = process.env.DATABASE_URL.replace('sqlite://', '').replace('file:', '');
       const sqlite = new Database(dbPath);
       _db = drizzle(sqlite);
@@ -32,12 +38,11 @@ export async function getDb() {
 export async function createSession(session: InsertSession) {
   const db = await getDb();
   if (!db) {
-    // In production without database, just return success
     console.log("[Database] Session creation skipped - no database available");
-    return { success: true };
+    return { success: true, sessionId: session.sessionId };
   }
   const result = await db.insert(sessions).values(session);
-  return result;
+  return { success: true, sessionId: session.sessionId };
 }
 
 export async function getSessionById(sessionId: string) {
@@ -61,18 +66,22 @@ export async function updateSessionActivity(sessionId: string) {
 export async function createGeneratedApp(app: InsertGeneratedApp) {
   const db = await getDb();
   if (!db) {
-    // In production without database, just return success
     console.log("[Database] App creation skipped - no database available");
-    return { success: true };
+    return { success: true, id: Math.floor(Math.random() * 1000000) };
   }
   const result = await db.insert(generatedApps).values(app);
-  return result;
+  // Return the inserted ID
+  const inserted = await db.select({ id: generatedApps.id })
+    .from(generatedApps)
+    .where(eq(generatedApps.sessionId, app.sessionId))
+    .orderBy(desc(generatedApps.generatedAt))
+    .limit(1);
+  return { success: true, id: inserted[0].id };
 }
 
 export async function getAllGeneratedApps() {
   const db = await getDb();
   if (!db) {
-    // Return empty array if no database
     return [];
   }
   return db.select().from(generatedApps).orderBy(desc(generatedApps.generatedAt));
@@ -81,7 +90,6 @@ export async function getAllGeneratedApps() {
 export async function getGeneratedAppsBySessionId(sessionId: string) {
   const db = await getDb();
   if (!db) {
-    // Return empty array if no database
     return [];
   }
   return db.select().from(generatedApps).where(eq(generatedApps.sessionId, sessionId)).orderBy(desc(generatedApps.generatedAt));
