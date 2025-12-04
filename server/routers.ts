@@ -2,21 +2,19 @@ import { publicProcedure, router } from "./_core/trpc";
 import { generateAppFromPrompt, modifyAppWithAI } from "./groqClient";
 import * as db from "./db";
 import { nanoid } from "nanoid";
+// FIX: Use Zod schemas for proper input validation instead of manual type checking
+import {
+  GenerateAppInputSchema,
+  ModifyAppInputSchema,
+  UpdateAppInputSchema,
+  AppIdInputSchema,
+} from "../shared/validation";
 
 export const appRouter = router({
   apps: router({
     generate: publicProcedure
-      .input((val: unknown) => {
-        if (
-          typeof val === "object" &&
-          val !== null &&
-          "prompt" in val &&
-          typeof (val as any).prompt === "string"
-        ) {
-          return val as { prompt: string; sessionId?: string };
-        }
-        throw new Error("Invalid input: prompt is required");
-      })
+      // FIX: Use Zod schema validation for type safety and better error messages
+      .input(GenerateAppInputSchema)
       .mutation(async ({ input }) => {
         const sessionId = input.sessionId || nanoid();
 
@@ -49,19 +47,8 @@ export const appRouter = router({
       }),
 
     modify: publicProcedure
-      .input((val: unknown) => {
-        if (
-          typeof val === "object" &&
-          val !== null &&
-          "id" in val &&
-          typeof (val as any).id === "number" &&
-          "prompt" in val &&
-          typeof (val as any).prompt === "string"
-        ) {
-          return val as { id: number; prompt: string };
-        }
-        throw new Error("Invalid input: id and prompt are required");
-      })
+      // FIX: Use Zod schema validation for type safety and better error messages
+      .input(ModifyAppInputSchema)
       .mutation(async ({ input }) => {
         const app = await db.getGeneratedAppById(input.id);
         if (!app) {
@@ -94,22 +81,8 @@ export const appRouter = router({
       }),
 
     update: publicProcedure
-      .input((val: unknown) => {
-        if (
-          typeof val === "object" &&
-          val !== null &&
-          "id" in val &&
-          typeof (val as any).id === "number"
-        ) {
-          return val as {
-            id: number;
-            htmlCode?: string;
-            cssCode?: string;
-            jsCode?: string;
-          };
-        }
-        throw new Error("Invalid input: id is required");
-      })
+      // FIX: Use Zod schema validation for type safety and better error messages
+      .input(UpdateAppInputSchema)
       .mutation(async ({ input }) => {
         const { id, ...updates } = input;
         await db.updateGeneratedApp(id, updates);
@@ -121,17 +94,8 @@ export const appRouter = router({
     }),
 
     get: publicProcedure
-      .input((val: unknown) => {
-        if (
-          typeof val === "object" &&
-          val !== null &&
-          "id" in val &&
-          typeof (val as any).id === "number"
-        ) {
-          return val as { id: number };
-        }
-        throw new Error("Invalid input: id is required");
-      })
+      // FIX: Use Zod schema validation for type safety and better error messages
+      .input(AppIdInputSchema)
       .query(async ({ input }) => {
         const app = await db.getGeneratedAppById(input.id);
         if (!app) {
@@ -141,17 +105,8 @@ export const appRouter = router({
       }),
 
     delete: publicProcedure
-      .input((val: unknown) => {
-        if (
-          typeof val === "object" &&
-          val !== null &&
-          "id" in val &&
-          typeof (val as any).id === "number"
-        ) {
-          return val as { id: number };
-        }
-        throw new Error("Invalid input: id is required");
-      })
+      // FIX: Use Zod schema validation for type safety and better error messages
+      .input(AppIdInputSchema)
       .mutation(async ({ input }) => {
         await db.deleteGeneratedApp(input.id);
         return { success: true };
