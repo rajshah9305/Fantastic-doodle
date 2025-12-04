@@ -48,7 +48,7 @@
     "clsx": "^2.1.1",
     "dotenv": "^16.3.1",
     "drizzle-orm": "^0.44.5",
-    "esbuild": "^0.25.0",
+    "esbuild": "^0.25.12",
     "express": "^4.21.2",
     "framer-motion": "^12.23.22",
     "groq-sdk": "^0.37.0",
@@ -60,7 +60,7 @@
     "superjson": "^1.13.3",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
-    "vite": "^7.1.7",
+    "vite": "^7.2.6",
     "wouter": "^3.3.5",
     "zod": "^3.22.4"
   },
@@ -79,10 +79,10 @@
     "tailwindcss": "^4.1.14",
     "tsx": "^4.19.1",
     "typescript": "^5.3.3",
-    "vitest": "^2.1.4"
+    "vitest": "^2.1.9"
   },
   "optionalDependencies": {
-    "better-sqlite3": "^11.7.0",
-    "@types/better-sqlite3": "^7.6.8"
+    "@types/better-sqlite3": "^7.6.8",
+    "better-sqlite3": "^11.7.0"
   }
 }

@@ -84,29 +84,50 @@ export async function createGeneratedApp(app: InsertGeneratedApp) {
   return result;
 }
 
-export async function getAllGeneratedApps() {
+// FIX: Add pagination to prevent N+1 query performance issues
+export async function getAllGeneratedApps(
+  limit: number = 50,
+  offset: number = 0
+) {
   const db = await getDb();
   if (!db) {
     // Return empty array if no database
     return [];
   }
+  // Validate pagination parameters
+  const validLimit = Math.min(Math.max(1, limit), 100);
+  const validOffset = Math.max(0, offset);
+
   return db
     .select()
     .from(generatedApps)
-    .orderBy(desc(generatedApps.generatedAt));
+    .orderBy(desc(generatedApps.generatedAt))
+    .limit(validLimit)
+    .offset(validOffset);
 }
 
-export async function getGeneratedAppsBySessionId(sessionId: string) {
+// FIX: Add pagination to prevent N+1 query performance issues
+export async function getGeneratedAppsBySessionId(
+  sessionId: string,
+  limit: number = 50,
+  offset: number = 0
+) {
   const db = await getDb();
   if (!db) {
     // Return empty array if no database
     return [];
   }
+  // Validate pagination parameters
+  const validLimit = Math.min(Math.max(1, limit), 100);
+  const validOffset = Math.max(0, offset);
+
   return db
     .select()
     .from(generatedApps)
     .where(eq(generatedApps.sessionId, sessionId))
-    .orderBy(desc(generatedApps.generatedAt));
+    .orderBy(desc(generatedApps.generatedAt))
+    .limit(validLimit)
+    .offset(validOffset);
 }
 
 export async function getGeneratedAppById(id: number) {

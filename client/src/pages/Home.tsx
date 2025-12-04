@@ -160,7 +160,35 @@ export default function Home() {
   }
 
   // Builder Workspace View
-  const fullCode = `${generatedApp.htmlCode || ""}\n\n<style>\n${generatedApp.cssCode || ""}\n</style>\n\n<script>\n${generatedApp.jsCode || ""}\n</script>`;
+  // FIX: Add null checks to prevent runtime errors when generatedApp is null
+  if (!generatedApp) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-center space-y-4">
+          <h2 className="text-2xl font-bold text-foreground">
+            No App Generated
+          </h2>
+          <p className="text-muted-foreground">Please generate an app first</p>
+          <button
+            onClick={() => setShowEditor(false)}
+            className="px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700"
+          >
+            Go Back
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const fullCode = `${generatedApp.htmlCode || ""}
+
+<style>
+${generatedApp.cssCode || ""}
+</style>
+
+<script>
+${generatedApp.jsCode || ""}
+</script>`;
 
   return (
     <div className="h-screen flex flex-col bg-black text-slate-300 overflow-hidden font-sans relative">
@@ -191,7 +219,7 @@ export default function Home() {
               Workspace
             </h2>
             <p className="text-xs text-orange-400 truncate max-w-[200px]">
-              {generatedApp.title}
+              {generatedApp?.title || "Untitled App"}
             </p>
           </div>
           <div className="h-6 w-px bg-orange-900/30 ml-4"></div>
@@ -222,12 +250,12 @@ export default function Home() {
           <button
             onClick={() => {
               try {
-                const htmlContent = `<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>${generatedApp.title}</title>\n  <style>\n    ${generatedApp.cssCode || ""}\n  </style>\n</head>\n<body>\n  ${generatedApp.htmlCode || ""}\n  <script>\n    ${generatedApp.jsCode || ""}\n  </script>\n</body>\n</html>`;
+                const htmlContent = `<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>${generatedApp?.title || "Generated App"}</title>\n  <style>\n    ${generatedApp?.cssCode || ""}\n  </style>\n</head>\n<body>\n  ${generatedApp?.htmlCode || ""}\n  <script>\n    ${generatedApp?.jsCode || ""}\n  </script>\n</body>\n</html>`;
                 const blob = new Blob([htmlContent], { type: "text/html" });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement("a");
                 a.href = url;
-                a.download = `${generatedApp.title.replace(/\s+/g, "-").toLowerCase()}.html`;
+                a.download = `${(generatedApp?.title || "app").replace(/\s+/g, "-").toLowerCase()}.html`;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);

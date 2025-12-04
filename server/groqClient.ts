@@ -1,14 +1,22 @@
 import Groq from "groq-sdk";
 
-if (!process.env.GROQ_API_KEY) {
-  throw new Error(
-    "❌ GROQ_API_KEY environment variable is required. Please add it to your .env file."
-  );
-}
+// FIX: Defer API key validation to function level for graceful error handling
+// This prevents module load failures and allows better error messages
+let groq: Groq | null = null;
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+function getGroqClient(): Groq {
+  if (!groq) {
+    if (!process.env.GROQ_API_KEY) {
+      throw new Error(
+        "❌ GROQ_API_KEY environment variable is required. Please add it to your .env file."
+      );
+    }
+    groq = new Groq({
+      apiKey: process.env.GROQ_API_KEY,
+    });
+  }
+  return groq;
+}
 
 /**
  * Safely parse JSON from LLM response, handling escaped newlines and special characters
@@ -119,7 +127,7 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
 - NO pastel colors, NO soft gradients, NO subtle shadows - keep it bold and industrial`;
 
   try {
-    const message = await groq.chat.completions.create({
+    const message = await getGroqClient().chat.completions.create({
       model: "openai/gpt-oss-120b",
       temperature: 1,
       max_completion_tokens: 8192,
@@ -190,7 +198,7 @@ Guidelines:
 - Escape all special characters properly in JSON strings`;
 
   try {
-    const stream = await groq.chat.completions.create({
+    const stream = await getGroqClient().chat.completions.create({
       model: "openai/gpt-oss-120b",
       temperature: 1,
       max_completion_tokens: 8192,
@@ -271,7 +279,7 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
 - NO pastel colors, NO soft gradients, NO subtle shadows - keep it bold and industrial`;
 
   try {
-    const stream = await groq.chat.completions.create({
+    const stream = await getGroqClient().chat.completions.create({
       model: "openai/gpt-oss-120b",
       temperature: 1,
       max_completion_tokens: 8192,
@@ -352,7 +360,7 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
 - NO pastel colors, NO soft gradients, NO subtle shadows - keep it bold and industrial`;
 
   try {
-    const message = await groq.chat.completions.create({
+    const message = await getGroqClient().chat.completions.create({
       model: "openai/gpt-oss-120b",
       temperature: 1,
       max_completion_tokens: 8192,
@@ -427,7 +435,7 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
 - NO pastel colors, NO soft gradients, NO subtle shadows - keep it bold and industrial`;
 
   try {
-    const stream = await groq.chat.completions.create({
+    const stream = await getGroqClient().chat.completions.create({
       model: "openai/gpt-oss-120b",
       temperature: 1,
       max_completion_tokens: 8192,
@@ -465,7 +473,7 @@ CRITICAL DESIGN REQUIREMENTS - BRUTALIST ORANGE/BLACK THEME:
  */
 export async function validateGroqConnection(): Promise<boolean> {
   try {
-    const message = await groq.chat.completions.create({
+    const message = await getGroqClient().chat.completions.create({
       model: "openai/gpt-oss-120b",
       max_tokens: 100,
       messages: [
@@ -493,7 +501,7 @@ export async function validateGroqConnection(): Promise<boolean> {
  */
 export async function testGroqAPI(): Promise<string> {
   try {
-    const message = await groq.chat.completions.create({
+    const message = await getGroqClient().chat.completions.create({
       model: "openai/gpt-oss-120b",
       max_tokens: 100,
       messages: [
