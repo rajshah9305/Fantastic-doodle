@@ -2,20 +2,21 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
+import { fileURLToPath } from "url";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "client", "src"),
-      "@shared": path.resolve(__dirname, "shared"),
+      "@": path.resolve(fileURLToPath(new URL(".", import.meta.url)), "client", "src"),
+      "@shared": path.resolve(fileURLToPath(new URL(".", import.meta.url)), "shared"),
     },
   },
-  envDir: __dirname,
-  root: path.resolve(__dirname, "client"),
-  publicDir: path.resolve(__dirname, "client", "public"),
+  envDir: fileURLToPath(new URL(".", import.meta.url)),
+  root: path.resolve(fileURLToPath(new URL(".", import.meta.url)), "client"),
+  publicDir: path.resolve(fileURLToPath(new URL(".", import.meta.url)), "client", "public"),
   build: {
-    outDir: path.resolve(__dirname, "dist/public"),
+    outDir: path.resolve(fileURLToPath(new URL(".", import.meta.url)), "dist/public"),
     emptyOutDir: true,
     rollupOptions: {
       output: {

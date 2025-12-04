@@ -174,7 +174,7 @@ export default function Editor() {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-background">
+    <div className="h-screen flex flex-col bg-card">
       {/* Header */}
       <div className="bg-card border-b px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4">
