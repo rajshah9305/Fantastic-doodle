@@ -9,13 +9,6 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { appRouter } from "../server/routers.js";
 import { createContext } from "../server/_core/context.js";
 
-// Create the tRPC handler
-const trpcHandler = nodeHTTPRequestHandler({
-  router: appRouter,
-  createContext,
-  batching: { enabled: true },
-});
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Debug logging
   console.log("[Vercel] tRPC request:", {
@@ -38,7 +31,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    await trpcHandler(req, res);
+    // Create handler for each request with proper path
+    const path = new URL(req.url || "/", `http://${req.headers.host}`).pathname;
+    await nodeHTTPRequestHandler({
+      router: appRouter,
+      createContext: () => createContext({ req, res }),
+      batching: { enabled: true },
+      req,
+      res,
+      path,
+    });
   } catch (error) {
     console.error("[Vercel] Unhandled error:", {
       error: error instanceof Error ? error.message : String(error),
