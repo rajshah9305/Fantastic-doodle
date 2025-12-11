@@ -2,9 +2,6 @@ import { publicProcedure, router } from '../_core/trpc.js';
 import { z } from 'zod';
 import { getGroqClient } from '../groqClient.js';
 
-// Validate Groq is available on startup
-getGroqClient();
-
 export const groqRouter = router({
   chat: publicProcedure
     .input(z.object({

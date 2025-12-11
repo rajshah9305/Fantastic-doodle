@@ -11,9 +11,6 @@ import {
 } from '../db.js';
 import { getGroqClient } from '../groqClient.js';
 
-// Validate Groq is available on startup
-getGroqClient();
-
 // System prompt for app generation
 const SYSTEM_PROMPT = `You are an expert web developer. Generate a complete, functional single-page web application based on the user's description.
 
