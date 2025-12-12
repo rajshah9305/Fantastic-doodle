@@ -14,8 +14,8 @@ type Database = any;
 
 export async function getDb(): Promise<Database | null> {
   // Check if DATABASE_URL is configured
-  if (!process.env.DATABASE_URL) {
-    console.log("[Database] DATABASE_URL not configured, running without database");
+  if (!process.env.DATABASE_URL || process.env.DATABASE_URL === 'test') {
+    console.log("[Database] DATABASE_URL not configured or is test, running without database");
     return null;
   }
 
@@ -27,13 +27,14 @@ export async function getDb(): Promise<Database | null> {
         prepare: false,
         max: 10,
         idle_timeout: 20,
-        connect_timeout: 10,
+        connect_timeout: 5,
       });
       
       _db = drizzle(client);
       console.log("[Database] Connected successfully to Supabase PostgreSQL");
     } catch (error) {
       console.error("[Database] Failed to connect:", error);
+      console.log("[Database] Running in demo mode without database persistence");
       _db = null;
     }
   }
@@ -44,7 +45,7 @@ export async function getDb(): Promise<Database | null> {
 export async function createSession(session: InsertSession) {
   const db = await getDb();
   if (!db) {
-    return { success: true };
+    return [{ id: Math.floor(Math.random() * 10000), ...session }];
   }
   const result = await db.insert(sessions).values(session);
   return result;
@@ -78,7 +79,7 @@ export async function updateSessionActivity(sessionId: string) {
 export async function createGeneratedApp(app: InsertGeneratedApp) {
   const db = await getDb();
   if (!db) {
-    return { success: true };
+    return [{ id: Math.floor(Math.random() * 100000), ...app, generatedAt: new Date(), updatedAt: new Date() }];
   }
   const result = await db.insert(generatedApps).values(app);
   return result;
