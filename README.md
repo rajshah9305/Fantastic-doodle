@@ -2,7 +2,7 @@
 
 Transform natural language descriptions into fully functional web applications using AI.
 
-## 🚀 Features
+## Features
 
 ### Core Features
 
@@ -22,7 +22,7 @@ Transform natural language descriptions into fully functional web applications u
 - **Type-Safe APIs**: End-to-end type safety with tRPC
 - **Modern UI**: Beautiful, responsive design with dark mode support
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend**: React 18, TypeScript, Tailwind CSS 4, Radix UI
 - **Backend**: Express.js, tRPC, Groq API (Llama 3.3 70B)
@@ -30,7 +30,7 @@ Transform natural language descriptions into fully functional web applications u
 - **Build**: Vite, esbuild
 - **Deployment**: Vercel
 
-## 📦 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -57,7 +57,7 @@ npm run dev
 
 The app will be available at `http://localhost:3000`
 
-## 🗄️ Database Setup
+## Database Setup
 
 Run this SQL in your Supabase SQL Editor:
 
@@ -88,11 +88,7 @@ CREATE INDEX IF NOT EXISTS "generated_apps_session_id_idx" ON "generated_apps" (
 CREATE INDEX IF NOT EXISTS "generated_apps_generated_at_idx" ON "generated_apps" ("generated_at");
 ```
 
-
-
-
-
-## 🌐 Deploy to Vercel
+## Deploy to Vercel
 
 1. Push your code to GitHub
 2. Go to https://vercel.com/new
@@ -101,9 +97,9 @@ CREATE INDEX IF NOT EXISTS "generated_apps_generated_at_idx" ON "generated_apps"
    - `GROQ_API_KEY`: Your Groq API key
    - `DATABASE_URL`: Your Supabase connection string
    - `NODE_ENV=production`
-5. Deploy!
+5. Deploy
 
-## 📝 Environment Variables
+## Environment Variables
 
 Create a `.env` file in the root directory:
 
@@ -117,7 +113,7 @@ Get your credentials from:
 - **Groq API Key**: https://console.groq.com/keys
 - **Supabase Connection String**: https://supabase.com/dashboard (Project Settings > Database > Connection String)
 
-## 🎯 Usage
+## Usage
 
 ### Quick Workflow
 
@@ -146,9 +142,7 @@ Get your credentials from:
 - "A kanban board for project management with drag and drop"
 - "A markdown editor with live preview"
 
-
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 ├── client/              # React frontend
@@ -167,7 +161,7 @@ Get your credentials from:
 └── vercel.json         # Vercel deployment config
 ```
 
-## 🔧 Available Scripts
+## Available Scripts
 
 ```bash
 npm run dev       # Start development server
@@ -179,15 +173,15 @@ npm run format    # Format code with Prettier
 npm test          # Run tests
 ```
 
-## 🤝 Contributing
+## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome. Please feel free to submit a Pull Request.
 
-## 📄 License
+## License
 
 MIT License - feel free to use this project for personal or commercial purposes.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Powered by [Groq](https://groq.com) for lightning-fast AI inference
 - UI components from [Radix UI](https://www.radix-ui.com)
@@ -196,4 +190,4 @@ MIT License - feel free to use this project for personal or commercial purposes.
 
 ---
 
-**© 2024 AI STUDIO. Built with ❤️ using AI**
+© 2024 AI STUDIO. Built with care using AI
