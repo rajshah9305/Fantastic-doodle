@@ -13,17 +13,22 @@ let _db: any = null;
 type Database = any;
 
 export async function getDb(): Promise<Database | null> {
-  // Check if DATABASE_URL is configured
-  if (!process.env.DATABASE_URL || process.env.DATABASE_URL === 'test') {
-    console.log("[Database] DATABASE_URL not configured or is test, running without database");
+  // Check if DATABASE_URL is configured and valid
+  const dbUrl = process.env.DATABASE_URL;
+  if (
+    !dbUrl ||
+    dbUrl === 'test' ||
+    dbUrl.includes('your_supabase_connection_string') ||
+    dbUrl.includes('localhost') && dbUrl === 'development'
+  ) {
+    console.log("[Database] DATABASE_URL not configured properly, running without database");
     return null;
   }
 
   if (!_db) {
     try {
       // Create postgres connection
-      const connectionString = process.env.DATABASE_URL;
-      const client = postgres(connectionString, {
+      const client = postgres(dbUrl, {
         prepare: false,
         max: 10,
         idle_timeout: 20,
