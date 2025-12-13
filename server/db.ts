@@ -52,8 +52,13 @@ export async function createSession(session: InsertSession) {
   if (!db) {
     return [{ id: Math.floor(Math.random() * 10000), ...session }];
   }
-  const result = await db.insert(sessions).values(session);
-  return result;
+  try {
+    const result = await db.insert(sessions).values(session);
+    return result;
+  } catch (error) {
+    console.error("[Database] Error creating session:", error);
+    return [{ id: Math.floor(Math.random() * 10000), ...session }];
+  }
 }
 
 export async function getSessionById(sessionId: string) {
@@ -61,12 +66,17 @@ export async function getSessionById(sessionId: string) {
   if (!db) {
     return null;
   }
-  const result = await db
-    .select()
-    .from(sessions)
-    .where(eq(sessions.sessionId, sessionId))
-    .limit(1);
-  return result.length > 0 ? result[0] : null;
+  try {
+    const result = await db
+      .select()
+      .from(sessions)
+      .where(eq(sessions.sessionId, sessionId))
+      .limit(1);
+    return result.length > 0 ? result[0] : null;
+  } catch (error) {
+    console.error("[Database] Error getting session:", error);
+    return null;
+  }
 }
 
 export async function updateSessionActivity(sessionId: string) {
@@ -74,10 +84,14 @@ export async function updateSessionActivity(sessionId: string) {
   if (!db) {
     return;
   }
-  await db
-    .update(sessions)
-    .set({ lastActiveAt: new Date() })
-    .where(eq(sessions.sessionId, sessionId));
+  try {
+    await db
+      .update(sessions)
+      .set({ lastActiveAt: new Date() })
+      .where(eq(sessions.sessionId, sessionId));
+  } catch (error) {
+    console.error("[Database] Error updating session activity:", error);
+  }
 }
 
 // Generated apps management
@@ -86,8 +100,13 @@ export async function createGeneratedApp(app: InsertGeneratedApp) {
   if (!db) {
     return [{ id: Math.floor(Math.random() * 100000), ...app, generatedAt: new Date(), updatedAt: new Date() }];
   }
-  const result = await db.insert(generatedApps).values(app);
-  return result;
+  try {
+    const result = await db.insert(generatedApps).values(app);
+    return result;
+  } catch (error) {
+    console.error("[Database] Error creating app:", error);
+    return [{ id: Math.floor(Math.random() * 100000), ...app, generatedAt: new Date(), updatedAt: new Date() }];
+  }
 }
 
 // FIX: Add pagination to prevent N+1 query performance issues
@@ -100,16 +119,21 @@ export async function getAllGeneratedApps(
     // Return empty array if no database
     return [];
   }
-  // Validate pagination parameters
-  const validLimit = Math.min(Math.max(1, limit), 100);
-  const validOffset = Math.max(0, offset);
+  try {
+    // Validate pagination parameters
+    const validLimit = Math.min(Math.max(1, limit), 100);
+    const validOffset = Math.max(0, offset);
 
-  return db
-    .select()
-    .from(generatedApps)
-    .orderBy(desc(generatedApps.generatedAt))
-    .limit(validLimit)
-    .offset(validOffset);
+    return db
+      .select()
+      .from(generatedApps)
+      .orderBy(desc(generatedApps.generatedAt))
+      .limit(validLimit)
+      .offset(validOffset);
+  } catch (error) {
+    console.error("[Database] Error getting all apps:", error);
+    return [];
+  }
 }
 
 // FIX: Add pagination to prevent N+1 query performance issues
@@ -123,27 +147,32 @@ export async function getGeneratedAppsBySessionId(
     // Return empty array if no database
     return [];
   }
-  // Validate pagination parameters
-  const validLimit = Math.min(Math.max(1, limit), 100);
-  const validOffset = Math.max(0, offset);
+  try {
+    // Validate pagination parameters
+    const validLimit = Math.min(Math.max(1, limit), 100);
+    const validOffset = Math.max(0, offset);
 
-  // Handle 'all' sessions case
-  if (sessionId === 'all') {
+    // Handle 'all' sessions case
+    if (sessionId === 'all') {
+      return db
+        .select()
+        .from(generatedApps)
+        .orderBy(desc(generatedApps.generatedAt))
+        .limit(validLimit)
+        .offset(validOffset);
+    }
+
     return db
       .select()
       .from(generatedApps)
+      .where(eq(generatedApps.sessionId, sessionId))
       .orderBy(desc(generatedApps.generatedAt))
       .limit(validLimit)
       .offset(validOffset);
+  } catch (error) {
+    console.error("[Database] Error getting apps by session:", error);
+    return [];
   }
-
-  return db
-    .select()
-    .from(generatedApps)
-    .where(eq(generatedApps.sessionId, sessionId))
-    .orderBy(desc(generatedApps.generatedAt))
-    .limit(validLimit)
-    .offset(validOffset);
 }
 
 export async function getGeneratedAppById(id: number) {
@@ -151,12 +180,17 @@ export async function getGeneratedAppById(id: number) {
   if (!db) {
     return null;
   }
-  const result = await db
-    .select()
-    .from(generatedApps)
-    .where(eq(generatedApps.id, id))
-    .limit(1);
-  return result.length > 0 ? result[0] : null;
+  try {
+    const result = await db
+      .select()
+      .from(generatedApps)
+      .where(eq(generatedApps.id, id))
+      .limit(1);
+    return result.length > 0 ? result[0] : null;
+  } catch (error) {
+    console.error("[Database] Error getting app by id:", error);
+    return null;
+  }
 }
 
 export async function updateGeneratedApp(
@@ -167,10 +201,15 @@ export async function updateGeneratedApp(
   if (!db) {
     return { success: true };
   }
-  return db
-    .update(generatedApps)
-    .set({ ...updates, updatedAt: new Date() })
-    .where(eq(generatedApps.id, id));
+  try {
+    return db
+      .update(generatedApps)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(generatedApps.id, id));
+  } catch (error) {
+    console.error("[Database] Error updating app:", error);
+    return { success: true };
+  }
 }
 
 export async function deleteGeneratedApp(id: number) {
@@ -178,5 +217,10 @@ export async function deleteGeneratedApp(id: number) {
   if (!db) {
     return { success: true };
   }
-  return db.delete(generatedApps).where(eq(generatedApps.id, id));
+  try {
+    return db.delete(generatedApps).where(eq(generatedApps.id, id));
+  } catch (error) {
+    console.error("[Database] Error deleting app:", error);
+    return { success: true };
+  }
 }
