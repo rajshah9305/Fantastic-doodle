@@ -1,20 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams, useLocation } from "wouter";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 import CodeEditor from "@/components/CodeEditor";
 import LivePreview from "@/components/LivePreview";
 import AIChat from "@/components/AIChat";
-import {
-  Download,
-  Save,
-  ArrowLeft,
-  Loader2,
-  Code,
-  Eye,
-} from "lucide-react";
+import { Download, Save, ArrowLeft, Loader2, Code, Eye } from "lucide-react";
 
 interface Message {
   role: "user" | "assistant";
@@ -28,7 +21,7 @@ export default function Editor() {
   const [, navigate] = useLocation();
   const [code, setCode] = useState("");
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
-  const [activeTab, setActiveTab] = useState<ActiveTab>("editor");
+  const [activeTab, setActiveTab] = useState<ActiveTab>("editor"); // Default to code generation
 
   const appId = parseInt(id || "0", 10);
 
@@ -69,7 +62,7 @@ export default function Editor() {
 </body>
 </html>`;
       setCode(fullCode);
-      setChatMessages(prev => [
+      setChatMessages((prev) => [
         ...prev,
         {
           role: "assistant",
@@ -79,7 +72,7 @@ export default function Editor() {
       ]);
     },
     onError: (error: any) => {
-      setChatMessages(prev => [
+      setChatMessages((prev) => [
         ...prev,
         {
           role: "assistant",
@@ -130,7 +123,8 @@ export default function Editor() {
         jsCode: jsMatch ? jsMatch[1].trim() : "",
       });
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
       toast.error(`Failed to save: ${errorMessage}`);
     }
   };
@@ -146,13 +140,14 @@ export default function Editor() {
       return;
     }
 
-    setChatMessages(prev => [...prev, { role: "user", content: message }]);
+    setChatMessages((prev) => [...prev, { role: "user", content: message }]);
 
     try {
       await modifyApp.mutateAsync({ id: appId, instruction: message.trim() });
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
-      setChatMessages(prev => [
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      setChatMessages((prev) => [
         ...prev,
         {
           role: "assistant",
@@ -180,7 +175,8 @@ export default function Editor() {
       URL.revokeObjectURL(url);
       toast.success("App downloaded successfully");
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
       toast.error(`Failed to download: ${errorMessage}`);
     }
   };
@@ -270,31 +266,84 @@ export default function Editor() {
         </div>
       </header>
 
-      <div className="flex-1 flex flex-col md:flex-row overflow-hidden relative z-10">
-        {/* Code Panel */}
-        <div className="w-full md:w-1/2 flex flex-col border-r-0 md:border-r border-b md:border-b-0 border-orange-900/30 bg-black/50 backdrop-blur-sm">
-          <div className="h-10 bg-zinc-950 border-b border-orange-900/30 flex items-center px-4 justify-between">
-            <div className="flex items-center gap-2">
-              <Code size={14} className="text-orange-600" />
-              <span className="text-xs font-mono font-bold text-orange-400">
-                SOURCE.html
-              </span>
+      <Tabs
+        value={activeTab}
+        onValueChange={(v: string) => setActiveTab(v as ActiveTab)}
+        className="flex-1 flex flex-col overflow-hidden relative z-10"
+      >
+        {/* Tab Navigation - visible on mobile */}
+        <div className="md:hidden h-10 bg-black/80 border-b border-orange-900/30 flex items-center gap-2 px-4">
+          <button
+            onClick={() => setActiveTab("editor")}
+            className={`px-3 py-1.5 text-[10px] sm:text-xs font-mono font-bold uppercase transition-all ${
+              activeTab === "editor"
+                ? "text-orange-400 border-b-2 border-orange-600"
+                : "text-slate-500 hover:text-orange-400"
+            }`}
+          >
+            <Code className="w-3 h-3 inline mr-1" />
+            Generate
+          </button>
+          <button
+            onClick={() => setActiveTab("preview")}
+            className={`px-3 py-1.5 text-[10px] sm:text-xs font-mono font-bold uppercase transition-all ${
+              activeTab === "preview"
+                ? "text-orange-400 border-b-2 border-orange-600"
+                : "text-slate-500 hover:text-orange-400"
+            }`}
+          >
+            <Eye className="w-3 h-3 inline mr-1" />
+            Preview
+          </button>
+        </div>
+
+        <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+          {/* Code Panel - hidden on mobile when preview is active */}
+          <div
+            className={`hidden md:flex flex-col w-full md:w-1/2 border-r-0 md:border-r border-b md:border-b-0 border-orange-900/30 bg-black/50 backdrop-blur-sm ${
+              activeTab === "editor" && "md:hidden"
+            }`}
+          >
+            <div className="h-10 bg-zinc-950 border-b border-orange-900/30 flex items-center px-4 justify-between">
+              <div className="flex items-center gap-2">
+                <Code size={14} className="text-orange-600" />
+                <span className="text-xs font-mono font-bold text-orange-400">
+                  SOURCE.html
+                </span>
+              </div>
+            </div>
+
+            <div className="flex-1 overflow-hidden">
+              <CodeEditor value={code} onChange={setCode} language="html" />
             </div>
           </div>
 
-          <div className="flex-1 overflow-hidden">
-            <CodeEditor value={code} onChange={setCode} language="html" />
-          </div>
-        </div>
-
-        {/* Preview & AI Chat Panel */}
-        <div className="w-full md:w-1/2 bg-zinc-950/50 backdrop-blur-sm relative flex flex-col">
-          <Tabs
-            value={activeTab}
-            onValueChange={(v: string) => setActiveTab(v as ActiveTab)}
-            className="flex-1 flex flex-col"
+          {/* Mobile Code Editor - shown when editor tab active on mobile */}
+          <TabsContent
+            value="editor"
+            className="flex-1 flex flex-col md:hidden overflow-hidden"
           >
-            <div className="h-10 bg-black/80 border-b border-orange-900/30 flex items-center gap-2 px-4">
+            <div className="h-10 bg-zinc-950 border-b border-orange-900/30 flex items-center px-4 justify-between">
+              <div className="flex items-center gap-2">
+                <Code size={14} className="text-orange-600" />
+                <span className="text-xs font-mono font-bold text-orange-400">
+                  SOURCE.html
+                </span>
+              </div>
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <CodeEditor value={code} onChange={setCode} language="html" />
+            </div>
+          </TabsContent>
+
+          {/* Preview & AI Chat Panel */}
+          <div
+            className={`flex-1 bg-zinc-950/50 backdrop-blur-sm relative flex flex-col ${
+              activeTab === "editor" && "md:flex"
+            }`}
+          >
+            {/* Desktop tabs */}
+            <div className="hidden md:flex h-10 bg-black/80 border-b border-orange-900/30 items-center gap-2 px-4">
               <button
                 onClick={() => setActiveTab("preview")}
                 className={`px-3 py-1.5 text-[10px] sm:text-xs font-mono font-bold uppercase transition-all ${
@@ -320,9 +369,19 @@ export default function Editor() {
             </div>
 
             <div className="flex-1 overflow-hidden">
-              {activeTab === "preview" && (
+              {/* Desktop preview */}
+              <div className="hidden md:block h-full">
+                {activeTab === "preview" && (
+                  <LivePreview code={code} title={app.title} />
+                )}
+              </div>
+
+              {/* Mobile preview */}
+              <TabsContent value="preview" className="flex-1 flex md:hidden">
                 <LivePreview code={code} title={app.title} />
-              )}
+              </TabsContent>
+
+              {/* AI Chat */}
               {activeTab === "editor" && (
                 <div className="h-full overflow-hidden">
                   <AIChat
@@ -333,9 +392,9 @@ export default function Editor() {
                 </div>
               )}
             </div>
-          </Tabs>
+          </div>
         </div>
-      </div>
+      </Tabs>
     </div>
   );
 }
