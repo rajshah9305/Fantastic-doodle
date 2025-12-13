@@ -7,12 +7,8 @@ import { pgTable, serial, text, timestamp, index } from "drizzle-orm/pg-core";
 export const sessions = pgTable("sessions", {
   id: serial("id").primaryKey(),
   sessionId: text("session_id").notNull().unique(),
-  createdAt: timestamp("created_at", { mode: "date" })
-    .notNull()
-    .defaultNow(),
-  lastActiveAt: timestamp("last_active_at", { mode: "date" })
-    .notNull()
-    .defaultNow(),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  lastActiveAt: timestamp("last_active_at", { mode: "date" }).notNull().defaultNow(),
 }, (table) => ({
   sessionIdIdx: index("session_id_idx").on(table.sessionId),
 }));
