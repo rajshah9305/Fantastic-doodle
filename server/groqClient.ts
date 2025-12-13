@@ -130,41 +130,47 @@ function parseJsonResponse(text: string | null | undefined): Record<string, stri
 }
 
 export async function generateAppFromPrompt(prompt: string): Promise<{
-  htmlCode: string;
-  cssCode: string;
-  jsCode: string;
-  title: string;
-}> {
-  const systemPrompt = `You are an expert web developer creating production-quality web applications.
-CRITICAL: Respond with ONLY valid JSON in a single line. No markdown, no code blocks, no explanations.
-Format: {"title":"App Name","htmlCode":"<html>...</html>","cssCode":"body{...}","jsCode":"..."}
+   htmlCode: string;
+   cssCode: string;
+   jsCode: string;
+   title: string;
+ }> {
+   const systemPrompt = `You are an expert web developer creating production-quality web applications.
+ CRITICAL: Respond with ONLY valid JSON in a single line. No markdown, no code blocks, no explanations.
+ Format: {"title":"App Name","htmlCode":"<html>...</html>","cssCode":"body{...}","jsCode":"..."}
+ 
+ DESIGN REQUIREMENTS:
+ - Brutalist design: Primary orange (#ea580c), accents in red (#dc2626)
+ - Black (#000000) backgrounds with bold typography
+ - Thick borders (2-4px solid) throughout
+ - Hard drop shadows: 4px 4px 0px 0px rgba(0,0,0,1)
+ - No external CDNs, all code self-contained
+ - Modern ES6+ JavaScript with proper scoping
+ 
+ CODE QUALITY:
+ - Complete, fully-functional applications
+ - Proper semantic HTML5
+ - Comprehensive CSS with responsive design
+ - Extensive JavaScript features (event handlers, state management, animations)
+ - Professional error handling and user feedback
+ - Detailed comments explaining complex logic
+ - Mobile-responsive layout with media queries
+ 
+ IMPLEMENTATION DETAILS:
+ - Use flexbox/grid for layouts
+ - Implement smooth transitions and hover effects
+ - Add visual feedback for user interactions
+ - Create proper form validation
+ - Use const/let with arrow functions
+ - Implement array methods (map, filter, reduce) where relevant
+ - Add data persistence with localStorage if applicable
+ - Create reusable utility functions
 
-DESIGN REQUIREMENTS:
-- Brutalist design: Primary orange (#ea580c), accents in red (#dc2626)
-- Black (#000000) backgrounds with bold typography
-- Thick borders (2-4px solid) throughout
-- Hard drop shadows: 4px 4px 0px 0px rgba(0,0,0,1)
-- No external CDNs, all code self-contained
-- Modern ES6+ JavaScript with proper scoping
-
-CODE QUALITY:
-- Complete, fully-functional applications
-- Proper semantic HTML5
-- Comprehensive CSS with responsive design
-- Extensive JavaScript features (event handlers, state management, animations)
-- Professional error handling and user feedback
-- Detailed comments explaining complex logic
-- Mobile-responsive layout with media queries
-
-IMPLEMENTATION DETAILS:
-- Use flexbox/grid for layouts
-- Implement smooth transitions and hover effects
-- Add visual feedback for user interactions
-- Create proper form validation
-- Use const/let with arrow functions
-- Implement array methods (map, filter, reduce) where relevant
-- Add data persistence with localStorage if applicable
-- Create reusable utility functions`;
+ CRITICAL RESTRICTIONS:
+ - NEVER include "Created by ChatGPT" or any ChatGPT attribution in the HTML
+ - NEVER include footer credits to ChatGPT or OpenAI
+ - NEVER mention AI generation in comments or visible text
+ - Keep code clean and focused on the app's purpose`;
 
   try {
     const client = getGroqClient();
@@ -217,44 +223,50 @@ export async function testGroqConnection(): Promise<string> {
 }
 
 export async function generateAppFromPromptStream(
-  prompt: string,
-  onChunk: (chunk: string) => void
-): Promise<{
-  htmlCode: string;
-  cssCode: string;
-  jsCode: string;
-  title: string;
-}> {
-  const systemPrompt = `You are an expert web developer creating production-quality web applications.
-CRITICAL: Respond with ONLY valid JSON in a single line. No markdown, no code blocks, no explanations.
-Format: {"title":"App Name","htmlCode":"<html>...</html>","cssCode":"body{...}","jsCode":"..."}
+   prompt: string,
+   onChunk: (chunk: string) => void
+ ): Promise<{
+   htmlCode: string;
+   cssCode: string;
+   jsCode: string;
+   title: string;
+ }> {
+   const systemPrompt = `You are an expert web developer creating production-quality web applications.
+ CRITICAL: Respond with ONLY valid JSON in a single line. No markdown, no code blocks, no explanations.
+ Format: {"title":"App Name","htmlCode":"<html>...</html>","cssCode":"body{...}","jsCode":"..."}
+ 
+ DESIGN REQUIREMENTS:
+ - Brutalist design: Primary orange (#ea580c), accents in red (#dc2626)
+ - Black (#000000) backgrounds with bold typography
+ - Thick borders (2-4px solid) throughout
+ - Hard drop shadows: 4px 4px 0px 0px rgba(0,0,0,1)
+ - No external CDNs, all code self-contained
+ - Modern ES6+ JavaScript with proper scoping
+ 
+ CODE QUALITY:
+ - Complete, fully-functional applications
+ - Proper semantic HTML5
+ - Comprehensive CSS with responsive design
+ - Extensive JavaScript features (event handlers, state management, animations)
+ - Professional error handling and user feedback
+ - Detailed comments explaining complex logic
+ - Mobile-responsive layout with media queries
+ 
+ IMPLEMENTATION DETAILS:
+ - Use flexbox/grid for layouts
+ - Implement smooth transitions and hover effects
+ - Add visual feedback for user interactions
+ - Create proper form validation
+ - Use const/let with arrow functions
+ - Implement array methods (map, filter, reduce) where relevant
+ - Add data persistence with localStorage if applicable
+ - Create reusable utility functions
 
-DESIGN REQUIREMENTS:
-- Brutalist design: Primary orange (#ea580c), accents in red (#dc2626)
-- Black (#000000) backgrounds with bold typography
-- Thick borders (2-4px solid) throughout
-- Hard drop shadows: 4px 4px 0px 0px rgba(0,0,0,1)
-- No external CDNs, all code self-contained
-- Modern ES6+ JavaScript with proper scoping
-
-CODE QUALITY:
-- Complete, fully-functional applications
-- Proper semantic HTML5
-- Comprehensive CSS with responsive design
-- Extensive JavaScript features (event handlers, state management, animations)
-- Professional error handling and user feedback
-- Detailed comments explaining complex logic
-- Mobile-responsive layout with media queries
-
-IMPLEMENTATION DETAILS:
-- Use flexbox/grid for layouts
-- Implement smooth transitions and hover effects
-- Add visual feedback for user interactions
-- Create proper form validation
-- Use const/let with arrow functions
-- Implement array methods (map, filter, reduce) where relevant
-- Add data persistence with localStorage if applicable
-- Create reusable utility functions`;
+ CRITICAL RESTRICTIONS:
+ - NEVER include "Created by ChatGPT" or any ChatGPT attribution in the HTML
+ - NEVER include footer credits to ChatGPT or OpenAI
+ - NEVER mention AI generation in comments or visible text
+ - Keep code clean and focused on the app's purpose`;
 
   try {
     const client = getGroqClient();
@@ -298,40 +310,47 @@ IMPLEMENTATION DETAILS:
 }
 
 export async function modifyAppWithAI(
-  currentCode: string,
-  instruction: string,
-  originalPrompt: string
-): Promise<{
-  htmlCode: string;
-  cssCode: string;
-  jsCode: string;
-  title: string;
-}> {
-  const systemPrompt = `You are an expert web developer specializing in code modification and enhancement.
-CRITICAL: Respond with ONLY valid JSON in a single line. No markdown, no code blocks, no explanations.
-Format: {"title":"App Name","htmlCode":"<html>...</html>","cssCode":"body{...}","jsCode":"..."}
+   currentCode: string,
+   instruction: string,
+   originalPrompt: string
+ ): Promise<{
+   htmlCode: string;
+   cssCode: string;
+   jsCode: string;
+   title: string;
+ }> {
+   const systemPrompt = `You are an expert web developer specializing in code modification and enhancement.
+ CRITICAL: Respond with ONLY valid JSON in a single line. No markdown, no code blocks, no explanations.
+ Format: {"title":"App Name","htmlCode":"<html>...</html>","cssCode":"body{...}","jsCode":"..."}
+ 
+ MODIFICATION GUIDELINES:
+ - Preserve the original design language and functionality
+ - Maintain brutalist design: orange (#ea580c), black (#000000), red (#dc2626)
+ - Keep existing features while adding requested enhancements
+ - Improve code quality and add missing functionality
+ - Enhance user experience with better interactions
+ - Add smooth animations and visual feedback
+ - Implement proper error handling
+ - Optimize performance where possible
+ - Add helpful comments to explain changes
+ - Ensure mobile responsiveness is maintained
+ 
+ CODE QUALITY STANDARDS:
+ - Professional, production-ready code
+ - Proper semantic HTML5 structure
+ - Comprehensive CSS with all necessary styles
+ - Advanced JavaScript with proper event handling
+ - Use modern ES6+ features (arrow functions, const/let, destructuring)
+ - Implement state management patterns
+ - Add localStorage for data persistence if applicable
+ - Create reusable, maintainable code
 
-MODIFICATION GUIDELINES:
-- Preserve the original design language and functionality
-- Maintain brutalist design: orange (#ea580c), black (#000000), red (#dc2626)
-- Keep existing features while adding requested enhancements
-- Improve code quality and add missing functionality
-- Enhance user experience with better interactions
-- Add smooth animations and visual feedback
-- Implement proper error handling
-- Optimize performance where possible
-- Add helpful comments to explain changes
-- Ensure mobile responsiveness is maintained
-
-CODE QUALITY STANDARDS:
-- Professional, production-ready code
-- Proper semantic HTML5 structure
-- Comprehensive CSS with all necessary styles
-- Advanced JavaScript with proper event handling
-- Use modern ES6+ features (arrow functions, const/let, destructuring)
-- Implement state management patterns
-- Add localStorage for data persistence if applicable
-- Create reusable, maintainable code`;
+ CRITICAL RESTRICTIONS:
+ - NEVER include "Created by ChatGPT" or any ChatGPT attribution in the HTML
+ - NEVER include footer credits to ChatGPT or OpenAI
+ - NEVER mention AI generation in comments or visible text
+ - Remove any existing ChatGPT attributions from the code
+ - Keep code clean and focused on the app's purpose`;
 
   try {
     const message = await getGroqClient().chat.completions.create({
