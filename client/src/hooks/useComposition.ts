@@ -1,5 +1,4 @@
-import { useRef } from "react";
-import { usePersistFn } from "./usePersistFn";
+import { useRef, useCallback } from "react";
 
 export interface UseCompositionReturn<
   T extends HTMLInputElement | HTMLTextAreaElement,
@@ -33,7 +32,7 @@ export function useComposition<
   const timer = useRef<TimerResponse | null>(null);
   const timer2 = useRef<TimerResponse | null>(null);
 
-  const onCompositionStart = usePersistFn((e: React.CompositionEvent<T>) => {
+  const onCompositionStart = useCallback((e: React.CompositionEvent<T>) => {
     if (timer.current) {
       clearTimeout(timer.current);
       timer.current = null;
@@ -44,18 +43,18 @@ export function useComposition<
     }
     c.current = true;
     originalOnCompositionStart?.(e);
-  });
+  }, [originalOnCompositionStart]);
 
-  const onCompositionEnd = usePersistFn((e: React.CompositionEvent<T>) => {
+  const onCompositionEnd = useCallback((e: React.CompositionEvent<T>) => {
     timer.current = setTimeout(() => {
       timer2.current = setTimeout(() => {
         c.current = false;
       });
     });
     originalOnCompositionEnd?.(e);
-  });
+  }, [originalOnCompositionEnd]);
 
-  const onKeyDown = usePersistFn((e: React.KeyboardEvent<T>) => {
+  const onKeyDown = useCallback((e: React.KeyboardEvent<T>) => {
     if (
       c.current &&
       (e.key === "Escape" || (e.key === "Enter" && !e.shiftKey))
@@ -64,11 +63,11 @@ export function useComposition<
       return;
     }
     originalOnKeyDown?.(e);
-  });
+  }, [originalOnKeyDown]);
 
-  const isComposing = usePersistFn(() => {
+  const isComposing = useCallback(() => {
     return c.current;
-  });
+  }, []);
 
   return {
     onCompositionStart,
