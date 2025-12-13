@@ -31,8 +31,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    // Create handler for each request with proper path
-    const path = new URL(req.url || "/", `http://${req.headers.host}`).pathname;
+    // Create handler for each request with proper path. The path should be the tRPC procedure path.
+    // Extract the tRPC procedure path from the URL.
+    // The Vercel rewrite rule in vercel.json maps /api/trpc/:path* to /api/trpc.
+    // We need to extract the :path* part from the original URL.
+    const url = new URL(req.url || "/", `http://${req.headers.host}`);
+    const path = url.pathname.replace("/api/trpc/", "");
     await nodeHTTPRequestHandler({
       router: appRouter,
       createContext: () => createContext({ req, res }),
