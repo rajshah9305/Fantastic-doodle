@@ -83,7 +83,7 @@ export default function Home() {
   // Landing View
   if (!showEditor) {
     return (
-      <div className="min-h-screen bg-background flex flex-col relative overflow-hidden selection:bg-orange-200">
+      <div className="h-screen bg-background flex flex-col relative overflow-hidden selection:bg-orange-200">
         {/* Grid Pattern */}
         <div
           className="absolute inset-0 z-0 opacity-[0.03]"
@@ -94,10 +94,10 @@ export default function Home() {
           }}
         ></div>
 
-        {/* Header */}
-        <header className="relative z-10 p-3 xs:p-4 sm:p-6 md:p-8 flex justify-between items-center gap-2">
+        {/* Header - Compact */}
+        <header className="relative z-10 px-3 xs:px-4 sm:px-6 md:px-8 py-3 sm:py-4 flex justify-between items-center gap-2 flex-shrink-0">
           <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-3 min-w-0">
-            <div className="w-7 h-7 xs:w-8 xs:h-8 sm:w-10 sm:h-10 bg-orange-600 flex items-center justify-center text-white font-bold text-base xs:text-lg sm:text-xl shadow-[4px_4px_0px_0px_#000] flex-shrink-0">
+            <div className="w-7 h-7 xs:w-8 xs:h-8 sm:w-9 sm:h-9 bg-orange-600 flex items-center justify-center text-white font-bold text-base xs:text-lg sm:text-xl shadow-[4px_4px_0px_0px_#000] flex-shrink-0">
               A
             </div>
             <span className="font-sans font-bold text-lg xs:text-xl sm:text-2xl tracking-tighter text-foreground truncate">
@@ -114,75 +114,86 @@ export default function Home() {
           </div>
         </header>
 
-        {/* Main Content */}
-        <main className="flex-1 relative z-10 flex flex-col items-center px-3 xs:px-4 sm:px-6 md:px-8 max-w-5xl mx-auto w-full pt-4 xs:pt-8 sm:pt-12 md:pt-16 pb-16 xs:pb-20 sm:pb-24">
-          <div className="mb-4 xs:mb-6 sm:mb-8 text-center space-y-3 xs:space-y-4 sm:space-y-5 w-full">
-            <div className="inline-flex items-center gap-1.5 xs:gap-2 px-2.5 xs:px-3 py-1 bg-muted border border-border rounded-full text-[9px] xs:text-[10px] sm:text-xs font-mono text-muted-foreground mb-1.5 xs:mb-2 sm:mb-3 animate-fade-in">
-              <Zap size={10} className="xs:w-2.5 xs:h-2.5 sm:w-3 sm:h-3 text-orange-600 animate-pulse flex-shrink-0" />
-              <span>POWERED BY GROQ AI</span>
+        {/* Main Content - Centered Vertically */}
+        <main className="flex-1 relative z-10 flex flex-col items-center justify-center px-3 xs:px-4 sm:px-6 md:px-8 max-w-5xl mx-auto w-full">
+          <div className="w-full space-y-4 xs:space-y-5 sm:space-y-6 md:space-y-8">
+            {/* Badge */}
+            <div className="flex justify-center animate-fade-in">
+              <div className="inline-flex items-center gap-1.5 xs:gap-2 px-2.5 xs:px-3 py-1 xs:py-1.5 bg-muted border border-border rounded-full text-[9px] xs:text-[10px] sm:text-xs font-mono text-muted-foreground">
+                <Zap size={10} className="xs:w-2.5 xs:h-2.5 sm:w-3 sm:h-3 text-orange-600 animate-pulse flex-shrink-0" />
+                <span>POWERED BY GROQ AI</span>
+              </div>
             </div>
-            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-foreground tracking-tighter leading-[0.9] animate-fade-in-up px-2">
-              IMAGINE.
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 animate-gradient">
-                CONSTRUCT.
-              </span>
-              <br />
-              DEPLOY.
-            </h1>
-            <p className="max-w-xl mx-auto text-sm xs:text-base sm:text-lg text-muted-foreground font-medium leading-relaxed animate-fade-in-delay px-3 xs:px-4">
-              Turn natural language into production-grade applications. No
-              visual clutter. Just pure semantic creation.
-            </p>
-          </div>
 
-          {/* Input Form - Moved Higher */}
-          <div className="w-full max-w-2xl relative group mt-2 xs:mt-4 sm:mt-6 animate-fade-in-up-delay">
-            <div className="absolute -inset-1 bg-gradient-to-r from-orange-600 to-red-600 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200 animate-pulse-slow"></div>
-            <div className="relative flex flex-col sm:flex-row bg-card shadow-2xl rounded-lg p-1 xs:p-1.5 sm:p-2 border-2 border-border hover:border-orange-500/50 transition-all duration-300">
-              <input
-                type="text"
-                value={prompt}
-                onChange={e => setPrompt(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Describe your app..."
-                className="flex-1 bg-transparent px-3 xs:px-4 sm:px-6 py-2.5 xs:py-3 sm:py-4 md:py-5 text-sm xs:text-base sm:text-lg outline-none text-foreground placeholder:text-muted-foreground font-medium transition-all duration-200 focus:placeholder:text-orange-500/30 min-h-[44px]"
-                autoFocus
-                disabled={isGenerating}
-              />
-              <button
-                onClick={handleGenerate}
-                disabled={isGenerating || !prompt.trim()}
-                className="group relative px-4 xs:px-6 sm:px-8 py-2.5 xs:py-3 sm:py-4 font-mono text-[10px] xs:text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center justify-center gap-1.5 xs:gap-2 overflow-hidden bg-orange-600 text-white hover:bg-orange-700 border border-transparent shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] disabled:opacity-50 disabled:cursor-not-allowed active:translate-x-[2px] active:translate-y-[2px] active:shadow-none min-h-[44px] mt-1 sm:mt-0"
-              >
-                {isGenerating ? (
-                  <>
-                    <Loader2 size={14} className="xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4 animate-spin flex-shrink-0" />
-                    <span className="hidden xs:inline">Processing...</span>
-                    <span className="xs:hidden">...</span>
-                  </>
-                ) : (
-                  <>
-                    <ArrowRight size={14} className="xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform flex-shrink-0" />
-                    <span>Initialize</span>
-                  </>
-                )}
-              </button>
+            {/* Hero Title */}
+            <div className="text-center animate-fade-in-up">
+              <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-foreground tracking-tighter leading-[0.9] px-2">
+                IMAGINE.
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 animate-gradient">
+                  CONSTRUCT.
+                </span>
+                <br />
+                DEPLOY.
+              </h1>
             </div>
-          </div>
 
-          {/* Credits Footer - Fixed at Bottom */}
-          <div className="absolute bottom-3 xs:bottom-4 sm:bottom-6 left-0 right-0 flex justify-center animate-fade-in px-3 xs:px-4">
-            <div className="text-center space-y-0.5 xs:space-y-1 group cursor-default">
-              <p className="text-[9px] xs:text-[10px] sm:text-xs font-mono text-muted-foreground transition-colors group-hover:text-orange-600/70">
-                Built & Developed by
+            {/* Subtitle */}
+            <div className="text-center animate-fade-in-delay">
+              <p className="max-w-xl mx-auto text-sm xs:text-base sm:text-lg text-muted-foreground font-medium leading-relaxed px-3 xs:px-4">
+                Turn natural language into production-grade applications. No
+                visual clutter. Just pure semantic creation.
               </p>
-              <p className="text-[10px] xs:text-xs sm:text-sm font-bold text-orange-600 tracking-wider transition-all duration-300 group-hover:scale-105 group-hover:text-orange-500">
-                RAJ SHAH
-              </p>
+            </div>
+
+            {/* Input Form */}
+            <div className="w-full max-w-2xl mx-auto relative group animate-fade-in-up-delay">
+              <div className="absolute -inset-1 bg-gradient-to-r from-orange-600 to-red-600 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200 animate-pulse-slow"></div>
+              <div className="relative flex flex-col sm:flex-row bg-card shadow-2xl rounded-lg p-1 xs:p-1.5 sm:p-2 border-2 border-border hover:border-orange-500/50 transition-all duration-300">
+                <input
+                  type="text"
+                  value={prompt}
+                  onChange={e => setPrompt(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Describe your app..."
+                  className="flex-1 bg-transparent px-3 xs:px-4 sm:px-6 py-2.5 xs:py-3 sm:py-4 text-sm xs:text-base sm:text-lg outline-none text-foreground placeholder:text-muted-foreground font-medium transition-all duration-200 focus:placeholder:text-orange-500/30 min-h-[44px]"
+                  autoFocus
+                  disabled={isGenerating}
+                />
+                <button
+                  onClick={handleGenerate}
+                  disabled={isGenerating || !prompt.trim()}
+                  className="group relative px-4 xs:px-6 sm:px-8 py-2.5 xs:py-3 sm:py-4 font-mono text-[10px] xs:text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center justify-center gap-1.5 xs:gap-2 overflow-hidden bg-orange-600 text-white hover:bg-orange-700 border border-transparent shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] disabled:opacity-50 disabled:cursor-not-allowed active:translate-x-[2px] active:translate-y-[2px] active:shadow-none min-h-[44px] mt-1 sm:mt-0"
+                >
+                  {isGenerating ? (
+                    <>
+                      <Loader2 size={14} className="xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4 animate-spin flex-shrink-0" />
+                      <span className="hidden xs:inline">Processing...</span>
+                      <span className="xs:hidden">...</span>
+                    </>
+                  ) : (
+                    <>
+                      <ArrowRight size={14} className="xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+                      <span>Initialize</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </main>
+
+        {/* Credits Footer - Compact */}
+        <footer className="relative z-10 py-3 sm:py-4 flex justify-center animate-fade-in px-3 xs:px-4 flex-shrink-0">
+          <div className="text-center space-y-0.5 group cursor-default">
+            <p className="text-[9px] xs:text-[10px] sm:text-xs font-mono text-muted-foreground transition-colors group-hover:text-orange-600/70">
+              Built & Developed by
+            </p>
+            <p className="text-[10px] xs:text-xs sm:text-sm font-bold text-orange-600 tracking-wider transition-all duration-300 group-hover:scale-105 group-hover:text-orange-500">
+              RAJ SHAH
+            </p>
+          </div>
+        </footer>
       </div>
     );
   }
