@@ -95,32 +95,33 @@ export default function Home() {
         ></div>
 
         {/* Header */}
-        <header className="relative z-10 p-4 sm:p-6 md:p-8 flex justify-between items-center">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-orange-600 flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-[4px_4px_0px_0px_#000]">
+        <header className="relative z-10 p-3 xs:p-4 sm:p-6 md:p-8 flex justify-between items-center gap-2">
+          <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-3 min-w-0">
+            <div className="w-7 h-7 xs:w-8 xs:h-8 sm:w-10 sm:h-10 bg-orange-600 flex items-center justify-center text-white font-bold text-base xs:text-lg sm:text-xl shadow-[4px_4px_0px_0px_#000] flex-shrink-0">
               A
             </div>
-            <span className="font-sans font-bold text-xl sm:text-2xl tracking-tighter text-foreground">
+            <span className="font-sans font-bold text-lg xs:text-xl sm:text-2xl tracking-tighter text-foreground truncate">
               AI STUDIO
             </span>
           </div>
-          <div className="hidden md:flex gap-4 lg:gap-6 text-xs sm:text-sm font-mono text-muted-foreground">
-            <span>v2.4.0-STABLE</span>
+          <div className="hidden md:flex gap-3 lg:gap-6 text-xs sm:text-sm font-mono text-muted-foreground flex-shrink-0">
+            <span className="hidden lg:inline">v2.4.0-STABLE</span>
             <span className="text-orange-600 flex items-center gap-1">
               <div className="w-2 h-2 bg-orange-600 rounded-full animate-pulse" />{" "}
-              SYSTEM ONLINE
+              <span className="hidden lg:inline">SYSTEM ONLINE</span>
+              <span className="lg:hidden">ONLINE</span>
             </span>
           </div>
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 relative z-10 flex flex-col items-center px-4 sm:px-6 md:px-8 max-w-5xl mx-auto w-full pt-8 sm:pt-12 md:pt-16 pb-20 sm:pb-24">
-          <div className="mb-6 sm:mb-8 text-center space-y-4 sm:space-y-5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-muted border border-border rounded-full text-[10px] sm:text-xs font-mono text-muted-foreground mb-2 sm:mb-3 animate-fade-in">
-              <Zap size={10} className="sm:w-3 sm:h-3 text-orange-600 animate-pulse" />
+        <main className="flex-1 relative z-10 flex flex-col items-center px-3 xs:px-4 sm:px-6 md:px-8 max-w-5xl mx-auto w-full pt-4 xs:pt-8 sm:pt-12 md:pt-16 pb-16 xs:pb-20 sm:pb-24">
+          <div className="mb-4 xs:mb-6 sm:mb-8 text-center space-y-3 xs:space-y-4 sm:space-y-5 w-full">
+            <div className="inline-flex items-center gap-1.5 xs:gap-2 px-2.5 xs:px-3 py-1 bg-muted border border-border rounded-full text-[9px] xs:text-[10px] sm:text-xs font-mono text-muted-foreground mb-1.5 xs:mb-2 sm:mb-3 animate-fade-in">
+              <Zap size={10} className="xs:w-2.5 xs:h-2.5 sm:w-3 sm:h-3 text-orange-600 animate-pulse flex-shrink-0" />
               <span>POWERED BY GROQ AI</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-foreground tracking-tighter leading-[0.9] animate-fade-in-up px-2">
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-foreground tracking-tighter leading-[0.9] animate-fade-in-up px-2">
               IMAGINE.
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 animate-gradient">
@@ -129,40 +130,40 @@ export default function Home() {
               <br />
               DEPLOY.
             </h1>
-            <p className="max-w-xl mx-auto text-base sm:text-lg text-muted-foreground font-medium leading-relaxed animate-fade-in-delay px-4">
+            <p className="max-w-xl mx-auto text-sm xs:text-base sm:text-lg text-muted-foreground font-medium leading-relaxed animate-fade-in-delay px-3 xs:px-4">
               Turn natural language into production-grade applications. No
               visual clutter. Just pure semantic creation.
             </p>
           </div>
 
           {/* Input Form - Moved Higher */}
-          <div className="w-full max-w-2xl relative group mt-4 sm:mt-6 animate-fade-in-up-delay">
+          <div className="w-full max-w-2xl relative group mt-2 xs:mt-4 sm:mt-6 animate-fade-in-up-delay">
             <div className="absolute -inset-1 bg-gradient-to-r from-orange-600 to-red-600 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200 animate-pulse-slow"></div>
-            <div className="relative flex flex-col sm:flex-row bg-card shadow-2xl rounded-lg p-1.5 sm:p-2 border-2 border-border hover:border-orange-500/50 transition-all duration-300">
+            <div className="relative flex flex-col sm:flex-row bg-card shadow-2xl rounded-lg p-1 xs:p-1.5 sm:p-2 border-2 border-border hover:border-orange-500/50 transition-all duration-300">
               <input
                 type="text"
                 value={prompt}
                 onChange={e => setPrompt(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Describe your app..."
-                className="flex-1 bg-transparent px-4 sm:px-6 py-3 sm:py-4 md:py-5 text-base sm:text-lg outline-none text-foreground placeholder:text-muted-foreground font-medium transition-all duration-200 focus:placeholder:text-orange-500/30"
+                className="flex-1 bg-transparent px-3 xs:px-4 sm:px-6 py-2.5 xs:py-3 sm:py-4 md:py-5 text-sm xs:text-base sm:text-lg outline-none text-foreground placeholder:text-muted-foreground font-medium transition-all duration-200 focus:placeholder:text-orange-500/30 min-h-[44px]"
                 autoFocus
                 disabled={isGenerating}
               />
               <button
                 onClick={handleGenerate}
                 disabled={isGenerating || !prompt.trim()}
-                className="group relative px-6 sm:px-8 py-3 sm:py-4 font-mono text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center justify-center gap-2 overflow-hidden bg-orange-600 text-white hover:bg-orange-700 border border-transparent shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] disabled:opacity-50 disabled:cursor-not-allowed active:translate-x-[2px] active:translate-y-[2px] active:shadow-none min-h-[44px] sm:min-h-0"
+                className="group relative px-4 xs:px-6 sm:px-8 py-2.5 xs:py-3 sm:py-4 font-mono text-[10px] xs:text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center justify-center gap-1.5 xs:gap-2 overflow-hidden bg-orange-600 text-white hover:bg-orange-700 border border-transparent shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] disabled:opacity-50 disabled:cursor-not-allowed active:translate-x-[2px] active:translate-y-[2px] active:shadow-none min-h-[44px] mt-1 sm:mt-0"
               >
                 {isGenerating ? (
                   <>
-                    <Loader2 size={14} className="sm:w-4 sm:h-4 animate-spin" />
-                    <span className="hidden sm:inline">Processing...</span>
-                    <span className="sm:hidden">Processing</span>
+                    <Loader2 size={14} className="xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4 animate-spin flex-shrink-0" />
+                    <span className="hidden xs:inline">Processing...</span>
+                    <span className="xs:hidden">...</span>
                   </>
                 ) : (
                   <>
-                    <ArrowRight size={14} className="sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight size={14} className="xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform flex-shrink-0" />
                     <span>Initialize</span>
                   </>
                 )}
@@ -171,12 +172,12 @@ export default function Home() {
           </div>
 
           {/* Credits Footer - Fixed at Bottom */}
-          <div className="absolute bottom-4 sm:bottom-6 left-0 right-0 flex justify-center animate-fade-in px-4">
-            <div className="text-center space-y-1 group cursor-default">
-              <p className="text-[10px] sm:text-xs font-mono text-muted-foreground transition-colors group-hover:text-orange-600/70">
+          <div className="absolute bottom-3 xs:bottom-4 sm:bottom-6 left-0 right-0 flex justify-center animate-fade-in px-3 xs:px-4">
+            <div className="text-center space-y-0.5 xs:space-y-1 group cursor-default">
+              <p className="text-[9px] xs:text-[10px] sm:text-xs font-mono text-muted-foreground transition-colors group-hover:text-orange-600/70">
                 Built & Developed by
               </p>
-              <p className="text-xs sm:text-sm font-bold text-orange-600 tracking-wider transition-all duration-300 group-hover:scale-105 group-hover:text-orange-500">
+              <p className="text-[10px] xs:text-xs sm:text-sm font-bold text-orange-600 tracking-wider transition-all duration-300 group-hover:scale-105 group-hover:text-orange-500">
                 RAJ SHAH
               </p>
             </div>
@@ -229,35 +230,35 @@ ${generatedApp.jsCode || ""}
       ></div>
 
       {/* Header */}
-      <header className="h-14 sm:h-16 border-b border-orange-900/30 bg-black/80 backdrop-blur-sm flex items-center justify-between px-3 sm:px-4 md:px-6 z-20 relative gap-2">
-        <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
+      <header className="h-12 xs:h-14 sm:h-16 border-b border-orange-900/30 bg-black/80 backdrop-blur-sm flex items-center justify-between px-2 xs:px-3 sm:px-4 md:px-6 z-20 relative gap-1.5 xs:gap-2">
+        <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-4 min-w-0 flex-1">
           <button
             onClick={() => setShowEditor(false)}
             className="hover:text-white transition-colors shrink-0"
           >
-            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-orange-600 flex items-center justify-center text-white font-bold text-sm sm:text-base shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+            <div className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 bg-orange-600 flex items-center justify-center text-white font-bold text-xs xs:text-sm sm:text-base shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
               A
             </div>
           </button>
-          <div className="h-5 sm:h-6 w-px bg-orange-900/30 hidden sm:block"></div>
+          <div className="h-4 xs:h-5 sm:h-6 w-px bg-orange-900/30 hidden sm:block"></div>
           <div className="min-w-0 flex-1">
-            <h2 className="text-xs sm:text-sm font-bold text-white tracking-wide uppercase truncate">
+            <h2 className="text-[10px] xs:text-xs sm:text-sm font-bold text-white tracking-wide uppercase truncate">
               Workspace
             </h2>
-            <p className="text-[10px] sm:text-xs text-orange-400 truncate max-w-[150px] sm:max-w-[200px]">
+            <p className="text-[9px] xs:text-[10px] sm:text-xs text-orange-400 truncate max-w-[100px] xs:max-w-[150px] sm:max-w-[200px]">
               {generatedApp?.title || "Untitled App"}
             </p>
           </div>
-          <div className="h-5 sm:h-6 w-px bg-orange-900/30 ml-2 sm:ml-4 hidden md:block"></div>
+          <div className="h-4 xs:h-5 sm:h-6 w-px bg-orange-900/30 ml-1 xs:ml-2 sm:ml-4 hidden md:block"></div>
           <div className="hidden lg:block">
             <p className="text-[10px] font-mono text-slate-500">Built by</p>
             <p className="text-xs font-bold text-orange-500">RAJ SHAH</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-1 sm:gap-2 md:gap-4 shrink-0">
-          <div className="hidden sm:flex items-center gap-2 text-[10px] sm:text-xs font-mono text-orange-500">
-            <CheckCircle2 size={10} className="sm:w-3 sm:h-3" />
+        <div className="flex items-center gap-1 xs:gap-1.5 sm:gap-2 md:gap-4 shrink-0">
+          <div className="hidden sm:flex items-center gap-1.5 xs:gap-2 text-[10px] sm:text-xs font-mono text-orange-500">
+            <CheckCircle2 size={10} className="xs:w-2.5 xs:h-2.5 sm:w-3 sm:h-3 flex-shrink-0" />
             <span className="hidden md:inline">BUILD COMPLETE</span>
           </div>
 
@@ -267,10 +268,10 @@ ${generatedApp.jsCode || ""}
               navigator.clipboard.writeText(code);
               toast.success("Code copied to clipboard!");
             }}
-            className="group relative px-2 sm:px-3 py-1.5 sm:py-2 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center gap-1 sm:gap-2 bg-zinc-900 text-white border border-orange-900/50 hover:border-orange-500 hover:bg-zinc-800 min-h-[36px] sm:min-h-0"
+            className="group relative px-1.5 xs:px-2 sm:px-3 py-1.5 xs:py-1.5 sm:py-2 font-mono text-[9px] xs:text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center gap-1 xs:gap-1 sm:gap-2 bg-zinc-900 text-white border border-orange-900/50 hover:border-orange-500 hover:bg-zinc-800 min-h-[32px] xs:min-h-[36px] sm:min-h-0"
             title="Copy code"
           >
-            <Copy size={12} className="sm:w-3.5 sm:h-3.5" />
+            <Copy size={12} className="xs:w-3 xs:h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0" />
             <span className="hidden sm:inline">Copy</span>
           </button>
 
@@ -293,10 +294,10 @@ ${generatedApp.jsCode || ""}
                 toast.error(`Failed to download file: ${errorMessage}`);
               }
             }}
-            className="group relative px-2 sm:px-3 py-1.5 sm:py-2 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center gap-1 sm:gap-2 bg-orange-600 text-white hover:bg-orange-700 border border-transparent shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] min-h-[36px] sm:min-h-0"
+            className="group relative px-1.5 xs:px-2 sm:px-3 py-1.5 xs:py-1.5 sm:py-2 font-mono text-[9px] xs:text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center gap-1 xs:gap-1 sm:gap-2 bg-orange-600 text-white hover:bg-orange-700 border border-transparent shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] min-h-[32px] xs:min-h-[36px] sm:min-h-0"
             title="Export app"
           >
-            <Save size={12} className="sm:w-3.5 sm:h-3.5" />
+            <Save size={12} className="xs:w-3 xs:h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0" />
             <span className="hidden sm:inline">Export</span>
           </button>
         </div>
@@ -305,64 +306,64 @@ ${generatedApp.jsCode || ""}
       {/* Main Content */}
       <div className="flex-1 flex flex-col md:flex-row overflow-hidden relative z-10">
         {/* Code Panel */}
-        <div className="w-full md:w-1/2 flex flex-col border-r-0 md:border-r border-b md:border-b-0 border-orange-900/30 bg-black/50 backdrop-blur-sm">
-          <div className="h-10 bg-zinc-950 border-b border-orange-900/30 flex items-center px-4 justify-between">
-            <div className="flex items-center gap-2">
-              <Code2 size={14} className="text-orange-600" />
-              <span className="text-xs font-mono font-bold text-orange-400">
+        <div className="w-full md:w-1/2 flex flex-col border-r-0 md:border-r border-b md:border-b-0 border-orange-900/30 bg-black/50 backdrop-blur-sm h-1/2 md:h-auto">
+          <div className="h-8 xs:h-9 sm:h-10 bg-zinc-950 border-b border-orange-900/30 flex items-center px-2 xs:px-3 sm:px-4 justify-between flex-shrink-0">
+            <div className="flex items-center gap-1.5 xs:gap-2 min-w-0">
+              <Code2 size={12} className="xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4 text-orange-600 flex-shrink-0" />
+              <span className="text-[9px] xs:text-[10px] sm:text-xs font-mono font-bold text-orange-400 truncate">
                 GENERATED_SOURCE.html
               </span>
             </div>
           </div>
 
-          <div className="flex-1 overflow-hidden">
+          <div className="flex-1 overflow-hidden min-h-0">
             <Editor
               defaultLanguage="html"
               value={fullCode}
               theme="vs-dark"
               options={{
                 minimap: { enabled: false },
-                fontSize: 13,
+                fontSize: 11,
                 fontFamily: "'Fira Code', 'Monaco', 'Menlo', monospace",
                 readOnly: true,
                 scrollBeyondLastLine: false,
                 lineNumbers: "on",
-                padding: { top: 16, bottom: 16 },
+                padding: { top: 12, bottom: 12 },
               }}
             />
           </div>
         </div>
 
         {/* Preview Panel */}
-        <div className="w-full md:w-1/2 bg-zinc-950/50 backdrop-blur-sm relative flex flex-col">
-          <div className="h-12 border-b border-orange-900/30 flex justify-center items-center gap-4 bg-black/80 backdrop-blur-sm shadow-md z-10">
+        <div className="w-full md:w-1/2 bg-zinc-950/50 backdrop-blur-sm relative flex flex-col h-1/2 md:h-auto">
+          <div className="h-10 xs:h-11 sm:h-12 border-b border-orange-900/30 flex justify-center items-center gap-2 xs:gap-3 sm:gap-4 bg-black/80 backdrop-blur-sm shadow-md z-10 flex-shrink-0">
             <button
               onClick={() => setDevice("mobile")}
-              className={`p-2 rounded transition-colors ${device === "mobile" ? "text-orange-500 bg-zinc-900 border border-orange-600" : "text-slate-400 hover:text-orange-400 border border-transparent"}`}
+              className={`p-1.5 xs:p-2 rounded transition-colors min-h-[32px] min-w-[32px] flex items-center justify-center ${device === "mobile" ? "text-orange-500 bg-zinc-900 border border-orange-600" : "text-slate-400 hover:text-orange-400 border border-transparent"}`}
             >
-              <Smartphone size={16} />
+              <Smartphone size={14} className="xs:w-4 xs:h-4" />
             </button>
             <button
               onClick={() => setDevice("desktop")}
-              className={`p-2 rounded transition-colors ${device === "desktop" ? "text-orange-500 bg-zinc-900 border border-orange-600" : "text-slate-400 hover:text-orange-400 border border-transparent"}`}
+              className={`p-1.5 xs:p-2 rounded transition-colors min-h-[32px] min-w-[32px] flex items-center justify-center ${device === "desktop" ? "text-orange-500 bg-zinc-900 border border-orange-600" : "text-slate-400 hover:text-orange-400 border border-transparent"}`}
             >
-              <Monitor size={16} />
+              <Monitor size={14} className="xs:w-4 xs:h-4" />
             </button>
           </div>
 
-          <div className="flex-1 flex items-center justify-center p-8 bg-[radial-gradient(rgba(234,88,12,0.1)_1px,transparent_1px)] [background-size:20px_20px] overflow-hidden relative">
+          <div className="flex-1 flex items-center justify-center p-2 xs:p-4 sm:p-6 md:p-8 bg-[radial-gradient(rgba(234,88,12,0.1)_1px,transparent_1px)] [background-size:20px_20px] overflow-auto relative min-h-0">
             <div
               className={`
-              bg-white relative transition-all duration-500 ease-in-out shadow-[0_25px_50px_-12px_rgba(234,88,12,0.3)] border-[8px] border-orange-900
-              ${device === "mobile" ? "w-[375px] h-[750px] rounded-[3rem]" : "w-full h-full max-h-[800px] rounded-lg"}
+              bg-white relative transition-all duration-500 ease-in-out shadow-[0_25px_50px_-12px_rgba(234,88,12,0.3)] border-4 xs:border-[6px] sm:border-[8px] border-orange-900
+              ${device === "mobile" ? "w-[280px] xs:w-[320px] sm:w-[375px] h-[560px] xs:h-[640px] sm:h-[750px] rounded-[2rem] xs:rounded-[2.5rem] sm:rounded-[3rem]" : "w-full h-full max-w-full max-h-full rounded-md xs:rounded-lg"}
             `}
             >
               {device === "mobile" && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 h-6 w-32 bg-orange-900 rounded-b-xl z-20"></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 h-4 xs:h-5 sm:h-6 w-20 xs:w-28 sm:w-32 bg-orange-900 rounded-b-lg xs:rounded-b-xl z-20"></div>
               )}
 
               <div
-                className={`w-full h-full overflow-y-auto ${device === "mobile" ? "rounded-[2.5rem]" : ""}`}
+                className={`w-full h-full overflow-y-auto ${device === "mobile" ? "rounded-[1.75rem] xs:rounded-[2.25rem] sm:rounded-[2.5rem]" : "rounded-sm xs:rounded-md"}`}
               >
                 <iframe
                   srcDoc={`<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>${generatedApp.title}</title>\n  <style>\n    * {\n      margin: 0;\n      padding: 0;\n      box-sizing: border-box;\n    }\n    body {\n      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;\n    }\n    ${generatedApp.cssCode || ""}\n  </style>\n</head>\n<body>\n  ${generatedApp.htmlCode || ""}\n  <script>\n    ${generatedApp.jsCode || ""}\n  </script>\n</body>\n</html>`}

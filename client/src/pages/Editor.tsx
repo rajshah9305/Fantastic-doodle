@@ -219,48 +219,48 @@ export default function Editor() {
       ></div>
 
       {/* Header */}
-      <header className="h-14 sm:h-16 border-b border-orange-900/30 bg-black/80 backdrop-blur-sm flex items-center justify-between px-3 sm:px-4 md:px-6 z-20 relative gap-2">
-        <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
+      <header className="h-12 xs:h-14 sm:h-16 border-b border-orange-900/30 bg-black/80 backdrop-blur-sm flex items-center justify-between px-2 xs:px-3 sm:px-4 md:px-6 z-20 relative gap-1.5 xs:gap-2">
+        <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-4 min-w-0 flex-1">
           <button
             onClick={() => navigate("/dashboard")}
             className="hover:text-white transition-colors shrink-0"
           >
-            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-orange-600 flex items-center justify-center text-white font-bold text-sm sm:text-base shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+            <div className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 bg-orange-600 flex items-center justify-center text-white font-bold text-xs xs:text-sm sm:text-base shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
               A
             </div>
           </button>
-          <div className="h-5 sm:h-6 w-px bg-orange-900/30 hidden sm:block"></div>
+          <div className="h-4 xs:h-5 sm:h-6 w-px bg-orange-900/30 hidden sm:block"></div>
           <div className="min-w-0 flex-1">
-            <h2 className="text-xs sm:text-sm font-bold text-white tracking-wide uppercase truncate">
+            <h2 className="text-[10px] xs:text-xs sm:text-sm font-bold text-white tracking-wide uppercase truncate">
               Editor
             </h2>
-            <p className="text-[10px] sm:text-xs text-orange-400 truncate max-w-[200px] sm:max-w-[250px]">
+            <p className="text-[9px] xs:text-[10px] sm:text-xs text-orange-400 truncate max-w-[120px] xs:max-w-[200px] sm:max-w-[250px]">
               {app?.title || "Untitled App"}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-1 sm:gap-2 md:gap-4 shrink-0">
+        <div className="flex items-center gap-1 xs:gap-1.5 sm:gap-2 md:gap-4 shrink-0">
           <button
             onClick={handleSave}
             disabled={updateApp.isPending}
-            className="group relative px-2 sm:px-3 py-1.5 sm:py-2 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center gap-1 sm:gap-2 bg-zinc-900 text-white border border-orange-900/50 hover:border-orange-500 hover:bg-zinc-800 disabled:opacity-50 disabled:cursor-not-allowed min-h-[36px] sm:min-h-0"
+            className="group relative px-1.5 xs:px-2 sm:px-3 py-1.5 xs:py-1.5 sm:py-2 font-mono text-[9px] xs:text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center gap-1 xs:gap-1 sm:gap-2 bg-zinc-900 text-white border border-orange-900/50 hover:border-orange-500 hover:bg-zinc-800 disabled:opacity-50 disabled:cursor-not-allowed min-h-[32px] xs:min-h-[36px] sm:min-h-0"
             title="Save changes"
           >
             {updateApp.isPending ? (
-              <Loader2 size={12} className="sm:w-3.5 sm:h-3.5 animate-spin" />
+              <Loader2 size={12} className="xs:w-3 xs:h-3 sm:w-3.5 sm:h-3.5 animate-spin flex-shrink-0" />
             ) : (
-              <Save size={12} className="sm:w-3.5 sm:h-3.5" />
+              <Save size={12} className="xs:w-3 xs:h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0" />
             )}
             <span className="hidden sm:inline">Save</span>
           </button>
 
           <button
             onClick={handleDownload}
-            className="group relative px-2 sm:px-3 py-1.5 sm:py-2 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center gap-1 sm:gap-2 bg-orange-600 text-white hover:bg-orange-700 border border-transparent shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] min-h-[36px] sm:min-h-0"
+            className="group relative px-1.5 xs:px-2 sm:px-3 py-1.5 xs:py-1.5 sm:py-2 font-mono text-[9px] xs:text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center gap-1 xs:gap-1 sm:gap-2 bg-orange-600 text-white hover:bg-orange-700 border border-transparent shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] min-h-[32px] xs:min-h-[36px] sm:min-h-0"
             title="Export app"
           >
-            <Download size={12} className="sm:w-3.5 sm:h-3.5" />
+            <Download size={12} className="xs:w-3 xs:h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0" />
             <span className="hidden sm:inline">Export</span>
           </button>
         </div>
@@ -272,27 +272,28 @@ export default function Editor() {
         className="flex-1 flex flex-col overflow-hidden relative z-10"
       >
         {/* Tab Navigation - visible on mobile */}
-        <div className="md:hidden h-10 bg-black/80 border-b border-orange-900/30 flex items-center gap-2 px-4">
+        <div className="md:hidden h-9 xs:h-10 bg-black/80 border-b border-orange-900/30 flex items-center gap-1.5 xs:gap-2 px-2 xs:px-4">
           <button
             onClick={() => setActiveTab("editor")}
-            className={`px-3 py-1.5 text-[10px] sm:text-xs font-mono font-bold uppercase transition-all ${
+            className={`px-2 xs:px-3 py-1.5 text-[9px] xs:text-[10px] sm:text-xs font-mono font-bold uppercase transition-all min-h-[32px] flex items-center justify-center ${
               activeTab === "editor"
                 ? "text-orange-400 border-b-2 border-orange-600"
                 : "text-slate-500 hover:text-orange-400"
             }`}
           >
-            <Code className="w-3 h-3 inline mr-1" />
-            Generate
+            <Code className="w-3 h-3 inline mr-1 flex-shrink-0" />
+            <span className="hidden xs:inline">Generate</span>
+            <span className="xs:hidden">Code</span>
           </button>
           <button
             onClick={() => setActiveTab("preview")}
-            className={`px-3 py-1.5 text-[10px] sm:text-xs font-mono font-bold uppercase transition-all ${
+            className={`px-2 xs:px-3 py-1.5 text-[9px] xs:text-[10px] sm:text-xs font-mono font-bold uppercase transition-all min-h-[32px] flex items-center justify-center ${
               activeTab === "preview"
                 ? "text-orange-400 border-b-2 border-orange-600"
                 : "text-slate-500 hover:text-orange-400"
             }`}
           >
-            <Eye className="w-3 h-3 inline mr-1" />
+            <Eye className="w-3 h-3 inline mr-1 flex-shrink-0" />
             Preview
           </button>
         </div>

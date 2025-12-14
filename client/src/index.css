@@ -3,6 +3,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --breakpoint-xs: 475px;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -226,6 +227,13 @@
   }
 
   /* Mobile first responsive padding */
+  @media (min-width: 475px) {
+    .container {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+  }
+
   @media (min-width: 640px) {
     .container {
       padding-left: 1.5rem;
