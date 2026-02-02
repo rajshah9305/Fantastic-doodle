@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import {
-  Sparkles,
   Code2,
   ArrowRight,
   Clock,
@@ -25,14 +24,11 @@ const examples = [
     description:
       "A modern task manager with drag-and-drop, filters, and local storage",
     icon: FileText,
-    color: "from-blue-500 to-cyan-500",
     difficulty: "Beginner",
     time: "5 min",
     prompt:
       "A todo list app with add, delete, mark complete, and filter functionality. Use a clean modern design with gradient background.",
     tags: ["Productivity", "CRUD", "LocalStorage"],
-    preview:
-      "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&h=300&fit=crop",
   },
   {
     id: 2,
@@ -40,14 +36,11 @@ const examples = [
     description:
       "Real-time weather display with 5-day forecast and location search",
     icon: Cloud,
-    color: "from-cyan-500 to-teal-500",
     difficulty: "Intermediate",
     time: "8 min",
     prompt:
       "A weather dashboard showing current weather, 5-day forecast, temperature, humidity, and wind speed. Include a search bar for different cities.",
     tags: ["API", "Dashboard", "Real-time"],
-    preview:
-      "https://images.unsplash.com/photo-1592210454359-9043f067919b?w=400&h=300&fit=crop",
   },
   {
     id: 3,
@@ -55,183 +48,175 @@ const examples = [
     description:
       "Focus timer with work/break intervals and statistics tracking",
     icon: Timer,
-    color: "from-orange-500 to-red-500",
     difficulty: "Beginner",
     time: "6 min",
     prompt:
       "A Pomodoro timer with 25-minute work sessions, 5-minute breaks, pause/resume, and session counter. Modern minimalist design.",
     tags: ["Productivity", "Timer", "Statistics"],
-    preview:
-      "https://images.unsplash.com/photo-1501139083538-0139583c060f?w=400&h=300&fit=crop",
   },
   {
     id: 4,
     title: "Calculator",
     description: "Scientific calculator with history and keyboard support",
     icon: Calculator,
-    color: "from-indigo-500 to-blue-500",
     difficulty: "Beginner",
     time: "5 min",
     prompt:
       "A calculator with basic arithmetic operations, clear button, and calculation history. Clean design with large buttons.",
     tags: ["Utility", "Math", "Interactive"],
-    preview:
-      "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?w=400&h=300&fit=crop",
   },
   {
     id: 5,
     title: "Kanban Board",
     description: "Project management board with drag-and-drop cards",
     icon: TrendingUp,
-    color: "from-emerald-500 to-teal-500",
     difficulty: "Advanced",
     time: "12 min",
     prompt:
       "A Kanban board with three columns (To Do, In Progress, Done). Cards should be draggable between columns. Include add card functionality.",
     tags: ["Project Management", "Drag & Drop", "Workflow"],
-    preview:
-      "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop",
   },
   {
     id: 6,
     title: "Chat Interface",
     description: "Real-time messaging UI with emoji support",
     icon: MessageSquare,
-    color: "from-pink-500 to-rose-500",
     difficulty: "Intermediate",
     time: "9 min",
     prompt:
       "A chat interface with message bubbles, timestamp, user avatars, and an input field. Include emoji picker and send button.",
     tags: ["Communication", "UI", "Real-time"],
-    preview:
-      "https://images.unsplash.com/photo-1611746872915-64382b5c76da?w=400&h=300&fit=crop",
   },
   {
     id: 7,
     title: "Music Player",
     description: "Audio player with playlist and controls",
     icon: Music,
-    color: "from-violet-500 to-purple-500",
     difficulty: "Intermediate",
     time: "10 min",
     prompt:
       "A music player with play/pause, next/previous, progress bar, volume control, and a playlist. Modern glassmorphism design.",
     tags: ["Media", "Audio", "Entertainment"],
-    preview:
-      "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&h=300&fit=crop",
   },
   {
     id: 8,
     title: "Photo Gallery",
     description: "Image grid with lightbox and filters",
     icon: Camera,
-    color: "from-amber-500 to-orange-500",
     difficulty: "Intermediate",
     time: "8 min",
     prompt:
       "A photo gallery with grid layout, lightbox modal for full-size view, and category filters. Include smooth transitions.",
     tags: ["Media", "Images", "Gallery"],
-    preview:
-      "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=400&h=300&fit=crop",
   },
   {
     id: 9,
     title: "Expense Tracker",
     description: "Budget manager with charts and categories",
     icon: TrendingUp,
-    color: "from-green-500 to-emerald-500",
     difficulty: "Advanced",
     time: "15 min",
     prompt:
       "An expense tracker with add/delete transactions, category filters, total balance, and a simple bar chart showing spending by category.",
     tags: ["Finance", "Charts", "Analytics"],
-    preview:
-      "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400&h=300&fit=crop",
   },
   {
     id: 10,
     title: "Quiz App",
     description: "Interactive quiz with score tracking",
     icon: Gamepad2,
-    color: "from-fuchsia-500 to-pink-500",
     difficulty: "Intermediate",
     time: "10 min",
     prompt:
       "A quiz app with multiple choice questions, score tracking, timer, and results page. Include next/previous navigation.",
     tags: ["Education", "Interactive", "Game"],
-    preview:
-      "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=400&h=300&fit=crop",
   },
   {
     id: 11,
     title: "Recipe Finder",
     description: "Search and display recipes with ingredients",
     icon: Heart,
-    color: "from-red-500 to-pink-500",
     difficulty: "Intermediate",
     time: "9 min",
     prompt:
       "A recipe finder with search functionality, recipe cards showing image, title, ingredients, and cooking time. Grid layout with hover effects.",
     tags: ["Food", "Search", "Cards"],
-    preview:
-      "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&h=300&fit=crop",
   },
   {
     id: 12,
     title: "Color Palette Generator",
     description: "Generate and save color schemes",
     icon: Palette,
-    color: "from-cyan-500 to-blue-500",
     difficulty: "Beginner",
     time: "7 min",
     prompt:
       "A color palette generator that creates random color schemes. Show 5 colors with hex codes, copy to clipboard, and generate new palette button.",
     tags: ["Design", "Utility", "Creative"],
-    preview:
-      "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=400&h=300&fit=crop",
   },
 ];
+
+const getDifficultyColor = (difficulty: string) => {
+  switch (difficulty) {
+    case "Beginner":
+      return "text-emerald-400 border-emerald-900/50 bg-emerald-900/20";
+    case "Intermediate":
+      return "text-amber-400 border-amber-900/50 bg-amber-900/20";
+    case "Advanced":
+      return "text-red-400 border-red-900/50 bg-red-900/20";
+    default:
+      return "text-slate-400 border-slate-900/50 bg-slate-900/20";
+  }
+};
 
 export default function Examples() {
   const [, navigate] = useLocation();
 
   const handleUseExample = (prompt: string) => {
-    // Navigate to home with prompt parameter
     window.location.href = `/?prompt=${encodeURIComponent(prompt)}`;
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen bg-black text-slate-300 overflow-hidden font-sans relative">
+      {/* Grid Pattern Background */}
+      <div
+        className="absolute inset-0 z-0 opacity-[0.03]"
+        style={{
+          backgroundImage:
+            "linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+        }}
+      ></div>
+
       {/* Navigation */}
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="relative z-10 border-b border-white/10 bg-transparent backdrop-blur-md px-6 md:px-12 py-4"
+        className="relative z-10 border-b border-orange-900/30 bg-black/80 backdrop-blur-sm px-3 xs:px-4 sm:px-6 md:px-12 py-3 sm:py-4"
       >
         <div className="flex items-center justify-between">
           <motion.button
             onClick={() => navigate("/")}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-4"
+            className="flex items-center gap-2 xs:gap-3 sm:gap-4"
           >
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30">
-              <Sparkles className="w-6 h-6 text-white" />
+            <div className="w-8 h-8 xs:w-10 xs:h-10 sm:w-12 sm:h-12 bg-orange-600 flex items-center justify-center text-white font-bold text-sm xs:text-base sm:text-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              A
             </div>
             <div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-                AI Studio
+              <h1 className="text-base xs:text-lg sm:text-xl font-bold text-white tracking-tight">
+                AI STUDIO
               </h1>
-              <p className="text-xs text-slate-500">Examples</p>
+              <p className="text-[10px] xs:text-xs text-orange-500 font-mono">Examples</p>
             </div>
           </motion.button>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 xs:gap-2">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate("/")}
-              className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+              className="px-2 xs:px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] xs:text-xs sm:text-sm font-mono font-bold uppercase text-slate-400 hover:text-orange-400 transition-colors"
             >
               Home
             </motion.button>
@@ -239,7 +224,7 @@ export default function Examples() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate("/templates")}
-              className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+              className="px-2 xs:px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] xs:text-xs sm:text-sm font-mono font-bold uppercase text-slate-400 hover:text-orange-400 transition-colors"
             >
               Templates
             </motion.button>
@@ -248,19 +233,20 @@ export default function Examples() {
       </motion.nav>
 
       {/* Main Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 py-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 md:px-12 py-6 sm:py-8 md:py-12">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
         >
-          <h1 className="text-5xl md:text-6xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-slate-900 via-blue-900 to-cyan-900 bg-clip-text text-transparent">
-              Example Apps
+          <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-black mb-3 sm:mb-4 tracking-tighter">
+            <span className="text-white">EXAMPLE </span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">
+              APPS
             </span>
           </h1>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+          <p className="text-sm xs:text-base sm:text-lg text-slate-400 max-w-2xl mx-auto px-4">
             Get inspired by these ready-to-use examples. Click any card to
             generate it instantly.
           </p>
@@ -271,7 +257,7 @@ export default function Examples() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
         >
           {examples.map((example, index) => (
             <motion.div
@@ -279,30 +265,33 @@ export default function Examples() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * index }}
-              whileHover={{ y: -8, scale: 1.02 }}
-              className="group relative bg-white/80 backdrop-blur-sm rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border border-white/20"
+              whileHover={{ y: -4 }}
+              className="group relative bg-zinc-950 border border-orange-900/30 rounded-lg overflow-hidden hover:border-orange-500/50 hover:shadow-[0_0_30px_rgba(234,88,12,0.15)] transition-all"
             >
               {/* Card Content */}
-              <div className="p-6 space-y-4">
-                {/* Icon */}
-                <div
-                  className={`w-14 h-14 bg-gradient-to-br ${example.color} rounded-2xl flex items-center justify-center shadow-lg`}
-                >
-                  <example.icon className="w-7 h-7 text-white" />
+              <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
+                {/* Icon & Difficulty */}
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-orange-600 flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                    <example.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+                  </div>
+                  <span className={`px-2 sm:px-3 py-1 border rounded text-[10px] xs:text-xs font-mono ${getDifficultyColor(example.difficulty)}`}>
+                    {example.difficulty}
+                  </span>
                 </div>
 
                 {/* Title & Description */}
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">
+                  <h3 className="text-base sm:text-lg font-bold text-white mb-1 sm:mb-2 group-hover:text-orange-400 transition-colors">
                     {example.title}
                   </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-400 leading-relaxed line-clamp-2">
                     {example.description}
                   </p>
                 </div>
 
                 {/* Meta Info */}
-                <div className="flex items-center gap-4 text-xs text-slate-500">
+                <div className="flex items-center gap-3 sm:gap-4 text-[10px] xs:text-xs text-slate-500 font-mono">
                   <div className="flex items-center gap-1">
                     <Clock className="w-3 h-3" />
                     <span>{example.time}</span>
@@ -310,11 +299,11 @@ export default function Examples() {
                 </div>
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {example.tags.map(tag => (
                     <span
                       key={tag}
-                      className="px-2 py-1 bg-slate-100 rounded-lg text-xs font-medium text-slate-600"
+                      className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-zinc-900/50 rounded text-[9px] xs:text-[10px] sm:text-xs font-mono text-slate-500"
                     >
                       {tag}
                     </span>
@@ -326,11 +315,11 @@ export default function Examples() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleUseExample(example.prompt)}
-                  className={`w-full py-3 bg-gradient-to-r ${example.color} text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 group`}
+                  className="w-full py-2.5 sm:py-3 bg-orange-600 text-white font-mono text-xs sm:text-sm font-bold uppercase tracking-wider hover:bg-orange-700 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all flex items-center justify-center gap-2"
                 >
-                  <Code2 className="w-4 h-4" />
-                  <span>Generate This App</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <Code2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span>Generate App</span>
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
                 </motion.button>
               </div>
             </motion.div>

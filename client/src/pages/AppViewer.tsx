@@ -1,13 +1,5 @@
 import { useParams, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -16,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Loader2, ArrowLeft, Copy, Download, Trash2 } from "lucide-react";
+import { Loader2, ArrowLeft, Copy, Download, Trash2, Code, FileText, Braces } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -152,10 +144,10 @@ ${app.jsCode || ""}
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
-          <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
-          <p className="text-slate-600">Loading your app...</p>
+          <Loader2 className="w-10 h-10 sm:w-12 sm:h-12 animate-spin mx-auto mb-4 text-orange-500" />
+          <p className="text-slate-400 text-sm sm:text-base">Loading your app...</p>
         </div>
       </div>
     );
@@ -163,181 +155,192 @@ ${app.jsCode || ""}
 
   if (!app) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
-          <p className="text-slate-600 mb-4">App not found</p>
-          <Button onClick={() => navigate("/")} variant="outline">
-            <ArrowLeft className="w-4 h-4 mr-2" />
+          <p className="text-slate-400 mb-4 text-sm sm:text-base">App not found</p>
+          <button
+            onClick={() => navigate("/")}
+            className="px-4 py-2 text-xs sm:text-sm font-mono font-bold uppercase bg-zinc-900 text-white border border-orange-900/50 hover:border-orange-500 hover:bg-zinc-800 rounded transition-all flex items-center gap-2 mx-auto"
+          >
+            <ArrowLeft className="w-4 h-4" />
             Back to Home
-          </Button>
+          </button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6">
+    <div className="min-h-screen bg-black text-slate-300 overflow-hidden font-sans relative">
+      {/* Grid Pattern Background */}
+      <div
+        className="absolute inset-0 z-0 opacity-[0.03]"
+        style={{
+          backgroundImage:
+            "linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+        }}
+      ></div>
+
+      <div className="relative z-10 container mx-auto px-3 xs:px-4 sm:px-6 py-4 sm:py-6">
         <div className="mb-4 sm:mb-6">
-          <Button
-            onClick={() => navigate("/")}
-            variant="outline"
-            size="sm"
-            className="mb-3 sm:mb-4"
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="mb-3 sm:mb-4 px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] xs:text-xs sm:text-sm font-mono font-bold uppercase bg-zinc-900 text-slate-400 border border-orange-900/50 hover:border-orange-500 hover:text-orange-400 rounded transition-all flex items-center gap-2"
           >
-            <ArrowLeft className="w-4 h-4 sm:mr-2" />
-            <span className="hidden sm:inline">Back</span>
-          </Button>
+            <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
+            Back
+          </button>
 
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
             <div className="min-w-0 flex-1">
-              <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 truncate">{app.title}</h1>
-              <p className="text-slate-600 text-xs sm:text-sm mt-1">
+              <h1 className="text-xl xs:text-2xl sm:text-3xl font-black text-white truncate tracking-tighter">{app.title}</h1>
+              <p className="text-orange-500 text-[10px] xs:text-xs sm:text-sm mt-1 font-mono">
                 Created on {new Date(app.generatedAt).toLocaleDateString()}
               </p>
             </div>
 
-            <div className="flex gap-2 flex-wrap">
-              <Button onClick={handleCopyCode} variant="outline" size="sm" className="text-xs sm:text-sm min-h-[44px]">
-                <Copy className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-2" />
-                <span className="hidden sm:inline">{copied ? "Copied!" : "Copy Code"}</span>
-                <span className="sm:hidden">{copied ? "Copied!" : "Copy"}</span>
-              </Button>
-              <Button onClick={handleDownload} variant="outline" size="sm" className="text-xs sm:text-sm min-h-[44px]">
-                <Download className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-2" />
-                <span className="hidden sm:inline">Download</span>
-                <span className="sm:hidden">DL</span>
-              </Button>
-              <Button
-                onClick={handleDeleteClick}
-                variant="destructive"
-                size="sm"
-                disabled={deleteMutation.isPending}
-                className="text-xs sm:text-sm min-h-[44px]"
-                title="Delete app"
+            <div className="flex gap-1.5 xs:gap-2 flex-wrap">
+              <button
+                onClick={handleCopyCode}
+                className="px-2 xs:px-3 sm:px-4 py-1.5 sm:py-2 text-[9px] xs:text-[10px] sm:text-xs font-mono font-bold uppercase bg-zinc-900 text-white border border-orange-900/50 hover:border-orange-500 hover:bg-zinc-800 rounded transition-all flex items-center gap-1 sm:gap-2 min-h-[36px] sm:min-h-[44px]"
               >
-                <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-2" />
-                <span className="hidden sm:inline">Delete</span>
-              </Button>
+                <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden xs:inline">{copied ? "Copied!" : "Copy"}</span>
+              </button>
+              <button
+                onClick={handleDownload}
+                className="px-2 xs:px-3 sm:px-4 py-1.5 sm:py-2 text-[9px] xs:text-[10px] sm:text-xs font-mono font-bold uppercase bg-zinc-900 text-white border border-orange-900/50 hover:border-orange-500 hover:bg-zinc-800 rounded transition-all flex items-center gap-1 sm:gap-2 min-h-[36px] sm:min-h-[44px]"
+              >
+                <Download className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden xs:inline">Download</span>
+              </button>
+              <button
+                onClick={handleDeleteClick}
+                disabled={deleteMutation.isPending}
+                className="px-2 xs:px-3 sm:px-4 py-1.5 sm:py-2 text-[9px] xs:text-[10px] sm:text-xs font-mono font-bold uppercase bg-red-900/20 text-red-500 border border-red-900/50 hover:border-red-500 hover:bg-red-900/30 rounded transition-all disabled:opacity-50 flex items-center gap-1 sm:gap-2 min-h-[36px] sm:min-h-[44px]"
+              >
+                <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden xs:inline">Delete</span>
+              </button>
             </div>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div className="grid lg:grid-cols-3 gap-4 sm:gap-6">
           <div className="lg:col-span-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Preview</CardTitle>
-                <CardDescription>
+            <div className="bg-zinc-950 border border-orange-900/30 rounded-lg overflow-hidden hover:border-orange-500/50 transition-all">
+              <div className="p-3 sm:p-4 border-b border-orange-900/30">
+                <h2 className="text-sm sm:text-base font-bold text-white">Preview</h2>
+                <p className="text-[10px] xs:text-xs sm:text-sm text-slate-400 mt-1">
                   Live preview of your generated app
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="border rounded-lg overflow-hidden bg-white">
+                </p>
+              </div>
+              <div className="p-3 sm:p-4">
+                <div className="border border-orange-900/30 rounded-lg overflow-hidden bg-white">
                   <iframe
                     ref={iframeRef}
-                    className="w-full h-96 border-none"
+                    className="w-full h-72 sm:h-96 border-none"
                     title="App Preview"
                     sandbox="allow-scripts"
                   />
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
 
           <div className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">App Details</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 text-sm">
+            <div className="bg-zinc-950 border border-orange-900/30 rounded-lg overflow-hidden hover:border-orange-500/50 transition-all">
+              <div className="p-3 sm:p-4 border-b border-orange-900/30">
+                <h2 className="text-sm sm:text-base font-bold text-white">App Details</h2>
+              </div>
+              <div className="p-3 sm:p-4 space-y-3 text-xs sm:text-sm">
                 <div>
-                  <p className="text-slate-600 font-medium">Prompt</p>
-                  <p className="text-slate-700 mt-1 line-clamp-3">
+                  <p className="text-orange-400 font-mono uppercase text-[10px] xs:text-xs">Prompt</p>
+                  <p className="text-slate-300 mt-1 line-clamp-3">
                     {app.prompt}
                   </p>
                 </div>
                 <div>
-                  <p className="text-slate-600 font-medium">Code Stats</p>
-                  <p className="text-slate-700 mt-1">
-                    HTML: {app.htmlCode?.length || 0} chars
-                  </p>
-                  <p className="text-slate-700">
-                    CSS: {app.cssCode?.length || 0} chars
-                  </p>
-                  <p className="text-slate-700">
-                    JS: {app.jsCode?.length || 0} chars
-                  </p>
+                  <p className="text-orange-400 font-mono uppercase text-[10px] xs:text-xs">Code Stats</p>
+                  <div className="mt-1 space-y-1 text-slate-400 font-mono text-[10px] xs:text-xs">
+                    <p>HTML: {app.htmlCode?.length || 0} chars</p>
+                    <p>CSS: {app.cssCode?.length || 0} chars</p>
+                    <p>JS: {app.jsCode?.length || 0} chars</p>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Code Sections</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <details className="text-sm">
-                  <summary className="cursor-pointer font-medium text-slate-700 hover:text-slate-900">
+            <div className="bg-zinc-950 border border-orange-900/30 rounded-lg overflow-hidden hover:border-orange-500/50 transition-all">
+              <div className="p-3 sm:p-4 border-b border-orange-900/30">
+                <h2 className="text-sm sm:text-base font-bold text-white">Code Sections</h2>
+              </div>
+              <div className="p-3 sm:p-4 space-y-2">
+                <details className="text-xs sm:text-sm group">
+                  <summary className="cursor-pointer font-mono text-orange-400 hover:text-orange-300 flex items-center gap-2 py-1">
+                    <Code className="w-3 h-3 sm:w-4 sm:h-4" />
                     HTML
                   </summary>
-                  <pre className="mt-2 p-2 bg-slate-100 rounded text-xs overflow-auto max-h-40">
+                  <pre className="mt-2 p-2 sm:p-3 bg-zinc-900 border border-orange-900/30 rounded text-[10px] xs:text-xs overflow-auto max-h-32 sm:max-h-40 text-slate-300">
                     {app.htmlCode}
                   </pre>
                 </details>
-                <details className="text-sm">
-                  <summary className="cursor-pointer font-medium text-slate-700 hover:text-slate-900">
+                <details className="text-xs sm:text-sm group">
+                  <summary className="cursor-pointer font-mono text-orange-400 hover:text-orange-300 flex items-center gap-2 py-1">
+                    <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
                     CSS
                   </summary>
-                  <pre className="mt-2 p-2 bg-slate-100 rounded text-xs overflow-auto max-h-40">
+                  <pre className="mt-2 p-2 sm:p-3 bg-zinc-900 border border-orange-900/30 rounded text-[10px] xs:text-xs overflow-auto max-h-32 sm:max-h-40 text-slate-300">
                     {app.cssCode}
                   </pre>
                 </details>
-                <details className="text-sm">
-                  <summary className="cursor-pointer font-medium text-slate-700 hover:text-slate-900">
+                <details className="text-xs sm:text-sm group">
+                  <summary className="cursor-pointer font-mono text-orange-400 hover:text-orange-300 flex items-center gap-2 py-1">
+                    <Braces className="w-3 h-3 sm:w-4 sm:h-4" />
                     JavaScript
                   </summary>
-                  <pre className="mt-2 p-2 bg-slate-100 rounded text-xs overflow-auto max-h-40">
+                  <pre className="mt-2 p-2 sm:p-3 bg-zinc-900 border border-orange-900/30 rounded text-[10px] xs:text-xs overflow-auto max-h-32 sm:max-h-40 text-slate-300">
                     {app.jsCode}
                   </pre>
                 </details>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <DialogContent>
+        <DialogContent className="bg-zinc-950 border border-orange-900/50 text-white">
           <DialogHeader>
-            <DialogTitle>Delete App</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-white">Delete App</DialogTitle>
+            <DialogDescription className="text-slate-400">
               Are you sure you want to delete "{app?.title}"? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter>
-            <Button
-              variant="outline"
+          <DialogFooter className="gap-2">
+            <button
               onClick={() => setDeleteDialogOpen(false)}
               disabled={deleteMutation.isPending}
+              className="px-4 py-2 text-xs sm:text-sm font-mono font-bold uppercase bg-zinc-900 text-white border border-orange-900/50 hover:border-orange-500 hover:bg-zinc-800 rounded transition-all"
             >
               Cancel
-            </Button>
-            <Button
-              variant="destructive"
+            </button>
+            <button
               onClick={handleDeleteConfirm}
               disabled={deleteMutation.isPending}
+              className="px-4 py-2 text-xs sm:text-sm font-mono font-bold uppercase bg-red-600 text-white hover:bg-red-700 rounded transition-all flex items-center gap-2"
             >
               {deleteMutation.isPending ? (
                 <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  <Loader2 className="w-4 h-4 animate-spin" />
                   Deleting...
                 </>
               ) : (
                 "Delete"
               )}
-            </Button>
+            </button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
