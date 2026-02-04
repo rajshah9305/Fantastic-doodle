@@ -84,7 +84,7 @@ export default function Home() {
   // Landing View
   if (!showEditor) {
     return (
-      <div className="h-screen bg-background flex flex-col relative overflow-hidden selection:bg-orange-200">
+      <div className="h-screen bg-transparent flex flex-col relative overflow-hidden selection:bg-orange-200">
         {/* Grid Pattern */}
         <div
           className="absolute inset-0 z-0 opacity-[0.05]"
@@ -128,14 +128,14 @@ export default function Home() {
 
             {/* Hero Title */}
             <div className="text-center animate-fade-in-up">
-              <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-black tracking-tighter leading-[0.9] px-2">
+              <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter leading-[0.9] px-2">
                 IMAGINE.
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 animate-gradient">
                   CONSTRUCT.
                 </span>
                 <br />
-                <span className="font-black text-black">DEPLOY.</span>
+                <span className="font-black text-white">DEPLOY.</span>
               </h1>
             </div>
 
@@ -149,7 +149,7 @@ export default function Home() {
 
             {/* Input Form */}
             <div className="w-full max-w-2xl mx-auto relative group animate-fade-in-up-delay">
-              <div className="relative flex flex-col sm:flex-row bg-card shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1),0_0_0_1px_rgba(234,88,12,0.1),0_4px_0_0_rgba(234,88,12,0.1)] rounded-lg p-1 xs:p-1.5 sm:p-2 border-2 border-black hover:border-orange-500/50 transition-all duration-300">
+              <div className="relative flex flex-col sm:flex-row bg-card shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1),0_0_0_1px_rgba(234,88,12,0.1),0_4px_0_0_rgba(234,88,12,0.1)] rounded-lg p-1 xs:p-1.5 sm:p-2 border-2 border-orange-900/50 hover:border-orange-500/50 transition-all duration-300">
                 <input
                   type="text"
                   value={prompt}
