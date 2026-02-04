@@ -128,14 +128,14 @@ export default function Home() {
 
             {/* Hero Title */}
             <div className="text-center animate-fade-in-up">
-              <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-foreground tracking-tighter leading-[0.9] px-2">
+              <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-black tracking-tighter leading-[0.9] px-2">
                 IMAGINE.
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 animate-gradient">
                   CONSTRUCT.
                 </span>
                 <br />
-                <span className="font-bold text-muted-foreground">DEPLOY.</span>
+                <span className="font-black text-black">DEPLOY.</span>
               </h1>
             </div>
 
