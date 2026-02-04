@@ -261,16 +261,17 @@ ${generatedApp.jsCode || ""}
             </p>
           </div>
           <div className="h-4 xs:h-5 sm:h-6 w-px bg-orange-900/30 ml-1 xs:ml-2 sm:ml-4 hidden md:block"></div>
-          <div className="hidden lg:block">
-            <p className="text-[10px] font-mono text-slate-500">Built by</p>
-            <p className="text-xs font-bold text-orange-500">RAJ SHAH</p>
-          </div>
         </div>
 
-        <div className="flex items-center gap-1 xs:gap-1.5 sm:gap-2 md:gap-4 shrink-0">
-          <div className="hidden sm:flex items-center gap-1.5 xs:gap-2 text-[10px] sm:text-xs font-mono text-orange-500">
-            <CheckCircle2 size={10} className="xs:w-2.5 xs:h-2.5 sm:w-3 sm:h-3 flex-shrink-0" />
-            <span className="hidden md:inline">BUILD COMPLETE</span>
+        <div className="flex items-center gap-4 shrink-0">
+          <div className="hidden lg:flex flex-col items-end mr-2">
+            <span className="text-[10px] font-mono text-zinc-500 uppercase leading-none mb-0.5">Built by</span>
+            <span className="text-xs font-bold text-orange-500 leading-none tracking-wide">RAJ SHAH</span>
+          </div>
+
+          <div className="hidden sm:flex items-center gap-2 text-[10px] sm:text-xs font-mono text-orange-500 mr-2">
+            <CheckCircle2 size={14} className="flex-shrink-0" />
+            <span className="hidden md:inline font-bold tracking-tight">BUILD COMPLETE</span>
           </div>
 
           <button
@@ -279,10 +280,10 @@ ${generatedApp.jsCode || ""}
               navigator.clipboard.writeText(code);
               toast.success("Code copied to clipboard!");
             }}
-            className="group relative px-1.5 xs:px-2 sm:px-3 py-1.5 xs:py-1.5 sm:py-2 font-mono text-[9px] xs:text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center gap-1 xs:gap-1 sm:gap-2 bg-zinc-900 text-white border border-orange-900/50 hover:border-orange-500 hover:bg-zinc-800 min-h-[32px] xs:min-h-[36px] sm:min-h-0"
+            className="group relative px-4 py-2 font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center gap-2 bg-zinc-900 text-white border border-orange-900/50 hover:border-orange-500 hover:bg-zinc-800 hover:shadow-[4px_4px_0px_0px_rgba(234,88,12,0.2)]"
             title="Copy code"
           >
-            <Copy size={12} className="xs:w-3 xs:h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0" />
+            <Copy size={14} className="flex-shrink-0" />
             <span className="hidden sm:inline">Copy</span>
           </button>
 
@@ -305,10 +306,10 @@ ${generatedApp.jsCode || ""}
                 toast.error(`Failed to download file: ${errorMessage}`);
               }
             }}
-            className="group relative px-1.5 xs:px-2 sm:px-3 py-1.5 xs:py-1.5 sm:py-2 font-mono text-[9px] xs:text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center gap-1 xs:gap-1 sm:gap-2 bg-orange-600 text-white hover:bg-orange-700 border border-transparent shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] min-h-[32px] xs:min-h-[36px] sm:min-h-0"
+            className="group relative px-4 py-2 font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 ease-out flex items-center gap-2 bg-orange-600 text-white hover:bg-orange-700 border border-transparent shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
             title="Export app"
           >
-            <Save size={12} className="xs:w-3 xs:h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0" />
+            <Save size={14} className="flex-shrink-0" />
             <span className="hidden sm:inline">Export</span>
           </button>
         </div>
