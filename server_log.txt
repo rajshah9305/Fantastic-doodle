@@ -1,0 +1,141 @@
+
+> no-code-ai-app-builder@1.0.0 dev
+> NODE_ENV=development tsx watch server/_core/index.ts
+
+[Config] Environment variables loaded successfully
+[2026-02-04T06:43:25.885Z] [INFO] [Server] Running on http://localhost:3000/ {"environment":"development","hasDatabase":true}
+[2026-02-04T06:45:18.210Z] [DEBUG] [HTTP] → GET /
+[2026-02-04T06:45:18.277Z] [INFO] [HTTP] ← GET / {"statusCode":200,"duration":"67ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.039Z] [DEBUG] [HTTP] → GET /@vite/client
+[2026-02-04T06:45:19.045Z] [DEBUG] [HTTP] → GET /src/main.tsx
+[2026-02-04T06:45:19.046Z] [DEBUG] [HTTP] → GET /@react-refresh
+[2026-02-04T06:45:19.089Z] [INFO] [HTTP] ← GET /@react-refresh {"statusCode":200,"duration":"43ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.114Z] [INFO] [HTTP] ← GET /@vite/client {"statusCode":200,"duration":"75ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.139Z] [INFO] [HTTP] ← GET /src/main.tsx {"statusCode":200,"duration":"94ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.158Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/react_jsx-dev-runtime.js
+[2026-02-04T06:45:19.159Z] [DEBUG] [HTTP] → GET /src/lib/trpc.ts
+[2026-02-04T06:45:19.164Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/@tanstack_react-query.js
+[2026-02-04T06:45:19.167Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/react_jsx-dev-runtime.js {"statusCode":200,"duration":"9ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.172Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/@tanstack_react-query.js {"statusCode":200,"duration":"8ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.220Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/@trpc_client.js
+[2026-02-04T06:45:19.221Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/@trpc_client.js {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.222Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/react-dom_client.js
+[2026-02-04T06:45:19.224Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/react-dom_client.js {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.226Z] [DEBUG] [HTTP] → GET /src/App.tsx
+[2026-02-04T06:45:19.226Z] [DEBUG] [HTTP] → GET /src/index.css
+[2026-02-04T06:45:19.233Z] [INFO] [HTTP] ← GET /src/App.tsx {"statusCode":200,"duration":"7ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.234Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/superjson.js
+[2026-02-04T06:45:19.235Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/superjson.js {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.237Z] [INFO] [HTTP] ← GET /src/lib/trpc.ts {"statusCode":200,"duration":"78ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.237Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/vite/dist/client/env.mjs
+[2026-02-04T06:45:19.238Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/vite/dist/client/env.mjs {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.239Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/chunk-CYZG5QNB.js
+[2026-02-04T06:45:19.255Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/chunk-CYZG5QNB.js {"statusCode":200,"duration":"16ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.507Z] [INFO] [HTTP] ← GET /src/index.css {"statusCode":200,"duration":"281ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.519Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/chunk-G3PMV62Z.js
+[2026-02-04T06:45:19.522Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/chunk-G3PMV62Z.js {"statusCode":200,"duration":"3ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.523Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/chunk-V7DLPMS6.js
+[2026-02-04T06:45:19.525Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/chunk-V7DLPMS6.js {"statusCode":200,"duration":"2ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.526Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/chunk-NTMZB5HB.js
+[2026-02-04T06:45:19.527Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/chunk-NTMZB5HB.js {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.528Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/chunk-E22KYI7D.js
+[2026-02-04T06:45:19.621Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/chunk-E22KYI7D.js {"statusCode":200,"duration":"93ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.947Z] [DEBUG] [HTTP] → GET /src/components/ui/sonner.tsx
+[2026-02-04T06:45:19.948Z] [DEBUG] [HTTP] → GET /src/components/ui/tooltip.tsx
+[2026-02-04T06:45:19.948Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/chunk-S4LS53TU.js
+[2026-02-04T06:45:19.951Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/chunk-S4LS53TU.js {"statusCode":200,"duration":"3ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.952Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/@trpc_react-query.js
+[2026-02-04T06:45:19.966Z] [DEBUG] [HTTP] → GET /src/pages/NotFound.tsx
+[2026-02-04T06:45:19.967Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/wouter.js
+[2026-02-04T06:45:19.967Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/wouter.js {"statusCode":200,"duration":"0ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.976Z] [DEBUG] [HTTP] → GET /src/contexts/ThemeContext.tsx
+[2026-02-04T06:45:19.987Z] [INFO] [HTTP] ← GET /src/contexts/ThemeContext.tsx {"statusCode":200,"duration":"11ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.995Z] [DEBUG] [HTTP] → GET /src/components/ErrorBoundary.tsx
+[2026-02-04T06:45:19.996Z] [INFO] [HTTP] ← GET /src/components/ErrorBoundary.tsx {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:19.998Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/@trpc_react-query.js {"statusCode":200,"duration":"46ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.003Z] [DEBUG] [HTTP] → GET /src/contexts/auth-context.tsx
+[2026-02-04T06:45:20.004Z] [INFO] [HTTP] ← GET /src/contexts/auth-context.tsx {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.047Z] [DEBUG] [HTTP] → GET /src/pages/Home.tsx
+[2026-02-04T06:45:20.050Z] [INFO] [HTTP] ← GET /src/pages/Home.tsx {"statusCode":200,"duration":"3ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.057Z] [INFO] [HTTP] ← GET /src/components/ui/sonner.tsx {"statusCode":200,"duration":"110ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.057Z] [INFO] [HTTP] ← GET /src/pages/NotFound.tsx {"statusCode":200,"duration":"91ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.067Z] [INFO] [HTTP] ← GET /src/components/ui/tooltip.tsx {"statusCode":200,"duration":"119ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.068Z] [DEBUG] [HTTP] → GET /src/contexts/app-context.tsx
+[2026-02-04T06:45:20.068Z] [INFO] [HTTP] ← GET /src/contexts/app-context.tsx {"statusCode":200,"duration":"0ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.069Z] [DEBUG] [HTTP] → GET /src/components/Layout.tsx
+[2026-02-04T06:45:20.069Z] [INFO] [HTTP] ← GET /src/components/Layout.tsx {"statusCode":200,"duration":"0ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.080Z] [DEBUG] [HTTP] → GET /src/pages/AppViewer.tsx
+[2026-02-04T06:45:20.081Z] [INFO] [HTTP] ← GET /src/pages/AppViewer.tsx {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.081Z] [DEBUG] [HTTP] → GET /src/pages/Examples.tsx
+[2026-02-04T06:45:20.082Z] [INFO] [HTTP] ← GET /src/pages/Examples.tsx {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.082Z] [DEBUG] [HTTP] → GET /src/pages/Templates.tsx
+[2026-02-04T06:45:20.083Z] [INFO] [HTTP] ← GET /src/pages/Templates.tsx {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.193Z] [DEBUG] [HTTP] → GET /src/pages/Dashboard.tsx
+[2026-02-04T06:45:20.194Z] [INFO] [HTTP] ← GET /src/pages/Dashboard.tsx {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.194Z] [DEBUG] [HTTP] → GET /src/pages/Editor.tsx
+[2026-02-04T06:45:20.195Z] [INFO] [HTTP] ← GET /src/pages/Editor.tsx {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.195Z] [DEBUG] [HTTP] → GET /src/pages/Settings.tsx
+[2026-02-04T06:45:20.196Z] [INFO] [HTTP] ← GET /src/pages/Settings.tsx {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.196Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/react.js
+[2026-02-04T06:45:20.197Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/react.js {"statusCode":200,"duration":"0ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.197Z] [DEBUG] [HTTP] → GET /src/lib/utils.ts
+[2026-02-04T06:45:20.197Z] [INFO] [HTTP] ← GET /src/lib/utils.ts {"statusCode":200,"duration":"0ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.197Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/lucide-react.js
+[2026-02-04T06:45:20.204Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/lucide-react.js {"statusCode":200,"duration":"7ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.226Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/@monaco-editor_react.js
+[2026-02-04T06:45:20.227Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/@monaco-editor_react.js {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.227Z] [DEBUG] [HTTP] → GET /src/const.ts
+[2026-02-04T06:45:20.227Z] [INFO] [HTTP] ← GET /src/const.ts {"statusCode":200,"duration":"0ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.228Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/sonner.js
+[2026-02-04T06:45:20.229Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/sonner.js {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.229Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/@radix-ui_react-tooltip.js
+[2026-02-04T06:45:20.230Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/@radix-ui_react-tooltip.js {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.231Z] [DEBUG] [HTTP] → GET /src/components/ui/dialog.tsx
+[2026-02-04T06:45:20.231Z] [INFO] [HTTP] ← GET /src/components/ui/dialog.tsx {"statusCode":200,"duration":"0ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.261Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/framer-motion.js
+[2026-02-04T06:45:20.266Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/framer-motion.js {"statusCode":200,"duration":"5ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.266Z] [DEBUG] [HTTP] → GET /src/components/ui/button.tsx
+[2026-02-04T06:45:20.267Z] [INFO] [HTTP] ← GET /src/components/ui/button.tsx {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.267Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/clsx.js
+[2026-02-04T06:45:20.268Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/clsx.js {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.269Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/tailwind-merge.js
+[2026-02-04T06:45:20.271Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/tailwind-merge.js {"statusCode":200,"duration":"2ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.271Z] [DEBUG] [HTTP] → GET /src/components/ui/tabs.tsx
+[2026-02-04T06:45:20.272Z] [INFO] [HTTP] ← GET /src/components/ui/tabs.tsx {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.277Z] [DEBUG] [HTTP] → GET /src/components/CodeEditor.tsx
+[2026-02-04T06:45:20.278Z] [INFO] [HTTP] ← GET /src/components/CodeEditor.tsx {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.284Z] [DEBUG] [HTTP] → GET /src/components/LivePreview.tsx
+[2026-02-04T06:45:20.284Z] [INFO] [HTTP] ← GET /src/components/LivePreview.tsx {"statusCode":200,"duration":"0ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.291Z] [DEBUG] [HTTP] → GET /src/components/AIChat.tsx
+[2026-02-04T06:45:20.292Z] [INFO] [HTTP] ← GET /src/components/AIChat.tsx {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.299Z] [DEBUG] [HTTP] → GET /@fs/app/shared/const.ts
+[2026-02-04T06:45:20.299Z] [INFO] [HTTP] ← GET /@fs/app/shared/const.ts {"statusCode":200,"duration":"0ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.300Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/@radix-ui_react-dialog.js
+[2026-02-04T06:45:20.300Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/@radix-ui_react-dialog.js {"statusCode":200,"duration":"0ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.303Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/chunk-5U4B2RVW.js
+[2026-02-04T06:45:20.304Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/chunk-5U4B2RVW.js {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.304Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/chunk-TZVOV5SS.js
+[2026-02-04T06:45:20.305Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/chunk-TZVOV5SS.js {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.311Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/chunk-HGC2YQBN.js
+[2026-02-04T06:45:20.313Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/chunk-HGC2YQBN.js {"statusCode":200,"duration":"2ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.313Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/chunk-37U4ONPX.js
+[2026-02-04T06:45:20.314Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/chunk-37U4ONPX.js {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.325Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/chunk-U7P2NEEE.js
+[2026-02-04T06:45:20.326Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/chunk-U7P2NEEE.js {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.326Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/@radix-ui_react-slot.js
+[2026-02-04T06:45:20.327Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/@radix-ui_react-slot.js {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.327Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/class-variance-authority.js
+[2026-02-04T06:45:20.328Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/class-variance-authority.js {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.328Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/@radix-ui_react-tabs.js
+[2026-02-04T06:45:20.328Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/@radix-ui_react-tabs.js {"statusCode":200,"duration":"0ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.335Z] [DEBUG] [HTTP] → GET /src/components/ui/textarea.tsx
+[2026-02-04T06:45:20.336Z] [INFO] [HTTP] ← GET /src/components/ui/textarea.tsx {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.338Z] [DEBUG] [HTTP] → GET /src/components/ui/scroll-area.tsx
+[2026-02-04T06:45:20.339Z] [INFO] [HTTP] ← GET /src/components/ui/scroll-area.tsx {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.340Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/chunk-7CXDP3QN.js
+[2026-02-04T06:45:20.341Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/chunk-7CXDP3QN.js {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.343Z] [DEBUG] [HTTP] → GET /src/hooks/useComposition.ts
+[2026-02-04T06:45:20.344Z] [INFO] [HTTP] ← GET /src/hooks/useComposition.ts {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+[2026-02-04T06:45:20.345Z] [DEBUG] [HTTP] → GET /@fs/app/node_modules/.vite/deps/@radix-ui_react-scroll-area.js
+[2026-02-04T06:45:20.346Z] [INFO] [HTTP] ← GET /@fs/app/node_modules/.vite/deps/@radix-ui_react-scroll-area.js {"statusCode":200,"duration":"1ms","status":"SUCCESS"}
+6:46:09 AM [vite] (client) hmr update /src/pages/Home.tsx, /src/index.css
