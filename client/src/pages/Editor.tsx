@@ -305,17 +305,8 @@ export default function Editor() {
               activeTab === "editor" && "md:hidden"
             }`}
           >
-            <div className="h-10 bg-zinc-950 border-b border-orange-900/30 flex items-center px-4 justify-between">
-              <div className="flex items-center gap-2">
-                <Code size={14} className="text-orange-600" />
-                <span className="text-xs font-mono font-bold text-orange-400">
-                  SOURCE.html
-                </span>
-              </div>
-            </div>
-
-            <div className="flex-1 overflow-hidden">
-              <CodeEditor value={code} onChange={setCode} language="html" />
+            <div className="flex-1 overflow-hidden p-4 bg-zinc-950/30">
+              <CodeEditor value={code} onChange={setCode} language="html" filename="source.html" />
             </div>
           </div>
 
@@ -324,16 +315,8 @@ export default function Editor() {
             value="editor"
             className="flex-1 flex flex-col md:hidden overflow-hidden"
           >
-            <div className="h-10 bg-zinc-950 border-b border-orange-900/30 flex items-center px-4 justify-between">
-              <div className="flex items-center gap-2">
-                <Code size={14} className="text-orange-600" />
-                <span className="text-xs font-mono font-bold text-orange-400">
-                  SOURCE.html
-                </span>
-              </div>
-            </div>
-            <div className="flex-1 overflow-hidden">
-              <CodeEditor value={code} onChange={setCode} language="html" />
+            <div className="flex-1 overflow-hidden p-2 bg-zinc-950/30">
+              <CodeEditor value={code} onChange={setCode} language="html" filename="source.html" />
             </div>
           </TabsContent>
 
