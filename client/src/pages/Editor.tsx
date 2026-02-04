@@ -371,14 +371,14 @@ export default function Editor() {
 
             <div className="flex-1 overflow-hidden">
               {/* Desktop preview */}
-              <div className="hidden md:block h-full">
+              <div className="hidden md:block h-full p-4 md:p-8 bg-[radial-gradient(rgba(234,88,12,0.1)_1px,transparent_1px)] [background-size:20px_20px]">
                 {activeTab === "preview" && (
                   <LivePreview code={code} title={app.title} />
                 )}
               </div>
 
               {/* Mobile preview */}
-              <TabsContent value="preview" className="flex-1 flex md:hidden">
+              <TabsContent value="preview" className="flex-1 flex md:hidden p-4 bg-[radial-gradient(rgba(234,88,12,0.1)_1px,transparent_1px)] [background-size:20px_20px]">
                 <LivePreview code={code} title={app.title} />
               </TabsContent>
 
