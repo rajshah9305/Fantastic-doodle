@@ -149,7 +149,7 @@ export default function Home() {
 
             {/* Input Form */}
             <div className="w-full max-w-2xl mx-auto relative group animate-fade-in-up-delay">
-              <div className="relative flex flex-col sm:flex-row bg-card shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1),0_0_0_1px_rgba(234,88,12,0.1),0_4px_0_0_rgba(234,88,12,0.1)] rounded-lg p-1 xs:p-1.5 sm:p-2 border-2 border-border hover:border-orange-500/50 transition-all duration-300">
+              <div className="relative flex flex-col sm:flex-row bg-card shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1),0_0_0_1px_rgba(234,88,12,0.1),0_4px_0_0_rgba(234,88,12,0.1)] rounded-lg p-1 xs:p-1.5 sm:p-2 border-2 border-black hover:border-orange-500/50 transition-all duration-300">
                 <input
                   type="text"
                   value={prompt}
