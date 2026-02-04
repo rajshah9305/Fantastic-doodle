@@ -23,12 +23,29 @@ Return ONLY a JSON object with exactly these fields (no markdown, no code blocks
   "jsCode": "// Complete functionality"
 }
 
-Important:
-- The app must be self-contained and work independently
-- Include all necessary HTML, CSS, and JavaScript
-- Make it visually appealing and responsive
-- Ensure all functionality is implemented
-- Use modern best practices`;
+DESIGN SYSTEM (Strictly Enforced):
+- Style: Industrial Brutalism.
+- Color Palette:
+  - Backgrounds: Black (#000000) or very dark gray (#09090b).
+  - Primary Accent: Bright Orange (#ea580c).
+  - Secondary Accent: Red (#dc2626) for errors/warnings.
+  - Text: White (#ffffff) or light gray (#e2e8f0).
+- Typography: Monospace for data/code, Sans-serif (Inter/system-ui) for headings. Bold, uppercase headings.
+- Borders: Thick, visible borders (2px-4px solid #333 or #ea580c) on all interactive elements.
+- Shadows: Hard drop shadows (no blur), e.g., box-shadow: 4px 4px 0px 0px #000 (or orange on hover).
+- Spacing: GENEROUS spacing.
+  - Use plenty of padding inside containers (min 2rem/32px).
+  - Use large gaps between grid items (min 1.5rem/24px).
+  - Ensure content does not touch the edges of the screen.
+- Layout: Responsive, mobile-first. Use CSS Grid or Flexbox.
+
+REQUIREMENTS:
+- The app must be self-contained and work independently.
+- Include all necessary HTML, CSS, and JavaScript.
+- Make it visually appealing and responsive.
+- Ensure all functionality is implemented.
+- Use modern best practices (ES6+, CSS variables).
+- NO placeholder images (use CSS shapes or simple SVGs if needed).`;
 
 export const appsRouter = router({
   generate: publicProcedure
@@ -179,7 +196,13 @@ Return ONLY a JSON object with exactly these fields (no markdown, no code blocks
   "htmlCode": "<modified html>",
   "cssCode": "/* modified styles */",
   "jsCode": "// modified script"
-}`;
+}
+
+Maintain the Industrial Brutalist design:
+- Black backgrounds, Orange accents.
+- Thick borders, Hard shadows.
+- GENEROUS spacing and padding (fix any cramped UI).
+- Responsive layout.`;
 
         const completion = await getGroqClient().chat.completions.create({
            messages: [
