@@ -16,7 +16,7 @@ import Editor from "@monaco-editor/react";
 import { getOrCreateSessionId } from "@/const";
 import { toast } from "sonner";
 import type { GeneratedApp } from "@shared/types";
-import { ParticleSystem } from "@/components/ParticleSystem";
+import { useTypewriter } from "@/hooks/useTypewriter";
 
 interface GeneratedAppResponse {
   success: boolean;
@@ -95,17 +95,24 @@ export default function Home() {
     }
   };
 
+  const fullCode = generatedApp ? `${generatedApp.htmlCode || ""}
+
+<style>
+${generatedApp.cssCode || ""}
+</style>
+
+<script>
+${generatedApp.jsCode || ""}
+</script>` : "";
+
+  const displayedCode = useTypewriter(fullCode, 10);
+
   // Landing View
   if (!showEditor) {
     return (
-      <div className="h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-orange-100 dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-900 flex flex-col relative overflow-hidden selection:bg-orange-200">
+      <div className="h-screen bg-zinc-50 dark:bg-zinc-950 flex flex-col relative overflow-hidden selection:bg-orange-200">
         {/* Background */}
-        <div className="absolute inset-0 z-0">
-          {/* Particle System */}
-          <ParticleSystem className="opacity-30" particleCount={isMobile ? 15 : 25} />
-          {/* Additional glow effect overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-transparent to-amber-500/10 animate-pulse-slow"></div>
-        </div>
+        <div className="absolute inset-0 z-0"></div>
 
         {/* Subtle Grid Pattern Overlay */}
         <div
@@ -154,11 +161,9 @@ export default function Home() {
               <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-zinc-800 dark:text-white tracking-tighter leading-[0.9] px-2 drop-shadow-lg">
                 IMAGINE.
                 <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-orange-500 to-red-600 animate-gradient drop-shadow-none">
-                  CONSTRUCT.
-                </span>
+                CONSTRUCT.
                 <br />
-                <span className="font-bold text-zinc-600 dark:text-zinc-400">DEPLOY.</span>
+                DEPLOY.
               </h1>
             </div>
 
@@ -240,16 +245,6 @@ export default function Home() {
       </div>
     );
   }
-
-  const fullCode = `${generatedApp.htmlCode || ""}
-
-<style>
-${generatedApp.cssCode || ""}
-</style>
-
-<script>
-${generatedApp.jsCode || ""}
-</script>`;
 
   return (
     <div className="h-screen flex flex-col bg-black text-slate-300 overflow-hidden font-sans relative">
@@ -342,8 +337,13 @@ ${generatedApp.jsCode || ""}
       <div className="flex-1 flex flex-col md:flex-row overflow-hidden relative z-10">
         {/* Code Panel */}
         <div className="w-full md:w-1/2 flex flex-col border-r-0 md:border-r border-b md:border-b-0 border-orange-900/30 bg-black/50 backdrop-blur-sm h-1/2 md:h-auto">
-          <div className="h-8 xs:h-9 sm:h-10 bg-zinc-950 border-b border-orange-900/30 flex items-center px-2 xs:px-3 sm:px-4 justify-between flex-shrink-0">
-            <div className="flex items-center gap-1.5 xs:gap-2 min-w-0">
+          <div className="h-8 xs:h-9 sm:h-10 bg-zinc-950 border-b border-orange-900/30 flex items-center px-2 xs:px-3 sm:px-4 gap-4 flex-shrink-0">
+            <div className="flex gap-1.5">
+              <div className="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+            </div>
+            <div className="flex items-center gap-1.5 xs:gap-2 min-w-0 opacity-80">
               <Code2 size={12} className="xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4 text-orange-600 flex-shrink-0" />
               <span className="text-[9px] xs:text-[10px] sm:text-xs font-mono font-bold text-orange-400 truncate">
                 GENERATED_SOURCE.html
@@ -354,7 +354,7 @@ ${generatedApp.jsCode || ""}
           <div className="flex-1 overflow-hidden min-h-0">
             <Editor
               defaultLanguage="html"
-              value={fullCode}
+              value={displayedCode}
               theme="vs-dark"
               options={{
                 minimap: { enabled: false },
@@ -398,13 +398,13 @@ ${generatedApp.jsCode || ""}
               )}
 
               <div
-                className={`w-full h-full overflow-y-auto ${device === "mobile" ? "rounded-[1.75rem] xs:rounded-[2.25rem] sm:rounded-[2.5rem]" : "rounded-sm xs:rounded-md"}`}
+                className={`w-full h-full ${device === "mobile" ? "rounded-[1.75rem] xs:rounded-[2.25rem] sm:rounded-[2.5rem]" : "rounded-sm xs:rounded-md"}`}
               >
                 <iframe
                   srcDoc={`<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>${generatedApp.title}</title>\n  <style>\n    * {\n      margin: 0;\n      padding: 0;\n      box-sizing: border-box;\n    }\n    body {\n      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;\n    }\n    ${generatedApp.cssCode || ""}\n  </style>\n</head>\n<body>\n  ${generatedApp.htmlCode || ""}\n  <script>\n    ${generatedApp.jsCode || ""}\n  </script>\n</body>\n</html>`}
                   className="w-full h-full border-none"
                   title="App Preview"
-                  sandbox="allow-scripts"
+                  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
                 />
               </div>
             </div>
