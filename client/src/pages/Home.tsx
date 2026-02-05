@@ -161,7 +161,7 @@ ${generatedApp.jsCode || ""}
               <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-zinc-800 dark:text-white tracking-tighter leading-[0.9] px-2 drop-shadow-lg">
                 IMAGINE.
                 <br />
-                CONSTRUCT.
+                <span className="text-orange-600">CONSTRUCT.</span>
                 <br />
                 DEPLOY.
               </h1>
