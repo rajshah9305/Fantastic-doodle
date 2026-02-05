@@ -16,7 +16,6 @@ import Editor from "@monaco-editor/react";
 import { getOrCreateSessionId } from "@/const";
 import { toast } from "sonner";
 import type { GeneratedApp } from "@shared/types";
-import { GeometricBackground, MobileGeometricBackground } from "@/components/BackgroundRender";
 import { ParticleSystem } from "@/components/ParticleSystem";
 
 interface GeneratedAppResponse {
@@ -100,13 +99,8 @@ export default function Home() {
   if (!showEditor) {
     return (
       <div className="h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-orange-100 dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-900 flex flex-col relative overflow-hidden selection:bg-orange-200">
-        {/* Background Renders */}
+        {/* Background */}
         <div className="absolute inset-0 z-0">
-          {isMobile ? (
-            <MobileGeometricBackground className="opacity-60" />
-          ) : (
-            <GeometricBackground className="opacity-50" />
-          )}
           {/* Particle System */}
           <ParticleSystem className="opacity-30" particleCount={isMobile ? 15 : 25} />
           {/* Additional glow effect overlay */}
