@@ -69,18 +69,21 @@ export default function AIChat({
               <Sparkles className="w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-3 sm:mb-4 text-orange-600/50" />
               <p className="mb-3 sm:mb-4 font-medium text-sm sm:text-base text-white">Try asking:</p>
               <ul className="text-xs sm:text-sm space-y-1.5 sm:space-y-2">
-                <li className="p-2 bg-zinc-900 border border-orange-900/30 rounded-lg text-slate-300">
-                  "Make the background blue"
-                </li>
-                <li className="p-2 bg-zinc-900 border border-orange-900/30 rounded-lg text-slate-300">
-                  "Add a button to clear all items"
-                </li>
-                <li className="p-2 bg-zinc-900 border border-orange-900/30 rounded-lg text-slate-300">
-                  "Change the font to something modern"
-                </li>
-                <li className="p-2 bg-zinc-900 border border-orange-900/30 rounded-lg text-slate-300 hidden sm:block">
-                  "Add dark mode support"
-                </li>
+                {[
+                  "Make the background blue",
+                  "Add a button to clear all items",
+                  "Change the font to something modern",
+                  "Add dark mode support",
+                ].map((suggestion, i) => (
+                  <li key={i} className={i === 3 ? "hidden sm:block" : ""}>
+                    <button
+                      onClick={() => setInput(suggestion)}
+                      className="w-full text-left p-2 bg-zinc-900 border border-orange-900/30 rounded-lg text-slate-300 hover:bg-zinc-800 hover:border-orange-500/50 hover:text-white transition-all focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none"
+                    >
+                      "{suggestion}"
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
           )}
@@ -121,6 +124,7 @@ export default function AIChat({
             onKeyDown={handleKeyDown}
             className="min-h-[60px] sm:min-h-[80px] max-h-[150px] sm:max-h-[200px] resize-none text-sm sm:text-base bg-zinc-900 border-orange-900/50 text-white placeholder:text-slate-500 focus:border-orange-500"
             disabled={isSending || isLoading}
+            aria-label="Chat input"
           />
           <Button
             type="submit"
@@ -128,6 +132,7 @@ export default function AIChat({
             disabled={!input.trim() || isSending || isLoading}
             className="shrink-0 min-w-[44px] min-h-[44px] bg-orange-600 hover:bg-orange-700 text-white"
             title="Send message"
+            aria-label="Send message"
           >
             <Send className="h-4 w-4" />
           </Button>
