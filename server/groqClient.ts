@@ -113,9 +113,9 @@ export async function testGroqConnection(): Promise<string> {
   try {
     const client = getGroqClient();
     await client.chat.completions.create({
-      model: "openai/gpt-oss-120b",
+      model: "llama-3.3-70b-versatile",
       messages: [{ role: "user", content: "test" }],
-      max_completion_tokens: 10,
+      max_tokens: 10,
     });
     return "connected";
   } catch (error) {
