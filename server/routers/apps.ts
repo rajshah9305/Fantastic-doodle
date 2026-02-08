@@ -77,11 +77,10 @@ export const appsRouter = router({
               content: `Generate a web application for: ${input.prompt}`,
             },
           ],
-          model: 'openai/gpt-oss-120b',
+          model: 'llama-3.3-70b-versatile',
           temperature: 1,
-          max_completion_tokens: 65536,
+          max_tokens: 4096,
           top_p: 1,
-          reasoning_effort: 'medium',
         });
 
         const responseText =
@@ -215,11 +214,10 @@ Maintain the Industrial Brutalist design:
                content: `Current app HTML:\n${app.htmlCode}\n\nCurrent app CSS:\n${app.cssCode}\n\nCurrent app JS:\n${app.jsCode}\n\nModification instruction: ${input.instruction}`,
              },
            ],
-           model: 'openai/gpt-oss-120b',
+           model: 'llama-3.3-70b-versatile',
            temperature: 1,
-           max_completion_tokens: 65536,
+           max_tokens: 4096,
            top_p: 1,
-           reasoning_effort: 'medium',
            });
 
           const responseText =

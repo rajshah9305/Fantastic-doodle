@@ -77,11 +77,10 @@ class Configuration {
 export const config = new Configuration();
 
 /**
- * Load config on module import
+ * Initial load attempt
  */
 try {
   config.load();
 } catch (error) {
-  console.error("[Config] Failed to load configuration");
-  process.exit(1);
+  console.warn("[Config] Warning: Initial configuration load failed. Some features may not work until all required environment variables are provided.");
 }
