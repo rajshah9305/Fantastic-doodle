@@ -17,6 +17,7 @@ import { getOrCreateSessionId } from "@/const";
 import { toast } from "sonner";
 import type { GeneratedApp } from "@shared/types";
 import { useTypewriter } from "@/hooks/useTypewriter";
+import ThreeBackground from "@/components/ThreeBackground";
 
 interface GeneratedAppResponse {
   success: boolean;
@@ -112,15 +113,18 @@ ${generatedApp.jsCode || ""}
     return (
       <div className="h-screen bg-zinc-50 dark:bg-zinc-950 flex flex-col relative overflow-hidden selection:bg-orange-200">
         {/* Background */}
-        <div className="absolute inset-0 z-0"></div>
+        <ThreeBackground />
+
+        {/* Focus Gradient */}
+        <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_center,transparent_0%,var(--background)_100%)] opacity-70 pointer-events-none" />
 
         {/* Subtle Grid Pattern Overlay */}
         <div
-          className="absolute inset-0 z-[1] opacity-[0.03]"
+          className="absolute inset-0 z-[2] opacity-[0.03]"
           style={{
             backgroundImage:
               "linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
+            backgroundSize: "60px 60px",
           }}
         ></div>
 
