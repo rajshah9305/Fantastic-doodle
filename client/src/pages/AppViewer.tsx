@@ -101,6 +101,15 @@ ${app.jsCode || ""}
     }
   };
 
+  const handleCopySection = async (section: string, code: string) => {
+    try {
+      await navigator.clipboard.writeText(code);
+      toast.success(`${section} copied to clipboard!`);
+    } catch (error) {
+      toast.error(`Failed to copy ${section}`);
+    }
+  };
+
   const handleDownload = () => {
     if (!app) return;
 
@@ -278,29 +287,65 @@ ${app.jsCode || ""}
               </div>
               <div className="p-3 sm:p-4 space-y-2">
                 <details className="text-xs sm:text-sm group">
-                  <summary className="cursor-pointer font-mono text-orange-400 hover:text-orange-300 flex items-center gap-2 py-1">
-                    <Code className="w-3 h-3 sm:w-4 sm:h-4" />
-                    HTML
+                  <summary className="cursor-pointer font-mono text-orange-400 hover:text-orange-300 flex items-center justify-between py-1">
+                    <div className="flex items-center gap-2">
+                      <Code className="w-3 h-3 sm:w-4 sm:h-4" />
+                      HTML
+                    </div>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        handleCopySection("HTML", app.htmlCode);
+                      }}
+                      className="text-[10px] bg-zinc-900 px-2 py-0.5 border border-orange-900/50 hover:border-orange-500 rounded"
+                    >
+                      Copy
+                    </button>
                   </summary>
-                  <pre className="mt-2 p-2 sm:p-3 bg-zinc-900 border border-orange-900/30 rounded text-[10px] xs:text-xs overflow-auto max-h-32 sm:max-h-40 text-slate-300">
+                  <pre className="mt-2 p-2 sm:p-3 bg-zinc-900 border border-orange-900/30 rounded text-sm overflow-auto max-h-[500px] text-slate-300">
                     {app.htmlCode}
                   </pre>
                 </details>
                 <details className="text-xs sm:text-sm group">
-                  <summary className="cursor-pointer font-mono text-orange-400 hover:text-orange-300 flex items-center gap-2 py-1">
-                    <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
-                    CSS
+                  <summary className="cursor-pointer font-mono text-orange-400 hover:text-orange-300 flex items-center justify-between py-1">
+                    <div className="flex items-center gap-2">
+                      <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
+                      CSS
+                    </div>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        handleCopySection("CSS", app.cssCode || "");
+                      }}
+                      className="text-[10px] bg-zinc-900 px-2 py-0.5 border border-orange-900/50 hover:border-orange-500 rounded"
+                    >
+                      Copy
+                    </button>
                   </summary>
-                  <pre className="mt-2 p-2 sm:p-3 bg-zinc-900 border border-orange-900/30 rounded text-[10px] xs:text-xs overflow-auto max-h-32 sm:max-h-40 text-slate-300">
+                  <pre className="mt-2 p-2 sm:p-3 bg-zinc-900 border border-orange-900/30 rounded text-sm overflow-auto max-h-[500px] text-slate-300">
                     {app.cssCode}
                   </pre>
                 </details>
                 <details className="text-xs sm:text-sm group">
-                  <summary className="cursor-pointer font-mono text-orange-400 hover:text-orange-300 flex items-center gap-2 py-1">
-                    <Braces className="w-3 h-3 sm:w-4 sm:h-4" />
-                    JavaScript
+                  <summary className="cursor-pointer font-mono text-orange-400 hover:text-orange-300 flex items-center justify-between py-1">
+                    <div className="flex items-center gap-2">
+                      <Braces className="w-3 h-3 sm:w-4 sm:h-4" />
+                      JavaScript
+                    </div>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        handleCopySection("JavaScript", app.jsCode || "");
+                      }}
+                      className="text-[10px] bg-zinc-900 px-2 py-0.5 border border-orange-900/50 hover:border-orange-500 rounded"
+                    >
+                      Copy
+                    </button>
                   </summary>
-                  <pre className="mt-2 p-2 sm:p-3 bg-zinc-900 border border-orange-900/30 rounded text-[10px] xs:text-xs overflow-auto max-h-32 sm:max-h-40 text-slate-300">
+                  <pre className="mt-2 p-2 sm:p-3 bg-zinc-900 border border-orange-900/30 rounded text-sm overflow-auto max-h-[500px] text-slate-300">
                     {app.jsCode}
                   </pre>
                 </details>

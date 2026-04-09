@@ -31,10 +31,10 @@ export default function CodeEditor({
         options={{
           automaticLayout: true,
           minimap: { enabled: true },
-          fontSize: 14,
+          fontSize: 14, lineHeight: 22,
           lineNumbers: "on",
           roundedSelection: false,
-          scrollBeyondLastLine: false,
+          scrollBeyondLastLine: true,
           readOnly,
           wordWrap: "on",
           padding: { top: 16, bottom: 16 },

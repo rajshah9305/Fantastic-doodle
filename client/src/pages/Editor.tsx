@@ -15,11 +15,15 @@ interface Message {
 }
 
 type ActiveTab = "code" | "preview" | "ai";
+type ActiveLang = "html" | "css" | "javascript";
 
 export default function Editor() {
   const { id } = useParams<{ id: string }>();
   const [, navigate] = useLocation();
-  const [code, setCode] = useState("");
+  const [htmlCode, setHtmlCode] = useState("");
+  const [cssCode, setCssCode] = useState("");
+  const [jsCode, setJsCode] = useState("");
+  const [activeLang, setActiveLang] = useState<ActiveLang>("html");
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
   const [activeTab, setActiveTab] = useState<ActiveTab>("preview");
 
@@ -41,27 +45,35 @@ export default function Editor() {
     },
   });
 
-  // Modify app with AI
-  const modifyApp = trpc.apps.modify.useMutation({
-    onSuccess: (data: any) => {
-      const fullCode = `<!DOCTYPE html>
+  // Helper to get combined code for preview and download
+  const getFullCode = (html: string, css: string, js: string) => {
+    return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${data.title || app?.title || "Generated App"}</title>
+  <title>${app?.title || "Generated App"}</title>
   <style>
-    ${data.cssCode || ""}
+    ${css || ""}
   </style>
 </head>
 <body>
-  ${data.htmlCode || ""}
+  ${html || ""}
   <script>
-    ${data.jsCode || ""}
+    ${js || ""}
   </script>
 </body>
 </html>`;
-      setCode(fullCode);
+  };
+
+  const code = getFullCode(htmlCode, cssCode, jsCode);
+
+  // Modify app with AI
+  const modifyApp = trpc.apps.modify.useMutation({
+    onSuccess: (data: any) => {
+      setHtmlCode(data.htmlCode || "");
+      setCssCode(data.cssCode || "");
+      setJsCode(data.jsCode || "");
       setChatMessages((prev) => [
         ...prev,
         {
@@ -86,24 +98,9 @@ export default function Editor() {
 
   useEffect(() => {
     if (app) {
-      const fullCode = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${app.title}</title>
-  <style>
-    ${app.cssCode || ""}
-  </style>
-</head>
-<body>
-  ${app.htmlCode || ""}
-  <script>
-    ${app.jsCode || ""}
-  </script>
-</body>
-</html>`;
-      setCode(fullCode);
+      setHtmlCode(app.htmlCode || "");
+      setCssCode(app.cssCode || "");
+      setJsCode(app.jsCode || "");
     }
   }, [app]);
 
@@ -111,7 +108,9 @@ export default function Editor() {
     if (!app) return;
     updateApp.mutate({
       id: appId,
-      htmlCode: code,
+      htmlCode,
+      cssCode,
+      jsCode,
     });
   };
 
@@ -263,17 +262,51 @@ export default function Editor() {
               activeTab === "code" ? "flex flex-1" : "hidden md:flex"
             }`}
           >
-            <div className="h-10 bg-black border-b-2 border-zinc-800 flex items-center px-4 justify-between">
-              <div className="flex items-center gap-2">
-                <Code size={14} className="text-orange-600" />
-                <span className="text-xs font-mono font-black text-orange-400 tracking-tighter">
-                  SOURCE_CODE.HTML
-                </span>
+            <div className="h-10 bg-black border-b-2 border-zinc-800 flex items-center px-2 justify-between">
+              <div className="flex gap-1">
+                <button
+                  onClick={() => setActiveLang("html")}
+                  className={`px-3 py-1 text-[10px] font-mono font-black uppercase transition-all ${
+                    activeLang === "html"
+                      ? "text-white bg-orange-600 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                      : "text-slate-500 hover:text-slate-300"
+                  }`}
+                >
+                  HTML
+                </button>
+                <button
+                  onClick={() => setActiveLang("css")}
+                  className={`px-3 py-1 text-[10px] font-mono font-black uppercase transition-all ${
+                    activeLang === "css"
+                      ? "text-white bg-orange-600 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                      : "text-slate-500 hover:text-slate-300"
+                  }`}
+                >
+                  CSS
+                </button>
+                <button
+                  onClick={() => setActiveLang("javascript")}
+                  className={`px-3 py-1 text-[10px] font-mono font-black uppercase transition-all ${
+                    activeLang === "javascript"
+                      ? "text-white bg-orange-600 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                      : "text-slate-500 hover:text-slate-300"
+                  }`}
+                >
+                  JS
+                </button>
               </div>
             </div>
 
             <div className="flex-1 overflow-hidden">
-              <CodeEditor value={code} onChange={setCode} language="html" />
+              {activeLang === "html" && (
+                <CodeEditor value={htmlCode} onChange={setHtmlCode} language="html" />
+              )}
+              {activeLang === "css" && (
+                <CodeEditor value={cssCode} onChange={setCssCode} language="css" />
+              )}
+              {activeLang === "javascript" && (
+                <CodeEditor value={jsCode} onChange={setJsCode} language="javascript" />
+              )}
             </div>
           </div>
 
