@@ -11,10 +11,26 @@ import {
 } from '../db.js';
 import { getGroqClient } from '../groqClient.js';
 
-// System prompt for app generation
-const SYSTEM_PROMPT = `You are an expert web developer. Generate a complete, functional single-page web application based on the user's description.
+// Helper to parse AI response robustly
+const parseAIResponse = (text: string) => {
+  try {
+    // Attempt to extract JSON from markdown if present
+    const jsonMatch = text.match(/```json\s?([\s\S]*?)```/) ||
+                     text.match(/```\s?([\s\S]*?)```/);
 
-Return ONLY a JSON object with exactly these fields (no markdown, no code blocks, raw JSON):
+    const cleanJson = jsonMatch ? jsonMatch[1].trim() : text.trim();
+    return JSON.parse(cleanJson);
+  } catch (error) {
+    throw new Error('Failed to parse AI response. The generated response was not valid JSON.');
+  }
+};
+
+// System prompt for app generation
+const SYSTEM_PROMPT = `You are an expert web developer specializing in Industrial Brutalist web design.
+Generate a complete, functional single-page web application based on the user's description.
+
+Return ONLY a valid JSON object. Do not include any explanations or conversational text.
+Required JSON structure:
 {
   "title": "App Name",
   "description": "Brief description",
@@ -23,29 +39,31 @@ Return ONLY a JSON object with exactly these fields (no markdown, no code blocks
   "jsCode": "// Complete functionality"
 }
 
-DESIGN SYSTEM (Strictly Enforced):
-- Style: Industrial Brutalism.
+INDUSTRIAL BRUTALIST DESIGN SYSTEM (Strictly Enforced):
+- Aesthetics: Raw, bold, functional, and unapologetic.
 - Color Palette:
-  - Backgrounds: Black (#000000) or very dark gray (#09090b).
-  - Primary Accent: Bright Orange (#ea580c).
-  - Secondary Accent: Red (#dc2626) for errors/warnings.
-  - Text: White (#ffffff) or light gray (#e2e8f0).
-- Typography: Monospace for data/code, Sans-serif (Inter/system-ui) for headings. Bold, uppercase headings.
-- Borders: Thick, visible borders (2px-4px solid #333 or #ea580c) on all interactive elements.
-- Shadows: Hard drop shadows (no blur), e.g., box-shadow: 4px 4px 0px 0px #000 (or orange on hover).
-- Spacing: GENEROUS spacing.
-  - Use plenty of padding inside containers (min 2rem/32px).
-  - Use large gaps between grid items (min 1.5rem/24px).
-  - Ensure content does not touch the edges of the screen.
-- Layout: Responsive, mobile-first. Use CSS Grid or Flexbox.
+  - Base: Solid Black (#000000) or Zinc-950 (#09090b).
+  - Primary Accent: International Orange (#ea580c) - use for primary actions, highlights, and borders.
+  - Secondary Accent: Bright Red (#dc2626) for alerts or destructive actions.
+  - Text: High contrast White (#ffffff) or Slate-200 (#e2e8f0).
+- Typography:
+  - Headings: Heavy Sans-serif (Inter, system-ui), Bold, Uppercase, often with letter-spacing.
+  - Data/Input: Monospace (Fira Code, JetBrains Mono, system-mono).
+- UI Elements:
+  - Borders: Thick, visible borders (2px to 4px solid). Use International Orange or Slate-800.
+  - Shadows: Hard, offset drop shadows (e.g., box-shadow: 4px 4px 0px 0px #000). No blur.
+  - Buttons: Rectangular, sharp corners, hard shadows, hover state translates -2px -2px with increased shadow.
+- Spacing:
+  - MINIMUM padding for containers: 2rem (32px).
+  - MINIMUM gap for grids: 1.5rem (24px).
+  - Content must NEVER touch screen edges. Use max-width containers centered with margin auto.
+- Responsiveness: Use mobile-first CSS Grid and Flexbox.
 
-REQUIREMENTS:
-- The app must be self-contained and work independently.
-- Include all necessary HTML, CSS, and JavaScript.
-- Make it visually appealing and responsive.
-- Ensure all functionality is implemented.
-- Use modern best practices (ES6+, CSS variables).
-- NO placeholder images (use CSS shapes or simple SVGs if needed).`;
+TECHNICAL REQUIREMENTS:
+- Self-contained: The app must work without external dependencies except for system fonts.
+- Modern Code: Use ES6+ JavaScript and modern CSS features (Variables, Grid, Flex).
+- No Placeholders: Do not use placeholder images. Use CSS patterns, gradients, or SVG paths.
+- Accessibility: Ensure proper contrast and semantic HTML tags.`;
 
 export const appsRouter = router({
   generate: publicProcedure
@@ -78,7 +96,7 @@ export const appsRouter = router({
             },
           ],
           model: 'llama-3.3-70b-versatile',
-          temperature: 1,
+          temperature: 0.7, // Lowered for more consistent JSON
           max_tokens: 4096,
           top_p: 1,
         });
@@ -87,14 +105,7 @@ export const appsRouter = router({
           completion.choices[0]?.message?.content || '';
 
         // Parse the response
-        let appData;
-        try {
-          appData = JSON.parse(responseText);
-        } catch {
-          throw new Error(
-            'Failed to parse AI response. The generated response was not valid JSON.'
-          );
-        }
+        const appData = parseAIResponse(responseText);
 
         // Validate response structure
         if (
@@ -103,7 +114,7 @@ export const appsRouter = router({
           typeof appData.title !== 'string' ||
           typeof appData.htmlCode !== 'string'
         ) {
-          throw new Error('Invalid app structure from AI');
+          throw new Error('Invalid app structure from AI: Missing required fields');
         }
 
         // Save to database
@@ -125,7 +136,7 @@ export const appsRouter = router({
           htmlCode: appData.htmlCode,
           cssCode: appData.cssCode || null,
           jsCode: appData.jsCode || null,
-          id: Array.isArray(app) ? app[0]?.id : undefined,
+          id: Array.isArray(app) ? app[0]?.id : (app as any)?.id,
         };
       } catch (error) {
         const message =
@@ -189,8 +200,11 @@ export const appsRouter = router({
         }
 
         // Call Groq API to modify app
-        const systemPrompt = `You are an expert web developer. Modify the existing web application based on the user's instruction.
-Return ONLY a JSON object with exactly these fields (no markdown, no code blocks, raw JSON):
+        const systemPrompt = `You are an expert web developer specializing in Industrial Brutalist design.
+Modify the existing web application based on the user's instruction.
+
+Return ONLY a valid JSON object. Do not include any explanations.
+Required JSON structure:
 {
   "htmlCode": "<modified html>",
   "cssCode": "/* modified styles */",
@@ -198,10 +212,10 @@ Return ONLY a JSON object with exactly these fields (no markdown, no code blocks
 }
 
 Maintain the Industrial Brutalist design:
-- Black backgrounds, Orange accents.
-- Thick borders, Hard shadows.
-- GENEROUS spacing and padding (fix any cramped UI).
-- Responsive layout.`;
+- Solid black backgrounds, International Orange accents.
+- Sharp corners, thick borders, hard drop shadows.
+- GENEROUS spacing and padding (minimum 2rem).
+- Clean, responsive layout using CSS Grid/Flexbox.`;
 
         const completion = await getGroqClient().chat.completions.create({
            messages: [
@@ -215,7 +229,7 @@ Maintain the Industrial Brutalist design:
              },
            ],
            model: 'llama-3.3-70b-versatile',
-           temperature: 1,
+           temperature: 0.7,
            max_tokens: 4096,
            top_p: 1,
            });
@@ -223,14 +237,7 @@ Maintain the Industrial Brutalist design:
           const responseText =
           completion.choices[0]?.message?.content || '';
 
-          let modifiedCode;
-          try {
-          modifiedCode = JSON.parse(responseText);
-          } catch {
-          throw new Error(
-            'Failed to parse AI response for app modification.'
-          );
-          }
+          const modifiedCode = parseAIResponse(responseText);
 
         // Update the app
         await updateGeneratedApp(input.id, {
