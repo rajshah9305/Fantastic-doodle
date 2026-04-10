@@ -46,10 +46,19 @@ export default function LivePreview({
   }, [code]);
 
   return (
-    <div className="h-full w-full bg-white rounded-lg overflow-hidden border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+    <div className="h-full w-full flex flex-col bg-zinc-950 border-2 border-orange-600/50 shadow-[4px_4px_0px_0px_rgba(234,88,12,0.4)] overflow-hidden">
+      {/* Preview chrome bar */}
+      <div className="h-8 bg-black border-b border-orange-600/30 flex items-center px-3 gap-1.5 shrink-0">
+        <div className="w-2.5 h-2.5 rounded-full bg-zinc-700 border border-zinc-600" />
+        <div className="w-2.5 h-2.5 rounded-full bg-zinc-700 border border-zinc-600" />
+        <div className="w-2.5 h-2.5 rounded-full bg-zinc-700 border border-zinc-600" />
+        <span className="ml-2 text-[10px] font-mono text-zinc-500 uppercase tracking-widest truncate">
+          {title}
+        </span>
+      </div>
       <iframe
         ref={iframeRef}
-        className="w-full h-full border-0"
+        className="w-full flex-1 border-0 bg-white"
         sandbox="allow-scripts allow-same-origin"
         title={title}
       />

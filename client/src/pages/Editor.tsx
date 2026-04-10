@@ -314,7 +314,7 @@ export default function Editor() {
 
             <div className="flex-1 overflow-hidden flex flex-col">
               {/* Preview Content */}
-              <div className={`flex-1 p-4 sm:p-6 md:p-8 bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:20px_20px] ${activeTab === "preview" ? "block" : "hidden"}`}>
+              <div className={`flex-1 overflow-hidden ${activeTab === "preview" ? "flex" : "hidden"}`}>
                 <LivePreview code={code} title={app.title} />
               </div>
 
