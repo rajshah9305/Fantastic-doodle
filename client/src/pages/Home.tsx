@@ -373,27 +373,47 @@ ${generatedApp.jsCode || ""}
           </div>
 
           <div className="flex-1 flex items-center justify-center p-2 xs:p-4 sm:p-6 md:p-8 bg-[radial-gradient(rgba(234,88,12,0.1)_1px,transparent_1px)] [background-size:20px_20px] overflow-auto relative min-h-0">
-            <div
-              className={`
-              bg-white relative transition-all duration-500 ease-in-out shadow-[0_25px_50px_-12px_rgba(234,88,12,0.3)] border-4 xs:border-[6px] sm:border-[8px] border-orange-900
-              ${device === "mobile" ? "w-[280px] xs:w-[320px] sm:w-[375px] h-[560px] xs:h-[640px] sm:h-[750px] rounded-[2rem] xs:rounded-[2.5rem] sm:rounded-[3rem]" : "w-full h-full max-w-full max-h-full rounded-md xs:rounded-lg"}
-            `}
-            >
-              {device === "mobile" && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 h-4 xs:h-5 sm:h-6 w-20 xs:w-28 sm:w-32 bg-orange-900 rounded-b-lg xs:rounded-b-xl z-20"></div>
-              )}
-
-              <div
-                className={`w-full h-full ${device === "mobile" ? "rounded-[1.75rem] xs:rounded-[2.25rem] sm:rounded-[2.5rem]" : "rounded-sm xs:rounded-md"}`}
-              >
+            {/* Mobile frame */}
+            {device === "mobile" && (
+              <div className="relative flex-shrink-0 w-[280px] xs:w-[320px] sm:w-[375px] h-[560px] xs:h-[640px] sm:h-[750px] border-2 border-orange-600/50 shadow-[4px_4px_0px_0px_rgba(234,88,12,0.4)] bg-zinc-950 flex flex-col overflow-hidden">
+                {/* Chrome bar */}
+                <div className="h-8 bg-black border-b border-orange-600/30 flex items-center px-3 gap-1.5 shrink-0">
+                  <div className="w-2 h-2 rounded-full bg-zinc-700 border border-zinc-600" />
+                  <div className="w-2 h-2 rounded-full bg-zinc-700 border border-zinc-600" />
+                  <div className="w-2 h-2 rounded-full bg-zinc-700 border border-zinc-600" />
+                  <span className="ml-2 text-[10px] font-mono text-zinc-500 uppercase tracking-widest truncate">
+                    {generatedApp.title}
+                  </span>
+                </div>
                 <iframe
-                  srcDoc={`<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>${generatedApp.title}</title>\n  <style>\n    * {\n      margin: 0;\n      padding: 0;\n      box-sizing: border-box;\n    }\n    body {\n      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;\n    }\n    ${generatedApp.cssCode || ""}\n  </style>\n</head>\n<body>\n  ${generatedApp.htmlCode || ""}\n  <script>\n    ${generatedApp.jsCode || ""}\n  </script>\n</body>\n</html>`}
-                  className="w-full h-full border-none"
+                  srcDoc={`<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>${generatedApp.title}</title>\n  <style>\n    * { margin: 0; padding: 0; box-sizing: border-box; }\n    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }\n    ${generatedApp.cssCode || ""}\n  </style>\n</head>\n<body>\n  ${generatedApp.htmlCode || ""}\n  <script>\n    ${generatedApp.jsCode || ""}\n  </script>\n</body>\n</html>`}
+                  className="w-full flex-1 border-none bg-white"
                   title="App Preview"
                   sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
                 />
               </div>
-            </div>
+            )}
+
+            {/* Desktop frame */}
+            {device === "desktop" && (
+              <div className="w-full h-full border-2 border-orange-600/50 shadow-[4px_4px_0px_0px_rgba(234,88,12,0.4)] bg-zinc-950 flex flex-col overflow-hidden">
+                {/* Chrome bar */}
+                <div className="h-8 bg-black border-b border-orange-600/30 flex items-center px-3 gap-1.5 shrink-0">
+                  <div className="w-2 h-2 rounded-full bg-zinc-700 border border-zinc-600" />
+                  <div className="w-2 h-2 rounded-full bg-zinc-700 border border-zinc-600" />
+                  <div className="w-2 h-2 rounded-full bg-zinc-700 border border-zinc-600" />
+                  <span className="ml-2 text-[10px] font-mono text-zinc-500 uppercase tracking-widest truncate">
+                    {generatedApp.title}
+                  </span>
+                </div>
+                <iframe
+                  srcDoc={`<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>${generatedApp.title}</title>\n  <style>\n    * { margin: 0; padding: 0; box-sizing: border-box; }\n    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }\n    ${generatedApp.cssCode || ""}\n  </style>\n</head>\n<body>\n  ${generatedApp.htmlCode || ""}\n  <script>\n    ${generatedApp.jsCode || ""}\n  </script>\n</body>\n</html>`}
+                  className="w-full flex-1 border-none bg-white"
+                  title="App Preview"
+                  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
