@@ -64,6 +64,7 @@ export const appsRouter = router({
     .input(
       z.object({
         prompt: z.string().min(1, 'Prompt is required'),
+        model: z.string().optional(),
         sessionId: z.string(),
       })
     )
@@ -89,7 +90,7 @@ export const appsRouter = router({
               content: `Generate a web application exactly as described: ${input.prompt}`,
             },
           ],
-          model: 'llama-3.3-70b-versatile',
+          model: input.model || 'llama-3.3-70b-versatile',
           temperature: 0.5,
           max_tokens: 8192,
           top_p: 1,
@@ -183,6 +184,7 @@ export const appsRouter = router({
       z.object({
         id: z.number(),
         instruction: z.string(),
+        model: z.string().optional(),
       })
     )
     .mutation(async ({ input }) => {
@@ -221,7 +223,7 @@ CORE RULES — follow these without exception:
                content: `Current app HTML:\n${app.htmlCode}\n\nCurrent app CSS:\n${app.cssCode}\n\nCurrent app JS:\n${app.jsCode}\n\nModification instruction: ${input.instruction}`,
              },
            ],
-           model: 'llama-3.3-70b-versatile',
+           model: input.model || 'llama-3.3-70b-versatile',
            temperature: 0.5,
            max_tokens: 8192,
            top_p: 1,

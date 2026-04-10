@@ -134,11 +134,12 @@ export default function Editor() {
     toast.success("App exported successfully");
   };
 
-  const handleAIChat = async (message: string) => {
+  const handleAIChat = async (message: string, model: string) => {
     setChatMessages((prev) => [...prev, { role: "user", content: message }]);
     modifyApp.mutate({
       id: appId,
       instruction: message,
+      model: model,
     });
   };
 

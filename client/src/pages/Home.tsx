@@ -4,6 +4,7 @@ import {
   Code2,
   Smartphone,
   Monitor,
+  ChevronDown,
   Zap,
   Wand2,
   Save,
@@ -28,7 +29,14 @@ interface GeneratedAppResponse {
 export default function Home() {
   // Read ?prompt= from URL so Examples/Templates pages can pre-fill the input
   const urlPrompt = new URLSearchParams(window.location.search).get("prompt") || "";
+  const MODELS = [
+    { id: "llama-3.3-70b-versatile", name: "Llama 3.3 70B (Versatile)" },
+    { id: "llama-3.1-70b-versatile", name: "Llama 3.1 70B (Versatile)" },
+    { id: "llama-3.1-8b-instant", name: "Llama 3.1 8B (Instant)" },
+    { id: "mixtral-8x7b-32768", name: "Mixtral 8x7b" },
+  ];
   const [prompt, setPrompt] = useState(urlPrompt);
+  const [selectedModel, setSelectedModel] = useState(MODELS[0].id);
   const [generatedApp, setGeneratedApp] = useState<GeneratedAppResponse | null>(null);
   const [showEditor, setShowEditor] = useState(false);
   const [device, setDevice] = useState<"mobile" | "desktop">("mobile");
@@ -69,7 +77,7 @@ export default function Home() {
       return;
     }
     const sessionId = getOrCreateSessionId();
-    generateMutation.mutate({ prompt: prompt.trim(), sessionId });
+    generateMutation.mutate({ prompt: prompt.trim(), sessionId, model: selectedModel });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -174,6 +182,23 @@ ${generatedApp.jsCode || ""}
                   autoFocus
                   disabled={isGenerating}
                 />
+                <div className="relative min-w-[120px] sm:min-w-[160px] border-l border-zinc-200 dark:border-zinc-700 ml-1 sm:ml-2 pl-1 sm:pl-2 group/select">
+                  <select
+                    value={selectedModel}
+                    onChange={(e) => setSelectedModel(e.target.value)}
+                    className="w-full bg-transparent text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider py-2.5 xs:py-3 sm:py-4 px-2 sm:px-3 outline-none appearance-none cursor-pointer text-zinc-600 dark:text-zinc-400 focus:text-orange-600 dark:focus:text-orange-500 transition-colors"
+                    disabled={isGenerating}
+                  >
+                    {MODELS.map((model) => (
+                      <option key={model.id} value={model.id} className="bg-white dark:bg-zinc-900">
+                        {model.name.split(" (")[0]}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="absolute inset-y-0 right-1 sm:right-2 flex items-center pointer-events-none text-zinc-400 group-hover/select:text-orange-500 transition-colors">
+                    <ChevronDown size={14} />
+                  </div>
+                </div>
                 <button
                   onClick={handleGenerate}
                   disabled={isGenerating || !prompt.trim()}

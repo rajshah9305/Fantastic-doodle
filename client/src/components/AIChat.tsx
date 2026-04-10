@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, Sparkles, Loader2 } from "lucide-react";
+import { Send, Sparkles, Loader2, ChevronDown } from "lucide-react";
 
 interface Message {
   role: "user" | "assistant";
@@ -11,9 +11,16 @@ interface Message {
 
 interface AIChatProps {
   messages: Message[];
-  onSendMessage: (message: string) => Promise<void>;
+  onSendMessage: (message: string, model: string) => Promise<void>;
   isLoading?: boolean;
 }
+
+const MODELS = [
+  { id: "llama-3.3-70b-versatile", name: "Llama 3.3 70B (Versatile)" },
+  { id: "llama-3.1-70b-versatile", name: "Llama 3.1 70B (Versatile)" },
+  { id: "llama-3.1-8b-instant", name: "Llama 3.1 8B (Instant)" },
+  { id: "mixtral-8x7b-32768", name: "Mixtral 8x7b" },
+];
 
 export default function AIChat({
   messages,
@@ -22,6 +29,7 @@ export default function AIChat({
 }: AIChatProps) {
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [selectedModel, setSelectedModel] = useState(MODELS[0].id);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -36,7 +44,7 @@ export default function AIChat({
 
     setIsSending(true);
     try {
-      await onSendMessage(input.trim());
+      await onSendMessage(input.trim(), selectedModel);
       setInput("");
     } finally {
       setIsSending(false);
@@ -52,14 +60,16 @@ export default function AIChat({
 
   return (
     <div className="flex flex-col h-full bg-black">
-      <div className="p-3 sm:p-4 border-b border-orange-900/30">
-        <div className="flex items-center gap-2">
-          <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" />
-          <h3 className="font-bold text-sm sm:text-base text-white">AI Assistant</h3>
+      <div className="p-3 sm:p-4 border-b border-orange-900/30 flex justify-between items-center">
+        <div>
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" />
+            <h3 className="font-bold text-sm sm:text-base text-white">AI Assistant</h3>
+          </div>
+          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+            Modify your app with natural language
+          </p>
         </div>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1">
-          Modify your app with natural language
-        </p>
       </div>
 
       <ScrollArea className="flex-1 p-3 sm:p-4">
@@ -115,7 +125,25 @@ export default function AIChat({
         </div>
       </ScrollArea>
 
-      <form onSubmit={handleSubmit} className="p-3 sm:p-4 border-t border-orange-900/30">
+      <form onSubmit={handleSubmit} className="p-3 sm:p-4 border-t border-orange-900/30 space-y-3">
+        <div className="relative group">
+          <select
+            value={selectedModel}
+            onChange={(e) => setSelectedModel(e.target.value)}
+            className="w-full bg-zinc-900 border border-orange-900/50 text-orange-500 text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider py-1.5 px-3 rounded appearance-none focus:outline-none focus:border-orange-500 cursor-pointer transition-colors"
+            disabled={isSending || isLoading}
+          >
+            {MODELS.map((model) => (
+              <option key={model.id} value={model.id}>
+                {model.name}
+              </option>
+            ))}
+          </select>
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none text-orange-500/50 group-hover:text-orange-500 transition-colors">
+            <ChevronDown size={14} />
+          </div>
+        </div>
+
         <div className="flex gap-2">
           <Textarea
             placeholder="Describe the changes..."
