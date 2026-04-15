@@ -8,40 +8,30 @@ set -e
 echo "🚀 Setting up Universal NLP Interface..."
 echo ""
 
-# Color codes
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
-
 # Check prerequisites
 echo "📋 Checking prerequisites..."
 
 # Check Python 3.11
 if ! command -v python3.11 &> /dev/null; then
-    echo -e "${RED}✗ Python 3.11 is required but not installed.${NC}"
+    echo "❌ Python 3.11 is required but not installed."
     echo "   Install via: brew install python@3.11 (macOS) or download from python.org"
     exit 1
 fi
-echo -e "${GREEN}✓${NC} Python 3.11 found: $(python3.11 --version)"
+echo "✅ Python 3.11 found: $(python3.11 --version)"
 
 # Check Node.js
 if ! command -v node &> /dev/null; then
-    echo -e "${RED}✗ Node.js is not installed. Please install Node.js 18 or higher.${NC}"
+    echo "❌ Node.js is not installed. Please install Node.js 18 or higher."
     exit 1
 fi
-NODE_VERSION=$(node --version | cut -d'v' -f2 | cut -d'.' -f1)
-if [ "$NODE_VERSION" -lt 18 ]; then
-    echo -e "${YELLOW}⚠ Node.js version is less than 18. Please upgrade.${NC}"
-fi
-echo -e "${GREEN}✓${NC} Node.js found: $(node --version)"
+echo "✅ Node.js found: $(node --version)"
 
 # Check npm
 if ! command -v npm &> /dev/null; then
-    echo -e "${RED}✗ npm is not installed. Please install npm.${NC}"
+    echo "❌ npm is not installed. Please install npm."
     exit 1
 fi
-echo -e "${GREEN}✓${NC} npm found: $(npm --version)"
+echo "✅ npm found: $(npm --version)"
 
 echo ""
 echo "📦 Setting up backend..."
@@ -57,22 +47,19 @@ fi
 echo "Activating virtual environment..."
 source venv/bin/activate
 
-# Upgrade pip
-echo "Upgrading pip..."
-pip install --upgrade pip --quiet
-
 # Install dependencies
 echo "Installing Python dependencies..."
-pip install -r requirements.txt --quiet
+pip install --upgrade pip
+pip install -r requirements.txt
 
 # Create .env file if it doesn't exist
 if [ ! -f ".env" ]; then
     echo "Creating .env file from template..."
     cp .env.example .env
-    echo -e "${YELLOW}⚠  Please edit backend/.env with your configuration${NC}"
+    echo "⚠️  Please edit backend/.env with your configuration"
 fi
 
-echo -e "${GREEN}✓${NC} Backend setup complete!"
+echo "✅ Backend setup complete!"
 
 cd ..
 
@@ -82,29 +69,27 @@ cd frontend
 
 # Install dependencies
 echo "Installing Node.js dependencies..."
-npm install --silent
+npm install
 
 # Create .env file if it doesn't exist
 if [ ! -f ".env" ]; then
     echo "Creating .env file from template..."
     cp .env.example .env
-    echo -e "${YELLOW}⚠  Please edit frontend/.env with your configuration${NC}"
+    echo "⚠️  Please edit frontend/.env with your configuration"
 fi
 
-echo -e "${GREEN}✓${NC} Frontend setup complete!"
+echo "✅ Frontend setup complete!"
 
 cd ..
 
 echo ""
 echo "✨ Setup complete!"
 echo ""
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "📝 Next steps:"
-echo ""
 echo "1. Get a Groq API key from https://console.groq.com"
 echo "2. Update configuration files:"
-echo "   - backend/.env (optional, can use UI)"
-echo "   - frontend/.env (set VITE_API_URL if needed)"
+echo "   - backend/.env"
+echo "   - frontend/.env"
 echo ""
 echo "🚀 To start the application:"
 echo ""
@@ -118,8 +103,5 @@ echo "  cd frontend"
 echo "  npm run dev"
 echo ""
 echo "Then visit http://localhost:5173"
-echo ""
-echo "💡 Run ./verify.sh to verify your setup"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 echo "Happy coding! 🎉"

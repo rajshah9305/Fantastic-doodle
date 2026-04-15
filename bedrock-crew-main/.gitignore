@@ -32,7 +32,10 @@ dist-ssr/
 .env
 .env.local
 .env.*.local
-.env.production
+# Keep .env.example files (safe templates)
+!.env.example
+!backend/.env.example
+!frontend/.env.example
 
 # IDE
 .vscode/
@@ -45,7 +48,6 @@ dist-ssr/
 # Logs
 logs/
 *.log
-*.log.*
 
 # Testing
 coverage/
@@ -54,10 +56,3 @@ coverage/
 # Build
 build/
 out/
-
-# Vercel
-.vercel
-
-# OS
-Thumbs.db
-Desktop.ini
