@@ -10,6 +10,7 @@ const ConfigSchema = z.object({
   GROQ_API_KEY: z.string().min(10, "Invalid GROQ_API_KEY"),
   DATABASE_URL: z.string().optional(),
   PORT: z.coerce.number().int().min(1).max(65535).default(3000),
+  VERCEL_URL: z.string().optional(),
 });
 
 type Config = z.infer<typeof ConfigSchema>;

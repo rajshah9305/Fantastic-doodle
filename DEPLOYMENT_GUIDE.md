@@ -1,57 +1,40 @@
 # Deployment Guide for Vercel
 
-This deployment guide covers the necessary steps to deploy your application on Vercel, including environment setup, configuration, troubleshooting, and verification. Follow the instructions below to ensure a smooth deployment process.
+This guide covers the steps to deploy the No-Code AI App Builder on Vercel.
 
-## 1. Environment Setup
+## 1. Prerequisites
 
-### Prerequisites:
-- Ensure you have a Vercel account. Sign up at [Vercel](https://vercel.com/signup).
-- Make sure your code repository is available on GitHub.
+- A Vercel account
+- A Groq API Key
+- (Optional) A PostgreSQL database connection string
 
-### Install Vercel CLI:
-To deploy from your local machine, install the Vercel CLI:
-```bash
-npm install -g vercel
-```
+## 2. Deployment Steps
 
-## 2. Configuration
+### Using Vercel Dashboard (Recommended)
 
-### Initializing a Project:
-1. Navigate to your project directory:
-   ```bash
-   cd YOUR_PROJECT_DIRECTORY
-   ```
-2. Run the following command to link your project to Vercel:
-   ```bash
-   vercel
-   ```
-   - Follow the prompts to set up your project.
+1.  **Import Project**: Connect your GitHub repository to Vercel.
+2.  **Framework Preset**: Select "Other" or leave as default (the project uses a custom `vercel.json`).
+3.  **Environment Variables**: Add the following in the Vercel dashboard:
+    -   `GROQ_API_KEY`: Your API key from Groq Console.
+    -   `DATABASE_URL`: (Optional) Your PostgreSQL connection string.
+    -   `NODE_ENV`: Set to `production`.
+4.  **Build Settings**: The build command is automatically detected from `package.json` (`npm run build`).
+5.  **Deploy**: Click "Deploy".
 
-### Environment Variables:
-- Set up any required environment variables in your Vercel dashboard under the "Settings" section of your project. For example, you might need to add:
-  - `API_KEY`
-  - `DATABASE_URL`
+### Using Vercel CLI
 
-## 3. Deployment Steps
-1. To deploy your application, run:
-   ```bash
-   vercel --prod
-   ```
-2. Follow the prompts to complete the deployment.
+1.  Install Vercel CLI: `npm i -g vercel`
+2.  Run `vercel` in the project root and follow the prompts.
+3.  Add environment variables when prompted or via the Vercel dashboard.
+4.  Deploy to production: `vercel --prod`
+
+## 3. Critical Configuration
+
+-   **Function Timeout**: The `api/trpc.ts` function is configured with a `maxDuration` of 60 seconds in `vercel.json` to allow enough time for Groq API responses.
+-   **Build Process**: The build script (`npm run build`) automatically runs type-checks before building the frontend assets.
 
 ## 4. Troubleshooting
-- If you encounter build errors, check the logs in the Vercel dashboard.
-- Ensure that all environment variables are correctly set and accessible within your application.
-- Common issues include:
-  - Incorrect `build` scripts in `package.json`.
-  - Missing environment variables.
 
-## 5. Verification
-After deployment, verify the following:
-- Access your live application using the URL provided by Vercel after deployment.
-- Check the functionality of your application and ensure there are no errors during operation.
-- Monitor the project dashboard for any errors or performance metrics.
-
----
-
-With these instructions, you should be able to successfully deploy your application on Vercel. Happy deploying!
+-   **Timeout Errors**: If you encounter 504 Gateway Timeout errors, ensure `maxDuration` is correctly set in `vercel.json` and your Vercel plan supports the configured duration.
+-   **Database Connection**: If the `DATABASE_URL` is missing or invalid, the app will gracefully fall back to "Demo Mode" (no persistence).
+-   **Build Failures**: Check the Vercel build logs. Ensure all dependencies are correctly listed in `package.json`.

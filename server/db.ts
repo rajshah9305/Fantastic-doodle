@@ -52,7 +52,7 @@ export async function createSession(session: InsertSession) {
     return [{ id: Math.floor(Math.random() * 10000), ...session }];
   }
   try {
-    const result = await db.insert(sessions).values(session);
+    const result = await db.insert(sessions).values(session).returning();
     return result;
   } catch (error) {
     console.error("[Database] Error creating session:", error);
@@ -86,7 +86,7 @@ export async function createGeneratedApp(app: InsertGeneratedApp) {
     return [{ id: Math.floor(Math.random() * 100000), ...app, generatedAt: new Date(), updatedAt: new Date() }];
   }
   try {
-    const result = await db.insert(generatedApps).values(app);
+    const result = await db.insert(generatedApps).values(app).returning();
     return result;
   } catch (error) {
     console.error("[Database] Error creating app:", error);
@@ -163,7 +163,8 @@ export async function updateGeneratedApp(
     return db
       .update(generatedApps)
       .set({ ...updates, updatedAt: new Date() })
-      .where(eq(generatedApps.id, id));
+      .where(eq(generatedApps.id, id))
+      .returning();
   } catch (error) {
     console.error("[Database] Error updating app:", error);
     return { success: true };
