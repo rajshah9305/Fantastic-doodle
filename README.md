@@ -22,7 +22,7 @@ Transform natural language descriptions into fully functional web applications u
 
 ### Prerequisites
 
-- Node.js 22.x or later
+- Node.js 24.x or later
 - A Groq API Key (get one at [console.groq.com](https://console.groq.com))
 - (Optional) A PostgreSQL database (e.g., Supabase)
 
