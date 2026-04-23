@@ -11,6 +11,9 @@ import { logger, requestLogger } from "../utils/logging.js";
 
 // Validate config on startup
 config.load();
+if (!config.hasGroqApiKey()) {
+  logger.warn("Config", "GROQ_API_KEY is not configured; app generation endpoints will fail until it is set");
+}
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
