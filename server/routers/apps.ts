@@ -138,7 +138,7 @@ export const appsRouter = router({
           htmlCode: appData.htmlCode,
           cssCode: appData.cssCode || null,
           jsCode: appData.jsCode || null,
-          id: Array.isArray(app) ? app[0]?.id : (app as any)?.id,
+          id: app[0]?.id,
         };
       } catch (error) {
         const message =

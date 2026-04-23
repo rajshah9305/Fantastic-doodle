@@ -5,7 +5,7 @@ export const SESSION_STORAGE_KEY = "app_session_id";
 export function getOrCreateSessionId(): string {
   let sessionId = localStorage.getItem(SESSION_STORAGE_KEY);
   if (!sessionId) {
-    sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    sessionId = `session_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
     localStorage.setItem(SESSION_STORAGE_KEY, sessionId);
   }
   return sessionId;
