@@ -2,12 +2,11 @@
  * Environment configuration with validation
  * Ensures expected variables are available at startup
  */
-
 import { z } from "zod";
 
 const ConfigSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
-  GROQ_API_KEY: z.string().min(10, "Invalid GROQ_API_KEY"),
+  GROQ_API_KEY: z.string().min(10, "Invalid GROQ_API_KEY").optional(),
   DATABASE_URL: z.string().optional(),
   PORT: z.coerce.number().int().min(1).max(65535).default(3000),
   VERCEL_URL: z.string().optional(),
@@ -22,7 +21,6 @@ class Configuration {
     if (this.config) {
       return this.config;
     }
-
     try {
       this.config = ConfigSchema.parse(process.env);
       console.log("[Config] Environment variables loaded successfully");
@@ -55,6 +53,10 @@ class Configuration {
     return !!this.get("DATABASE_URL");
   }
 
+  hasGroqApiKey(): boolean {
+    const key = this.get("GROQ_API_KEY");
+    return typeof key === "string" && key.trim().length >= 10;
+  }
 }
 
 export const config = new Configuration();
