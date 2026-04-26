@@ -11,6 +11,7 @@ import {
 import { Loader2, ArrowLeft, Copy, Download, Trash2, Code, FileText, Braces } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { buildCodeBundle, buildHtmlDocument } from "@/lib/app-code";
 
 export default function AppViewer() {
   const { id } = useParams<{ id: string }>();
@@ -39,35 +40,7 @@ export default function AppViewer() {
 
   useEffect(() => {
     if (iframeRef.current && app) {
-      const htmlContent = `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>${app.title}</title>
-          <style>
-            * {
-              margin: 0;
-              padding: 0;
-              box-sizing: border-box;
-            }
-            body {
-              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            }
-            ${app.cssCode || ""}
-          </style>
-        </head>
-        <body>
-          ${app.htmlCode || ""}
-          <script>
-            ${app.jsCode || ""}
-          </script>
-        </body>
-        </html>
-      `;
-
-      iframeRef.current.srcdoc = htmlContent;
+      iframeRef.current.srcdoc = buildHtmlDocument(app, true);
     }
   }, [app]);
 
@@ -78,18 +51,7 @@ export default function AppViewer() {
     }
 
     try {
-      const code = `<!-- HTML -->
-${app.htmlCode || ""}
-
-<!-- CSS -->
-<style>
-${app.cssCode || ""}
-</style>
-
-<!-- JavaScript -->
-<script>
-${app.jsCode || ""}
-</script>`;
+      const code = buildCodeBundle(app);
 
       await navigator.clipboard.writeText(code);
       setCopied(true);
@@ -104,23 +66,7 @@ ${app.jsCode || ""}
   const handleDownload = () => {
     if (!app) return;
 
-    const htmlContent = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${app.title}</title>
-  <style>
-    ${app.cssCode || ""}
-  </style>
-</head>
-<body>
-  ${app.htmlCode || ""}
-  <script>
-    ${app.jsCode || ""}
-  </script>
-</body>
-</html>`;
+    const htmlContent = buildHtmlDocument(app);
 
     const blob = new Blob([htmlContent], { type: "text/html" });
     const url = URL.createObjectURL(blob);

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Send, Sparkles, Loader2 } from "lucide-react";
+import { getDefaultAiModel, type AIModelId } from "@/lib/models";
 
 interface Message {
   role: "user" | "assistant";
@@ -11,7 +12,7 @@ interface Message {
 
 interface AIChatProps {
   messages: Message[];
-  onSendMessage: (message: string) => Promise<void>;
+  onSendMessage: (message: string, model: AIModelId) => Promise<void>;
   isLoading?: boolean;
 }
 
@@ -36,7 +37,7 @@ export default function AIChat({
 
     setIsSending(true);
     try {
-      await onSendMessage(input.trim());
+      await onSendMessage(input.trim(), getDefaultAiModel());
       setInput("");
     } finally {
       setIsSending(false);

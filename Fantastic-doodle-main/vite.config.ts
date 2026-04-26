@@ -21,9 +21,12 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks: {
-          'monaco': ['@monaco-editor/react'],
-          'vendor': ['react', 'react-dom'],
+        manualChunks(id) {
+          if (id.includes("@monaco-editor/react")) return "monaco";
+          if (id.includes("node_modules/react") || id.includes("node_modules/react-dom")) {
+            return "vendor";
+          }
+          return undefined;
         },
       },
     },

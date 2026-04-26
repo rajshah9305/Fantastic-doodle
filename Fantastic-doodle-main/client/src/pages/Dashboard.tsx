@@ -91,7 +91,7 @@ export default function Dashboard() {
             className="hover:text-white transition-colors flex-shrink-0"
           >
             <div className="w-6 xs:w-7 sm:w-8 h-6 xs:h-7 sm:h-8 bg-orange-600 flex items-center justify-center text-white font-bold text-xs xs:text-sm sm:text-base shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-              A
+              R
             </div>
           </button>
           <div className="h-4 xs:h-5 sm:h-6 w-px bg-orange-900/30 hidden sm:block flex-shrink-0"></div>

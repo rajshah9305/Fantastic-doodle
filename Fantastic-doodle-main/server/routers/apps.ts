@@ -10,7 +10,13 @@ import {
   getSessionById,
 } from '../db.js';
 import { getGroqClient } from '../groqClient.js';
-import { DEFAULT_MODEL } from '../../shared/models.js';
+
+const SUPPORTED_MODELS = [
+  'llama-3.3-70b-versatile',
+  'llama-3.1-8b-instant',
+  'openai/gpt-oss-120b',
+  'openai/gpt-oss-20b',
+] as const;
 
 // Helper to parse AI response robustly
 const parseAIResponse = (text: string) => {
@@ -21,7 +27,7 @@ const parseAIResponse = (text: string) => {
 
     const cleanJson = jsonMatch ? jsonMatch[1].trim() : text.trim();
     return JSON.parse(cleanJson);
-  } catch (error) {
+  } catch {
     throw new Error('Failed to parse AI response. The generated response was not valid JSON.');
   }
 };
@@ -65,6 +71,7 @@ export const appsRouter = router({
     .input(
       z.object({
         prompt: z.string().min(1, 'Prompt is required'),
+        model: z.enum(SUPPORTED_MODELS).optional(),
         sessionId: z.string(),
       })
     )
@@ -79,7 +86,7 @@ export const appsRouter = router({
         }
 
         // Call Groq API to generate app
-         const completion = await getGroqClient().chat.completions.create({
+        const completion = await getGroqClient().chat.completions.create({
           messages: [
             {
               role: 'system',
@@ -90,11 +97,10 @@ export const appsRouter = router({
               content: `Generate a web application exactly as described: ${input.prompt}`,
             },
           ],
-          model: DEFAULT_MODEL,
+          model: input.model || 'llama-3.3-70b-versatile',
           temperature: 0.5,
-          max_completion_tokens: 8192,
+          max_tokens: 8192,
           top_p: 1,
-          response_format: { type: "json_object" },
         });
 
         const responseText =
@@ -132,50 +138,12 @@ export const appsRouter = router({
           htmlCode: appData.htmlCode,
           cssCode: appData.cssCode || null,
           jsCode: appData.jsCode || null,
-          id: Array.isArray(app) ? app[0]?.id : (app as any)?.id,
+          id: app[0]?.id,
         };
       } catch (error) {
         const message =
           error instanceof Error ? error.message : 'Unknown error';
         throw new Error(`Failed to generate app: ${message}`);
-      }
-    }),
-
-  // Save a streamed app to the database
-  save: publicProcedure
-    .input(
-      z.object({
-        sessionId: z.string(),
-        title: z.string(),
-        description: z.string().optional(),
-        prompt: z.string(),
-        htmlCode: z.string(),
-        cssCode: z.string().optional(),
-        jsCode: z.string().optional(),
-      })
-    )
-    .mutation(async ({ input }) => {
-      try {
-        const session = await getSessionById(input.sessionId);
-        if (!session) {
-          await createSession({ sessionId: input.sessionId });
-        }
-        const app = await createGeneratedApp({
-          sessionId: input.sessionId,
-          title: input.title,
-          description: input.description || input.prompt,
-          prompt: input.prompt,
-          htmlCode: input.htmlCode,
-          cssCode: input.cssCode || '',
-          jsCode: input.jsCode || '',
-        });
-        return {
-          success: true,
-          id: Array.isArray(app) ? app[0]?.id : (app as any)?.id,
-        };
-      } catch (error) {
-        const message = error instanceof Error ? error.message : 'Unknown error';
-        throw new Error(`Failed to save app: ${message}`);
       }
     }),
 
@@ -223,6 +191,7 @@ export const appsRouter = router({
       z.object({
         id: z.number(),
         instruction: z.string(),
+        model: z.enum(SUPPORTED_MODELS).optional(),
       })
     )
     .mutation(async ({ input }) => {
@@ -250,28 +219,27 @@ CORE RULES — follow these without exception:
 4. Maintain or improve visual quality — the result must still look polished and intentional.
 5. If the instruction is ambiguous, make the most sensible interpretation and apply it cleanly.`;
 
+        // Call Groq API to modify app
         const completion = await getGroqClient().chat.completions.create({
-           messages: [
-             {
-               role: 'system',
-               content: systemPrompt,
-             },
-             {
-               role: 'user',
-               content: `Current app HTML:\n${app.htmlCode}\n\nCurrent app CSS:\n${app.cssCode}\n\nCurrent app JS:\n${app.jsCode}\n\nModification instruction: ${input.instruction}`,
-             },
-           ],
-           model: DEFAULT_MODEL,
-           temperature: 0.5,
-           max_completion_tokens: 8192,
-           top_p: 1,
-           response_format: { type: "json_object" },
-           });
+          messages: [
+            {
+              role: 'system',
+              content: systemPrompt,
+            },
+            {
+              role: 'user',
+              content: `Current app HTML:\n${app.htmlCode}\n\nCurrent app CSS:\n${app.cssCode}\n\nCurrent app JS:\n${app.jsCode}\n\nModification instruction: ${input.instruction}`,
+            },
+          ],
+          model: input.model || 'llama-3.3-70b-versatile',
+          temperature: 0.5,
+          max_tokens: 8192,
+          top_p: 1,
+        });
 
-          const responseText =
-          completion.choices[0]?.message?.content || '';
+        const responseText = completion.choices[0]?.message?.content || '';
 
-          const modifiedCode = parseAIResponse(responseText);
+        const modifiedCode = parseAIResponse(responseText);
 
         // Update the app
         await updateGeneratedApp(input.id, {

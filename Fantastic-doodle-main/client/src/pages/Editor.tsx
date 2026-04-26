@@ -6,6 +6,8 @@ import CodeEditor from "@/components/CodeEditor";
 import LivePreview from "@/components/LivePreview";
 import AIChat from "@/components/AIChat";
 import { Download, Save, ArrowLeft, Loader2, Code, Eye, Sparkles } from "lucide-react";
+import { buildHtmlDocument } from "@/lib/app-code";
+import type { AIModelId } from "@/lib/models";
 
 interface Message {
   role: "user" | "assistant";
@@ -42,23 +44,12 @@ export default function Editor() {
   // Modify app with AI
   const modifyApp = trpc.apps.modify.useMutation({
     onSuccess: (data: any) => {
-      const fullCode = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${data.title || app?.title || "Generated App"}</title>
-  <style>
-    ${data.cssCode || ""}
-  </style>
-</head>
-<body>
-  ${data.htmlCode || ""}
-  <script>
-    ${data.jsCode || ""}
-  </script>
-</body>
-</html>`;
+      const fullCode = buildHtmlDocument({
+        title: data.title || app?.title || "Generated App",
+        htmlCode: data.htmlCode,
+        cssCode: data.cssCode,
+        jsCode: data.jsCode,
+      });
       setCode(fullCode);
       setChatMessages((prev) => [
         ...prev,
@@ -84,23 +75,7 @@ export default function Editor() {
 
   useEffect(() => {
     if (app) {
-      const fullCode = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${app.title}</title>
-  <style>
-    ${app.cssCode || ""}
-  </style>
-</head>
-<body>
-  ${app.htmlCode || ""}
-  <script>
-    ${app.jsCode || ""}
-  </script>
-</body>
-</html>`;
+      const fullCode = buildHtmlDocument(app);
       setCode(fullCode);
     }
   }, [app]);
@@ -134,12 +109,17 @@ export default function Editor() {
     toast.success("App exported successfully");
   };
 
-  const handleAIChat = async (message: string) => {
+  const handleAIChat = async (message: string, model: AIModelId) => {
     setChatMessages((prev) => [...prev, { role: "user", content: message }]);
-    modifyApp.mutate({
-      id: appId,
-      instruction: message,
-    });
+    try {
+      await modifyApp.mutateAsync({
+        id: appId,
+        instruction: message,
+        model: model,
+      });
+    } catch {
+      // The mutation onError handler adds assistant feedback.
+    }
   };
 
   if (isLoading) {
@@ -189,7 +169,7 @@ export default function Editor() {
             className="shrink-0 group"
           >
             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-orange-600 flex items-center justify-center text-white font-black text-lg sm:text-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] group-hover:translate-x-[1px] group-hover:translate-y-[1px] group-hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
-              A
+              R
             </div>
           </button>
           <div className="hidden sm:block h-8 w-1 bg-zinc-800"></div>
@@ -327,12 +307,6 @@ export default function Editor() {
                 />
               </div>
 
-              {/* Fallback for Code tab on Desktop (should not happen due to hidden logic but good for completeness) */}
-              {activeTab === "code" && (
-                <div className="md:hidden flex-1">
-                  {/* Handled by the first flex panel */}
-                </div>
-              )}
             </div>
           </div>
         </div>

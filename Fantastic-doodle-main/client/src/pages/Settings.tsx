@@ -20,7 +20,7 @@ export default function Settings() {
           autoSave: settings.autoSave ?? true,
         };
       }
-    } catch (error) {
+    } catch {
       // Ignore parse errors, use defaults
     }
     return {
@@ -31,10 +31,11 @@ export default function Settings() {
     };
   };
 
-  const [name, setName] = useState(loadSettings().name);
-  const [email, setEmail] = useState(loadSettings().email);
-  const [notifications, setNotifications] = useState(loadSettings().notifications);
-  const [autoSave, setAutoSave] = useState(loadSettings().autoSave);
+  const initialSettings = loadSettings();
+  const [name, setName] = useState(initialSettings.name);
+  const [email, setEmail] = useState(initialSettings.email);
+  const [notifications, setNotifications] = useState(initialSettings.notifications);
+  const [autoSave, setAutoSave] = useState(initialSettings.autoSave);
 
   const handleSave = () => {
     try {
