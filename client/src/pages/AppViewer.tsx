@@ -186,7 +186,7 @@ export default function AppViewer() {
                 <div className="border border-orange-900/30 rounded-lg overflow-hidden bg-white">
                   <iframe
                     ref={iframeRef}
-                    className="w-full h-72 sm:h-96 border-none"
+                    className="w-full h-[420px] sm:h-[520px] lg:h-[580px] border-none"
                     title="App Preview"
                     sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups"
                   />

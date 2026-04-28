@@ -177,7 +177,7 @@ export default function Editor() {
             <h2 className="text-[10px] sm:text-xs font-black text-orange-600 tracking-[0.2em] uppercase">
               App Studio / Editor
             </h2>
-            <p className="text-sm sm:text-lg font-bold text-white truncate max-w-[150px] sm:max-w-md uppercase tracking-tight">
+            <p className="text-sm sm:text-lg font-bold text-white truncate max-w-[120px] sm:max-w-xs md:max-w-md uppercase tracking-tight">
               {app.title}
             </p>
           </div>
