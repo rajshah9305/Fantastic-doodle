@@ -84,7 +84,7 @@ export default function Dashboard() {
       ></div>
 
       {/* Header */}
-      <header className="h-13 xs:h-14 sm:h-16 border-b border-orange-900/30 bg-black/80 backdrop-blur-sm flex items-center justify-between px-3 xs:px-4 sm:px-4 md:px-6 z-20 relative gap-2">
+      <header className="h-12 xs:h-14 sm:h-16 border-b border-orange-900/30 bg-black/80 backdrop-blur-sm flex items-center justify-between px-3 xs:px-4 sm:px-4 md:px-6 z-20 relative gap-2">
         <div className="flex items-center gap-2 xs:gap-3 sm:gap-4 min-w-0 flex-1">
           <button
             onClick={() => navigate("/")}

@@ -1,4 +1,3 @@
-import { useRef, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import { useTheme } from "@/contexts/ThemeContext";
 

@@ -219,7 +219,6 @@ CORE RULES — follow these without exception:
 4. Maintain or improve visual quality — the result must still look polished and intentional.
 5. If the instruction is ambiguous, make the most sensible interpretation and apply it cleanly.`;
 
-        // Call Groq API to modify app
         const completion = await getGroqClient().chat.completions.create({
           messages: [
             {
