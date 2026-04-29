@@ -128,6 +128,7 @@
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
@@ -135,6 +136,10 @@
     font-feature-settings: "rounding" 1;
     overflow-x: hidden;
     width: 100%;
+    min-height: 100vh;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   * {
@@ -153,12 +158,24 @@
     @apply cursor-pointer;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight;
-  }
+  h1 { @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-tight; }
+  h2 { @apply text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-snug; }
+  h3 { @apply text-xl sm:text-2xl md:text-3xl font-bold tracking-tight; }
+  h4 { @apply text-lg sm:text-xl font-semibold; }
 
   p {
-    @apply leading-relaxed;
+    @apply text-sm sm:text-base leading-relaxed;
+  }
+
+  /* Improved touch targets for small devices */
+  @media (pointer: coarse) {
+    button, a, input, select, textarea {
+      min-height: 44px;
+    }
+    input[type="checkbox"], input[type="radio"] {
+      min-height: 24px;
+      min-width: 24px;
+    }
   }
 }
 
@@ -189,11 +206,14 @@
     .container { padding-left: 2.5rem; padding-right: 2.5rem; max-width: 1280px; }
   }
   @media (min-width: 1280px) {
-    .container { padding-left: 3rem; padding-right: 3rem; max-width: 1400px; }
+    .container { padding-left: 3rem; padding-right: 3rem; max-width: 1440px; }
   }
 
-  ::-webkit-scrollbar       { width: 8px; height: 8px; }
-  ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
+  ::-webkit-scrollbar       { width: 6px; height: 6px; }
+  @media (min-width: 768px) {
+    ::-webkit-scrollbar     { width: 8px; height: 8px; }
+  }
+  ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 10px; }
   ::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, #ea580c, #f59e0b);
     border-radius: 10px;
