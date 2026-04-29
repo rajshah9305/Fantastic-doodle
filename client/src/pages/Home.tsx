@@ -166,7 +166,7 @@ export default function Home() {
           </div>
 
           {/* Right hero content */}
-          <div className="w-full lg:w-1/2 flex flex-col items-center justify-center px-5 sm:px-10 lg:px-14 xl:px-20 py-10 lg:py-0 relative">
+          <div className="w-full lg:w-1/2 flex flex-col items-center justify-center px-4 sm:px-10 lg:px-14 xl:px-20 py-8 sm:py-12 lg:py-0 relative">
 
             {/* Mobile background */}
             <div
@@ -185,7 +185,7 @@ export default function Home() {
                 AI App Generator
               </p>
 
-              <h1 className="text-center font-black tracking-tight leading-[1.0] text-5xl sm:text-6xl md:text-7xl mb-6">
+              <h1 className="text-center font-black tracking-tight leading-[1.0] text-4xl sm:text-6xl md:text-7xl lg:text-8xl mb-6 sm:mb-8">
                 <span className="text-white block">IMAGINE</span>
                 <span className="text-orange-500 block">CONSTRUCT</span>
                 <span className="text-white block mt-1">DEPLOY</span>
@@ -216,7 +216,7 @@ export default function Home() {
                     <button
                       type="submit"
                       disabled={isGenerating || !prompt.trim()}
-                      className="ml-auto flex items-center gap-2 px-5 py-2.5 bg-orange-600 hover:bg-orange-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-mono text-xs font-bold uppercase tracking-widest rounded-lg transition-all duration-200 active:scale-95 shadow-[0_4px_0_rgba(0,0,0,0.5)] hover:shadow-[0_2px_0_rgba(0,0,0,0.5)] hover:translate-y-[2px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-400"
+                      className="ml-auto flex items-center gap-2 px-5 py-3 sm:py-2.5 min-h-[44px] sm:min-h-0 bg-orange-600 hover:bg-orange-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-mono text-xs font-bold uppercase tracking-widest rounded-lg transition-all duration-200 active:scale-95 shadow-[0_4px_0_rgba(0,0,0,0.5)] hover:shadow-[0_2px_0_rgba(0,0,0,0.5)] hover:translate-y-[2px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-400"
                       aria-label={isGenerating ? "Generating app..." : "Generate app"}
                     >
                       {isGenerating ? (
@@ -264,7 +264,7 @@ export default function Home() {
     <div className="h-screen flex flex-col bg-black text-slate-300 overflow-hidden font-sans">
 
       {/* Header */}
-      <header className="h-12 sm:h-14 border-b border-orange-900/30 bg-zinc-950 flex items-center justify-between px-3 sm:px-4 md:px-6 z-20 relative shrink-0 gap-2">
+      <header className="h-14 sm:h-16 border-b border-orange-900/30 bg-zinc-950 flex items-center justify-between px-3 sm:px-4 md:px-6 z-20 relative shrink-0 gap-2">
         <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
           <button
             onClick={() => setShowEditor(false)}
@@ -317,7 +317,7 @@ export default function Home() {
       </header>
 
       {/* Mobile tab bar */}
-      <div className="md:hidden h-10 bg-zinc-900 border-b border-zinc-800 flex shrink-0">
+      <div className="md:hidden h-12 bg-zinc-900 border-b border-zinc-800 flex shrink-0">
         <button
           onClick={() => setActiveTab("code")}
           className={`flex-1 flex items-center justify-center gap-1.5 text-[10px] font-mono font-bold uppercase transition-colors ${
