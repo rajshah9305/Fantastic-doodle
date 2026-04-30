@@ -12,6 +12,17 @@ export function buildHtmlDocument(parts: AppCodeParts, includeBaseStyle = false)
   const title = parts.title || "Generated App";
   const styles = `${includeBaseStyle ? `${DEFAULT_BODY_STYLE}\n` : ""}${parts.cssCode || ""}`.trim();
 
+  // Basic cleanup to prevent nested head/body if AI returns full HTML
+  let htmlBody = (parts.htmlCode || "").trim();
+
+  // If the AI returned a full document, try to extract just the body content
+  if (htmlBody.toLowerCase().includes("<body")) {
+    const bodyMatch = htmlBody.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+    if (bodyMatch) {
+      htmlBody = bodyMatch[1].trim();
+    }
+  }
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +34,7 @@ export function buildHtmlDocument(parts: AppCodeParts, includeBaseStyle = false)
   </style>
 </head>
 <body>
-  ${parts.htmlCode || ""}
+  ${htmlBody}
   <script>
     ${parts.jsCode || ""}
   </script>
