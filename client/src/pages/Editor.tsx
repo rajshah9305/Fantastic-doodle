@@ -124,10 +124,10 @@ export default function Editor() {
 
   if (isLoading) {
     return (
-      <div className="h-screen flex items-center justify-center bg-black">
+      <div className="h-screen flex items-center justify-center bg-white">
         <div className="text-center">
           <Loader2 className="w-12 h-12 animate-spin mx-auto mb-4 text-orange-600" />
-          <p className="text-orange-400 font-mono text-sm sm:text-base uppercase tracking-tighter">Initializing Workspace...</p>
+          <p className="text-orange-600 font-mono text-sm sm:text-base uppercase tracking-tighter">Initializing Workspace...</p>
         </div>
       </div>
     );
@@ -135,12 +135,12 @@ export default function Editor() {
 
   if (!app) {
     return (
-      <div className="h-screen flex items-center justify-center bg-black px-4">
-        <div className="text-center border-4 border-orange-600 p-6 sm:p-8 shadow-[8px_8px_0px_0px_rgba(234,88,12,1)] max-w-md w-full bg-zinc-950">
-          <p className="text-white mb-6 font-mono text-lg sm:text-xl font-black uppercase tracking-tighter">404: Construction Not Found</p>
+      <div className="h-screen flex items-center justify-center bg-white px-4">
+        <div className="text-center border-4 border-orange-600 p-6 sm:p-8 shadow-[8px_8px_0px_0px_rgba(234,88,12,1)] max-w-md w-full bg-white">
+          <p className="text-zinc-950 mb-6 font-mono text-lg sm:text-xl font-black uppercase tracking-tighter">404: Construction Not Found</p>
           <button
             onClick={() => navigate("/dashboard")}
-            className="w-full bg-orange-600 hover:bg-orange-700 text-white rounded-none border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center px-4 py-3 min-h-[44px] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] font-mono font-black text-xs sm:text-sm uppercase tracking-widest"
+            className="w-full bg-orange-600 hover:bg-orange-700 text-zinc-950 rounded-none border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center px-4 py-3 min-h-[44px] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] font-mono font-black text-xs sm:text-sm uppercase tracking-widest"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Return to Dashboard
@@ -151,7 +151,7 @@ export default function Editor() {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-black text-slate-300 overflow-hidden font-sans relative">
+    <div className="h-screen flex flex-col bg-white text-zinc-700 overflow-hidden font-sans relative">
       {/* Grid Pattern Background */}
       <div
         className="absolute inset-0 z-0 opacity-[0.03]"
@@ -163,7 +163,7 @@ export default function Editor() {
       ></div>
 
       {/* Header */}
-      <header className="h-16 sm:h-20 border-b-4 border-black bg-zinc-950 flex items-center justify-between px-3 xs:px-4 md:px-6 z-20 relative shadow-[0px_4px_0px_0px_rgba(0,0,0,1)] shrink-0 gap-2">
+      <header className="h-16 sm:h-20 border-b-4 border-black bg-white flex items-center justify-between px-3 xs:px-4 md:px-6 z-20 relative shadow-[0px_4px_0px_0px_rgba(0,0,0,1)] shrink-0 gap-2">
         <div className="flex items-center gap-2 sm:gap-4 min-w-0">
           <button
             onClick={() => navigate("/dashboard")}
@@ -174,12 +174,12 @@ export default function Editor() {
               R
             </div>
           </button>
-          <div className="hidden sm:block h-8 w-1 bg-zinc-800"></div>
+          <div className="hidden sm:block h-8 w-1 bg-zinc-200"></div>
           <div className="min-w-0">
             <h2 className="text-[9px] sm:text-xs font-black text-orange-600 tracking-[0.2em] uppercase leading-none mb-1">
               Studio
             </h2>
-            <p className="text-xs sm:text-lg font-bold text-white truncate max-w-[100px] xs:max-w-[150px] sm:max-w-md uppercase tracking-tight">
+            <p className="text-xs sm:text-lg font-bold text-zinc-950 truncate max-w-[100px] xs:max-w-[150px] sm:max-w-md uppercase tracking-tight">
               {app.title}
             </p>
           </div>
@@ -189,7 +189,7 @@ export default function Editor() {
           <button
             onClick={handleSave}
             disabled={updateApp.isPending}
-            className="min-h-[44px] px-2.5 sm:px-4 py-1.5 sm:py-2 font-mono text-[10px] sm:text-xs font-black uppercase tracking-widest transition-all bg-zinc-900 text-white border-2 border-black hover:bg-zinc-800 disabled:opacity-50 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] flex items-center gap-1.5 sm:gap-2"
+            className="min-h-[44px] px-2.5 sm:px-4 py-1.5 sm:py-2 font-mono text-[10px] sm:text-xs font-black uppercase tracking-widest transition-all bg-zinc-100 text-zinc-950 border-2 border-black hover:bg-zinc-200 disabled:opacity-50 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] flex items-center gap-1.5 sm:gap-2"
           >
             {updateApp.isPending ? (
               <Loader2 size={12} className="animate-spin sm:w-3.5 sm:h-3.5" />
@@ -211,11 +211,11 @@ export default function Editor() {
 
       <div className="flex-1 flex flex-col overflow-hidden relative z-10">
         {/* Tab Navigation - visible on mobile */}
-        <div className="md:hidden h-14 bg-zinc-900 border-b-2 border-black flex items-center justify-around px-1 shrink-0">
+        <div className="md:hidden h-14 bg-white border-b-2 border-black flex items-center justify-around px-1 shrink-0">
           <button
             onClick={() => setActiveTab("ai")}
             className={`flex-1 flex flex-col items-center justify-center py-1 transition-all min-h-[48px] ${
-              activeTab === "ai" ? "text-orange-500 bg-black/20" : "text-slate-500"
+              activeTab === "ai" ? "text-orange-600 bg-zinc-100" : "text-zinc-500"
             }`}
           >
             <Sparkles size={18} />
@@ -224,7 +224,7 @@ export default function Editor() {
           <button
             onClick={() => setActiveTab("code")}
             className={`flex-1 flex flex-col items-center justify-center py-1 transition-all min-h-[48px] ${
-              activeTab === "code" ? "text-orange-500 bg-black/20" : "text-slate-500"
+              activeTab === "code" ? "text-orange-600 bg-zinc-100" : "text-zinc-500"
             }`}
           >
             <Code size={18} />
@@ -233,7 +233,7 @@ export default function Editor() {
           <button
             onClick={() => setActiveTab("preview")}
             className={`flex-1 flex flex-col items-center justify-center py-1 transition-all min-h-[48px] ${
-              activeTab === "preview" ? "text-orange-500 bg-black/20" : "text-slate-500"
+              activeTab === "preview" ? "text-orange-600 bg-zinc-100" : "text-zinc-500"
             }`}
           >
             <Eye size={18} />
@@ -244,14 +244,14 @@ export default function Editor() {
         <div className="flex-1 flex flex-col md:flex-row overflow-hidden min-h-0">
           {/* Code Panel - always visible on desktop, tab on mobile */}
           <div
-            className={`flex-col w-full md:w-1/2 border-r-4 border-black bg-zinc-950 ${
+            className={`flex-col w-full md:w-1/2 border-r-4 border-black bg-white ${
               activeTab === "code" ? "flex flex-1" : "hidden md:flex"
             }`}
           >
-            <div className="h-9 sm:h-10 bg-black border-b-2 border-zinc-800 flex items-center px-4 justify-between shrink-0">
+            <div className="h-9 sm:h-10 bg-white border-b-2 border-zinc-800 flex items-center px-4 justify-between shrink-0">
               <div className="flex items-center gap-2">
                 <Code size={12} className="text-orange-600 sm:w-3.5 sm:h-3.5" />
-                <span className="text-[10px] sm:text-xs font-mono font-black text-orange-400 tracking-tighter uppercase leading-none">
+                <span className="text-[10px] sm:text-xs font-mono font-black text-orange-600 tracking-tighter uppercase leading-none">
                   Source
                 </span>
               </div>
@@ -264,18 +264,18 @@ export default function Editor() {
 
           {/* Right Panel (AI or Preview) */}
           <div
-            className={`flex-1 bg-zinc-900 relative flex flex-col ${
+            className={`flex-1 bg-zinc-100 relative flex flex-col ${
               activeTab === "code" ? "hidden md:flex" : "flex"
             }`}
           >
             {/* Desktop toggle tabs */}
-            <div className="hidden md:flex h-10 bg-black border-b-2 border-zinc-800 items-center px-2 gap-1 shrink-0">
+            <div className="hidden md:flex h-10 bg-white border-b-2 border-zinc-800 items-center px-2 gap-1 shrink-0">
               <button
                 onClick={() => setActiveTab("preview")}
                 className={`px-4 py-1 text-[10px] font-mono font-black uppercase transition-all flex items-center gap-2 min-h-[32px] ${
                   activeTab === "preview"
                     ? "text-white bg-orange-600 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
-                    : "text-slate-500 hover:text-slate-300"
+                    : "text-zinc-500 hover:text-zinc-700"
                 }`}
               >
                 <Eye size={12} />
@@ -286,7 +286,7 @@ export default function Editor() {
                 className={`px-4 py-1 text-[10px] font-mono font-black uppercase transition-all flex items-center gap-2 min-h-[32px] ${
                   activeTab === "ai"
                     ? "text-white bg-orange-600 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
-                    : "text-slate-500 hover:text-slate-300"
+                    : "text-zinc-500 hover:text-zinc-700"
                 }`}
               >
                 <Sparkles size={12} />

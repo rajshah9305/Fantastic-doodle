@@ -132,7 +132,7 @@
   }
 
   body {
-    @apply bg-black text-foreground;
+    @apply bg-white text-zinc-950;
     font-feature-settings: "rounding" 1;
     overflow-x: hidden;
     width: 100%;
