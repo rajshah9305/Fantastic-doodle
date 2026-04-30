@@ -63,9 +63,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex flex-col overflow-hidden selection:bg-orange-500/30">
+    <div className="min-h-screen bg-white flex flex-col overflow-hidden selection:bg-orange-500/30">
 
-      <header role="banner" className="relative z-20 flex items-center justify-between px-4 sm:px-8 py-4 sm:py-5 flex-shrink-0 border-b border-zinc-800/60">
+      <header role="banner" className="relative z-20 flex items-center justify-between px-4 sm:px-8 py-4 sm:py-5 flex-shrink-0 border-b border-zinc-200">
         <div className="flex items-center gap-2.5">
           <button
             onClick={() => navigate("/")}
@@ -73,26 +73,26 @@ export default function Home() {
           >
             R
           </button>
-          <span className="font-black text-lg sm:text-xl tracking-tighter text-white uppercase">
+          <span className="font-black text-lg sm:text-xl tracking-tighter text-zinc-950 uppercase">
             RAJ AI STUDIO
           </span>
         </div>
         <nav className="flex items-center gap-3 sm:gap-4" aria-label="Main navigation">
           <button
             onClick={() => navigate("/dashboard")}
-            className="text-[10px] sm:text-xs font-mono font-black text-slate-400 hover:text-orange-400 transition-colors uppercase tracking-widest min-h-[44px] px-2"
+            className="text-[10px] sm:text-xs font-mono font-black text-zinc-500 hover:text-orange-600 transition-colors uppercase tracking-widest min-h-[44px] px-2"
           >
             Dashboard
           </button>
           <button
             onClick={() => navigate("/examples")}
-            className="text-[10px] sm:text-xs font-mono font-black text-slate-400 hover:text-orange-400 transition-colors uppercase tracking-widest min-h-[44px] px-2 hidden xs:block"
+            className="text-[10px] sm:text-xs font-mono font-black text-zinc-500 hover:text-orange-600 transition-colors uppercase tracking-widest min-h-[44px] px-2 hidden xs:block"
           >
             Examples
           </button>
           <button
             onClick={() => navigate("/templates")}
-            className="text-[10px] sm:text-xs font-mono font-black text-slate-400 hover:text-orange-400 transition-colors uppercase tracking-widest min-h-[44px] px-2 hidden sm:block"
+            className="text-[10px] sm:text-xs font-mono font-black text-zinc-500 hover:text-orange-600 transition-colors uppercase tracking-widest min-h-[44px] px-2 hidden sm:block"
           >
             Templates
           </button>
@@ -115,8 +115,8 @@ export default function Home() {
               backgroundPosition: "center top",
             }}
           />
-          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-r from-transparent to-zinc-950 pointer-events-none" />
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-zinc-950 to-transparent pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-r from-transparent to-white pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none" />
         </div>
 
         {/* Right hero content */}
@@ -132,7 +132,7 @@ export default function Home() {
               backgroundPosition: "center top",
             }}
           />
-          <div className="absolute inset-0 lg:hidden bg-zinc-950/80" aria-hidden="true" />
+          <div className="absolute inset-0 lg:hidden bg-white/80" aria-hidden="true" />
 
           <div className="relative z-10 w-full max-w-lg">
             <p className="text-orange-500 text-[10px] sm:text-xs font-mono font-black tracking-[0.3em] uppercase mb-4 text-center leading-none">
@@ -140,16 +140,16 @@ export default function Home() {
             </p>
 
             <h1 className="text-center font-black tracking-tighter leading-[0.9] text-5xl sm:text-7xl md:text-8xl lg:text-9xl mb-8 sm:mb-12">
-              <span className="text-white block">IMAGINE</span>
+              <span className="text-zinc-950 block">IMAGINE</span>
               <span className="text-orange-600 block">CONSTRUCT</span>
-              <span className="text-white block mt-2">DEPLOY</span>
+              <span className="text-zinc-950 block mt-2">DEPLOY</span>
             </h1>
 
             <form
               onSubmit={e => { e.preventDefault(); handleGenerate(); }}
               aria-label="App generation form"
             >
-              <div className="rounded-none border-4 border-black bg-zinc-900 focus-within:border-orange-600 hover:border-zinc-700 transition-colors duration-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+              <div className="rounded-none border-4 border-black bg-zinc-100 focus-within:border-orange-600 hover:border-zinc-700 transition-colors duration-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
                 <label htmlFor="prompt-input" className="sr-only">Describe your app</label>
                 <textarea
                   id="prompt-input"
@@ -158,14 +158,14 @@ export default function Home() {
                   onChange={e => setPrompt(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="e.g. A task manager with drag-and-drop, dark mode, and local storage..."
-                  className="w-full bg-transparent px-4 sm:px-6 pt-6 pb-2 text-sm sm:text-lg text-white placeholder:text-zinc-600 outline-none resize-none leading-relaxed caret-orange-600 font-bold italic"
+                  className="w-full bg-transparent px-4 sm:px-6 pt-6 pb-2 text-sm sm:text-lg text-zinc-950 placeholder:text-zinc-500 outline-none resize-none leading-relaxed caret-orange-600 font-bold italic"
                   autoFocus
                   disabled={isGenerating}
                   aria-describedby="prompt-hint"
                 />
 
                 <div className="flex items-center justify-between px-4 sm:px-6 pb-4 sm:pb-6 pt-2 gap-4">
-                  <span id="prompt-hint" className="text-[10px] text-zinc-600 font-mono font-black uppercase tracking-widest hidden sm:block">
+                  <span id="prompt-hint" className="text-[10px] text-zinc-500 font-mono font-black uppercase tracking-widest hidden sm:block">
                     [ CTRL + ENTER ] TO INITIALIZE
                   </span>
                   <button
@@ -187,8 +187,8 @@ export default function Home() {
         </div>
       </main>
 
-      <footer role="contentinfo" className="relative z-10 py-4 flex justify-center items-center flex-shrink-0 border-t-4 border-black bg-zinc-950">
-        <p className="text-[10px] font-mono font-black text-zinc-600 uppercase tracking-[0.3em]">
+      <footer role="contentinfo" className="relative z-10 py-4 flex justify-center items-center flex-shrink-0 border-t-4 border-black bg-white">
+        <p className="text-[10px] font-mono font-black text-zinc-500 uppercase tracking-[0.3em]">
           Engineered by <span className="text-orange-600">RAJ_SHAH</span> // Ver 1.0.0
         </p>
       </footer>

@@ -5,5 +5,5 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
-  return <div className="bg-black overflow-x-hidden">{children}</div>;
+  return <div className="bg-white overflow-x-hidden min-h-screen flex flex-col w-full">{children}</div>;
 }
