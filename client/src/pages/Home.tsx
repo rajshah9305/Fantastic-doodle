@@ -7,13 +7,12 @@ import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { getOrCreateSessionId } from "@/const";
 import { toast } from "sonner";
-import { getDefaultAiModel, AI_MODELS, type AIModelId } from "@/lib/models";
+import { getDefaultAiModel } from "@/lib/models";
 
 export default function Home() {
   const [, navigate] = useLocation();
   const urlPrompt = new URLSearchParams(window.location.search).get("prompt") || "";
   const [prompt, setPrompt] = useState(urlPrompt);
-  const [selectedModel, setSelectedModel] = useState<AIModelId>(getDefaultAiModel());
 
   useEffect(() => {
     if (urlPrompt) {
@@ -52,7 +51,7 @@ export default function Home() {
     generateMutation.mutate({
       prompt: prompt.trim(),
       sessionId,
-      model: selectedModel
+      model: getDefaultAiModel()
     });
   };
 
@@ -164,24 +163,6 @@ export default function Home() {
                   disabled={isGenerating}
                   aria-describedby="prompt-hint"
                 />
-
-                <div className="px-4 sm:px-6 pb-2">
-                  <div className="flex items-center gap-3 bg-black/40 p-2 border-2 border-black">
-                    <span className="text-[10px] font-mono font-black text-zinc-500 uppercase tracking-widest">Model_Selector:</span>
-                    <select
-                      value={selectedModel}
-                      onChange={(e) => setSelectedModel(e.target.value as AIModelId)}
-                      disabled={isGenerating}
-                      className="bg-zinc-800 text-orange-500 text-[10px] font-mono font-black py-1 px-3 border-2 border-black focus:outline-none focus:border-orange-600 transition-all cursor-pointer uppercase tracking-widest"
-                    >
-                      {AI_MODELS.map((model) => (
-                        <option key={model.id} value={model.id}>
-                          {model.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
 
                 <div className="flex items-center justify-between px-4 sm:px-6 pb-4 sm:pb-6 pt-2 gap-4">
                   <span id="prompt-hint" className="text-[10px] text-zinc-600 font-mono font-black uppercase tracking-widest hidden sm:block">
