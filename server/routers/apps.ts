@@ -13,21 +13,33 @@ import { getGroqClient } from '../groqClient.js';
 
 const SUPPORTED_MODELS = [
   'llama-3.3-70b-versatile',
+  'llama-3.1-70b-versatile',
   'llama-3.1-8b-instant',
-  'openai/gpt-oss-120b',
-  'openai/gpt-oss-20b',
+  'mixtral-8x7b-32768',
 ] as const;
 
 // Helper to parse AI response robustly
 const parseAIResponse = (text: string) => {
   try {
-    // Attempt to extract JSON from markdown if present
-    const jsonMatch = text.match(/```json\s?([\s\S]*?)```/) ||
-                     text.match(/```\s?([\s\S]*?)```/);
+    // 1. Try to extract content between triple backticks (markdown)
+    const jsonMatch = text.match(/```(?:json)?\s?([\s\S]*?)```/);
+    if (jsonMatch) {
+      return JSON.parse(jsonMatch[1].trim());
+    }
 
-    const cleanJson = jsonMatch ? jsonMatch[1].trim() : text.trim();
-    return JSON.parse(cleanJson);
-  } catch {
+    // 2. Try to find the outermost curly braces
+    const firstBrace = text.indexOf('{');
+    const lastBrace = text.lastIndexOf('}');
+    if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+      const maybeJson = text.substring(firstBrace, lastBrace + 1);
+      return JSON.parse(maybeJson);
+    }
+
+    // 3. Fallback to parsing the whole text
+    return JSON.parse(text.trim());
+  } catch (error) {
+    console.error('AI Response Parsing Error:', error);
+    console.debug('Raw AI Response:', text);
     throw new Error('Failed to parse AI response. The generated response was not valid JSON.');
   }
 };

@@ -92,8 +92,8 @@ export default function AppViewer() {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
-          <Loader2 className="w-10 h-10 sm:w-12 sm:h-12 animate-spin mx-auto mb-4 text-orange-500" />
-          <p className="text-slate-400 text-sm sm:text-base">Loading your app...</p>
+          <Loader2 className="w-12 h-12 animate-spin mx-auto mb-4 text-orange-500" />
+          <p className="text-orange-400 font-mono">LOADING PREVIEW...</p>
         </div>
       </div>
     );
@@ -101,15 +101,15 @@ export default function AppViewer() {
 
   if (!app) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-slate-400 mb-4 text-sm sm:text-base">App not found</p>
+      <div className="min-h-screen bg-black flex items-center justify-center px-4">
+        <div className="text-center border-4 border-orange-600 p-8 shadow-[8px_8px_0px_0px_rgba(234,88,12,1)] max-w-md w-full">
+          <p className="text-white mb-6 font-mono text-xl font-black uppercase">App Not Found</p>
           <button
             onClick={() => navigate("/")}
-            className="px-4 py-2 text-xs sm:text-sm font-mono font-bold uppercase bg-zinc-900 text-white border border-orange-900/50 hover:border-orange-500 hover:bg-zinc-800 rounded transition-all flex items-center gap-2 mx-auto"
+            className="w-full bg-zinc-900 hover:bg-zinc-800 text-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all flex items-center justify-center gap-2 py-3 px-4 text-xs font-mono font-black"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Home
+            BACK TO HOME
           </button>
         </div>
       </div>
@@ -128,65 +128,79 @@ export default function AppViewer() {
         }}
       ></div>
 
-      <div className="relative z-10 container mx-auto px-3 xs:px-4 sm:px-6 py-4 sm:py-6">
-        <div className="mb-4 sm:mb-6">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-6 sm:py-10 max-w-7xl">
+        <div className="mb-8 sm:mb-12">
           <button
             onClick={() => navigate("/dashboard")}
-            className="mb-3 sm:mb-4 px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] xs:text-xs sm:text-sm font-mono font-bold uppercase bg-zinc-900 text-slate-400 border border-orange-900/50 hover:border-orange-500 hover:text-orange-400 rounded transition-all flex items-center gap-2"
+            className="mb-6 px-4 py-2 text-[10px] sm:text-xs font-mono font-black uppercase bg-zinc-900 text-slate-400 border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none hover:text-orange-400 transition-all flex items-center gap-2"
           >
-            <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
+            <ArrowLeft className="w-4 h-4" />
             Back
           </button>
 
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div className="min-w-0 flex-1">
-              <h1 className="text-xl xs:text-2xl sm:text-3xl font-black text-white truncate tracking-tighter">{app.title}</h1>
-              <p className="text-orange-500 text-[10px] xs:text-xs sm:text-sm mt-1 font-mono">
-                Created on {new Date(app.generatedAt).toLocaleDateString()}
-              </p>
+              <h1 className="text-2xl xs:text-4xl sm:text-5xl font-black text-white truncate tracking-tighter uppercase leading-none">{app.title}</h1>
+              <div className="flex items-center gap-3 mt-3">
+                <p className="text-orange-500 text-[10px] sm:text-xs font-mono font-black uppercase tracking-widest bg-orange-600/10 px-2 py-1 border border-orange-600/30">
+                  Deployed: {new Date(app.generatedAt).toLocaleDateString()}
+                </p>
+                <div className="h-1 w-1 bg-zinc-800 rounded-full" />
+                <p className="text-slate-500 text-[10px] sm:text-xs font-mono font-black uppercase tracking-widest">
+                  ID: #{app.id}
+                </p>
+              </div>
             </div>
 
-            <div className="flex gap-1.5 xs:gap-2 flex-wrap">
+            <div className="flex gap-3 flex-wrap">
               <button
                 onClick={handleCopyCode}
-                className="px-2 xs:px-3 sm:px-4 py-1.5 sm:py-2 text-[9px] xs:text-[10px] sm:text-xs font-mono font-bold uppercase bg-zinc-900 text-white border border-orange-900/50 hover:border-orange-500 hover:bg-zinc-800 rounded transition-all flex items-center gap-1 sm:gap-2 min-h-[36px] sm:min-h-[44px]"
+                className="px-4 py-2.5 text-[10px] sm:text-xs font-mono font-black uppercase bg-zinc-900 text-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all flex items-center gap-2 min-h-[44px]"
               >
-                <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden xs:inline">{copied ? "Copied!" : "Copy"}</span>
+                <Copy className="w-4 h-4" />
+                <span>{copied ? "Copied!" : "Copy Code"}</span>
               </button>
               <button
                 onClick={handleDownload}
-                className="px-2 xs:px-3 sm:px-4 py-1.5 sm:py-2 text-[9px] xs:text-[10px] sm:text-xs font-mono font-bold uppercase bg-zinc-900 text-white border border-orange-900/50 hover:border-orange-500 hover:bg-zinc-800 rounded transition-all flex items-center gap-1 sm:gap-2 min-h-[36px] sm:min-h-[44px]"
+                className="px-4 py-2.5 text-[10px] sm:text-xs font-mono font-black uppercase bg-zinc-900 text-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all flex items-center gap-2 min-h-[44px]"
               >
-                <Download className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden xs:inline">Download</span>
+                <Download className="w-4 h-4" />
+                <span>Download</span>
               </button>
               <button
                 onClick={handleDeleteClick}
                 disabled={deleteMutation.isPending}
-                className="px-2 xs:px-3 sm:px-4 py-1.5 sm:py-2 text-[9px] xs:text-[10px] sm:text-xs font-mono font-bold uppercase bg-red-900/20 text-red-500 border border-red-900/50 hover:border-red-500 hover:bg-red-900/30 rounded transition-all disabled:opacity-50 flex items-center gap-1 sm:gap-2 min-h-[36px] sm:min-h-[44px]"
+                className="px-4 py-2.5 text-[10px] sm:text-xs font-mono font-black uppercase bg-red-600 text-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all disabled:opacity-50 flex items-center gap-2 min-h-[44px]"
               >
-                <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden xs:inline">Delete</span>
+                <Trash2 className="w-4 h-4" />
+                <span>Destroy</span>
               </button>
             </div>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            <div className="bg-zinc-950 border border-orange-900/30 rounded-lg overflow-hidden hover:border-orange-500/50 transition-all">
-              <div className="p-3 sm:p-4 border-b border-orange-900/30">
-                <h2 className="text-sm sm:text-base font-bold text-white">Preview</h2>
-                <p className="text-[10px] xs:text-xs sm:text-sm text-slate-400 mt-1">
-                  Live preview of your generated app
-                </p>
+            <div className="bg-zinc-950 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col overflow-hidden group hover:shadow-[12px_12px_0px_0px_rgba(234,88,12,0.1)] transition-all">
+              <div className="p-4 border-b-4 border-black bg-zinc-900 flex justify-between items-center shrink-0">
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-1.5 mr-2">
+                    <div className="w-3 h-3 rounded-full bg-red-500 border-2 border-black" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-500 border-2 border-black" />
+                    <div className="w-3 h-3 rounded-full bg-green-500 border-2 border-black" />
+                  </div>
+                  <h2 className="text-xs sm:text-sm font-black text-white uppercase tracking-tight">Live Preview</h2>
+                </div>
+                <div className="flex items-center gap-2 text-orange-600">
+                   <div className="w-2 h-2 bg-orange-600 rounded-full animate-pulse" />
+                   <span className="text-[10px] font-mono font-black">ACTIVE</span>
+                </div>
               </div>
-              <div className="p-3 sm:p-4">
-                <div className="border border-orange-900/30 rounded-lg overflow-hidden bg-white">
+              <div className="p-4 sm:p-6 bg-[radial-gradient(rgba(234,88,12,0.05)_1px,transparent_1px)] [background-size:16px_16px]">
+                <div className="border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] overflow-hidden bg-white">
                   <iframe
                     ref={iframeRef}
-                    className="w-full h-[420px] sm:h-[520px] lg:h-[580px] border-none"
+                    className="w-full h-[450px] sm:h-[550px] lg:h-[650px] border-none"
                     title="App Preview"
                     sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups"
                   />
@@ -195,61 +209,61 @@ export default function AppViewer() {
             </div>
           </div>
 
-          <div className="space-y-4">
-            <div className="bg-zinc-950 border border-orange-900/30 rounded-lg overflow-hidden hover:border-orange-500/50 transition-all">
-              <div className="p-3 sm:p-4 border-b border-orange-900/30">
-                <h2 className="text-sm sm:text-base font-bold text-white">App Details</h2>
+          <div className="space-y-8">
+            <div className="bg-zinc-950 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden flex flex-col hover:shadow-[10px_10px_0px_0px_rgba(234,88,12,0.1)] transition-all">
+              <div className="p-4 border-b-4 border-black bg-zinc-900">
+                <h2 className="text-xs sm:text-sm font-black text-white uppercase tracking-tight">Configuration</h2>
               </div>
-              <div className="p-3 sm:p-4 space-y-3 text-xs sm:text-sm">
+              <div className="p-4 sm:p-6 space-y-6">
                 <div>
-                  <p className="text-orange-400 font-mono uppercase text-[10px] xs:text-xs">Prompt</p>
-                  <p className="text-slate-300 mt-1 line-clamp-3">
-                    {app.prompt}
-                  </p>
+                  <p className="text-orange-500 font-mono font-black uppercase text-[10px] mb-2 tracking-widest">Original Prompt</p>
+                  <div className="p-3 bg-zinc-900 border-2 border-black text-xs sm:text-sm text-slate-400 leading-relaxed font-medium italic italic">
+                    "{app.prompt}"
+                  </div>
                 </div>
                 <div>
-                  <p className="text-orange-400 font-mono uppercase text-[10px] xs:text-xs">Code Stats</p>
-                  <div className="mt-1 space-y-1 text-slate-400 font-mono text-[10px] xs:text-xs">
-                    <p>HTML: {app.htmlCode?.length || 0} chars</p>
-                    <p>CSS: {app.cssCode?.length || 0} chars</p>
-                    <p>JS: {app.jsCode?.length || 0} chars</p>
+                  <p className="text-orange-500 font-mono font-black uppercase text-[10px] mb-2 tracking-widest">Payload Metrics</p>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { l: "HTML", v: app.htmlCode?.length || 0 },
+                      { l: "CSS", v: app.cssCode?.length || 0 },
+                      { l: "JS", v: app.jsCode?.length || 0 },
+                    ].map((m, i) => (
+                      <div key={i} className="bg-zinc-900 border-2 border-black p-2 text-center">
+                        <p className="text-[9px] font-black text-white mb-1">{m.l}</p>
+                        <p className="text-[10px] font-mono text-orange-400">{m.v}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-zinc-950 border border-orange-900/30 rounded-lg overflow-hidden hover:border-orange-500/50 transition-all">
-              <div className="p-3 sm:p-4 border-b border-orange-900/30">
-                <h2 className="text-sm sm:text-base font-bold text-white">Code Sections</h2>
+            <div className="bg-zinc-950 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden flex flex-col hover:shadow-[10px_10px_0px_0px_rgba(234,88,12,0.1)] transition-all">
+              <div className="p-4 border-b-4 border-black bg-zinc-900">
+                <h2 className="text-xs sm:text-sm font-black text-white uppercase tracking-tight">Component Source</h2>
               </div>
-              <div className="p-3 sm:p-4 space-y-2">
-                <details className="text-xs sm:text-sm group">
-                  <summary className="cursor-pointer font-mono text-orange-400 hover:text-orange-300 flex items-center gap-2 py-1">
-                    <Code className="w-3 h-3 sm:w-4 sm:h-4" />
-                    HTML
-                  </summary>
-                  <pre className="mt-2 p-2 sm:p-3 bg-zinc-900 border border-orange-900/30 rounded text-[10px] xs:text-xs overflow-auto max-h-32 sm:max-h-40 text-slate-300">
-                    {app.htmlCode}
-                  </pre>
-                </details>
-                <details className="text-xs sm:text-sm group">
-                  <summary className="cursor-pointer font-mono text-orange-400 hover:text-orange-300 flex items-center gap-2 py-1">
-                    <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
-                    CSS
-                  </summary>
-                  <pre className="mt-2 p-2 sm:p-3 bg-zinc-900 border border-orange-900/30 rounded text-[10px] xs:text-xs overflow-auto max-h-32 sm:max-h-40 text-slate-300">
-                    {app.cssCode}
-                  </pre>
-                </details>
-                <details className="text-xs sm:text-sm group">
-                  <summary className="cursor-pointer font-mono text-orange-400 hover:text-orange-300 flex items-center gap-2 py-1">
-                    <Braces className="w-3 h-3 sm:w-4 sm:h-4" />
-                    JavaScript
-                  </summary>
-                  <pre className="mt-2 p-2 sm:p-3 bg-zinc-900 border border-orange-900/30 rounded text-[10px] xs:text-xs overflow-auto max-h-32 sm:max-h-40 text-slate-300">
-                    {app.jsCode}
-                  </pre>
-                </details>
+              <div className="p-4 space-y-3">
+                {[
+                  { n: "HTML Structure", i: Code, v: app.htmlCode },
+                  { n: "Style Definition", i: FileText, v: app.cssCode },
+                  { n: "Logic Script", i: Braces, v: app.jsCode },
+                ].map((s, i) => (
+                  <details key={i} className="group border-2 border-black bg-zinc-900 overflow-hidden">
+                    <summary className="cursor-pointer p-3 flex items-center justify-between hover:bg-zinc-800 transition-colors">
+                      <div className="flex items-center gap-2">
+                        <s.i className="w-4 h-4 text-orange-600" />
+                        <span className="text-[10px] font-mono font-black uppercase tracking-tight text-white">{s.n}</span>
+                      </div>
+                      <div className="w-4 h-4 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform">▼</div>
+                    </summary>
+                    <div className="p-3 border-t-2 border-black bg-black">
+                      <pre className="text-[10px] font-mono text-orange-400 overflow-auto max-h-48 whitespace-pre-wrap leading-tight">
+                        {s.v || "// EMPTY"}
+                      </pre>
+                    </div>
+                  </details>
+                ))}
               </div>
             </div>
           </div>
@@ -258,33 +272,30 @@ export default function AppViewer() {
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <DialogContent className="bg-zinc-950 border border-orange-900/50 text-white">
+        <DialogContent className="bg-zinc-950 border-4 border-black text-white rounded-none shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
           <DialogHeader>
-            <DialogTitle className="text-white">Delete App</DialogTitle>
-            <DialogDescription className="text-slate-400">
-              Are you sure you want to delete "{app?.title}"? This action cannot be undone.
+            <DialogTitle className="text-2xl font-black uppercase tracking-tighter text-white">Confirm Destruction</DialogTitle>
+            <DialogDescription className="text-slate-400 font-medium pt-2">
+              Are you certain you want to destroy <span className="text-orange-500 font-bold underline">"{app?.title}"</span>? This process is irreversible.
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="gap-2">
+          <DialogFooter className="gap-3 sm:gap-4 mt-6">
             <button
               onClick={() => setDeleteDialogOpen(false)}
               disabled={deleteMutation.isPending}
-              className="px-4 py-2 text-xs sm:text-sm font-mono font-bold uppercase bg-zinc-900 text-white border border-orange-900/50 hover:border-orange-500 hover:bg-zinc-800 rounded transition-all"
+              className="flex-1 px-4 py-3 text-xs font-mono font-black uppercase bg-zinc-800 text-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
             >
               Cancel
             </button>
             <button
               onClick={handleDeleteConfirm}
               disabled={deleteMutation.isPending}
-              className="px-4 py-2 text-xs sm:text-sm font-mono font-bold uppercase bg-red-600 text-white hover:bg-red-700 rounded transition-all flex items-center gap-2"
+              className="flex-1 px-4 py-3 text-xs font-mono font-black uppercase bg-red-600 text-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none flex items-center justify-center gap-2"
             >
               {deleteMutation.isPending ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Deleting...
-                </>
+                <Loader2 className="w-4 h-4 animate-spin" />
               ) : (
-                "Delete"
+                "Destroy"
               )}
             </button>
           </DialogFooter>
