@@ -115,8 +115,8 @@ export default function Home() {
               backgroundPosition: "center top",
             }}
           />
-          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-r from-transparent to-white pointer-events-none" />
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-32 pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none" />
         </div>
 
         {/* Right hero content */}
@@ -132,17 +132,17 @@ export default function Home() {
               backgroundPosition: "center top",
             }}
           />
-          <div className="absolute inset-0 lg:hidden bg-white/80" aria-hidden="true" />
+          <div className="absolute inset-0 lg:hidden bg-white/30 backdrop-blur-sm" aria-hidden="true" />
 
-          <div className="relative z-10 w-full max-w-lg">
+          <div className="relative z-10 w-full max-w-4xl">
             <p className="text-orange-500 text-[10px] sm:text-xs font-mono font-black tracking-[0.3em] uppercase mb-4 text-center leading-none">
               Industrial AI Engine
             </p>
 
             <h1 className="text-center font-black tracking-tighter leading-[0.9] text-5xl sm:text-7xl md:text-8xl lg:text-9xl mb-8 sm:mb-12">
-              <span className="text-zinc-950 block">IMAGINE</span>
-              <span className="text-orange-600 block">CONSTRUCT</span>
-              <span className="text-zinc-950 block mt-2">DEPLOY</span>
+              <span className="text-zinc-950 block drop-shadow-[0_2px_2px_rgba(255,255,255,0.8)]">IMAGINE</span>
+              <span className="text-orange-600 block drop-shadow-[0_2px_2px_rgba(255,255,255,0.8)]">CONSTRUCT</span>
+              <span className="text-zinc-950 block mt-2 drop-shadow-[0_2px_2px_rgba(255,255,255,0.8)]">DEPLOY</span>
             </h1>
 
             <form
