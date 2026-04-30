@@ -63,7 +63,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col overflow-hidden selection:bg-orange-500/30">
+    <div className="min-h-screen bg-white flex flex-col  selection:bg-orange-500/30">
 
       <header role="banner" className="relative z-20 flex items-center justify-between px-4 sm:px-8 py-4 sm:py-5 flex-shrink-0 border-b border-zinc-200">
         <div className="flex items-center gap-2.5">
@@ -103,7 +103,7 @@ export default function Home() {
         </nav>
       </header>
 
-      <main role="main" className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+      <main role="main" className="flex-1 flex flex-col lg:flex-row ">
 
         {/* Left image panel — desktop only */}
         <div className="hidden lg:block lg:w-1/2 relative overflow-hidden" aria-hidden="true">
@@ -120,7 +120,7 @@ export default function Home() {
         </div>
 
         {/* Right hero content */}
-        <div className="w-full lg:w-1/2 flex flex-col items-center justify-center px-4 sm:px-10 lg:px-14 xl:px-20 py-8 sm:py-12 lg:py-0 relative">
+        <div className="flex-1 w-full lg:w-1/2 flex flex-col items-center justify-center px-4 sm:px-10 lg:px-14 xl:px-20 py-8 sm:py-12 lg:py-0 relative">
 
           {/* Mobile background */}
           <div

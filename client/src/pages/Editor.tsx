@@ -124,7 +124,7 @@ export default function Editor() {
 
   if (isLoading) {
     return (
-      <div className="h-screen flex items-center justify-center bg-white">
+      <div className="h-[100dvh] flex items-center justify-center bg-white">
         <div className="text-center">
           <Loader2 className="w-12 h-12 animate-spin mx-auto mb-4 text-orange-600" />
           <p className="text-orange-600 font-mono text-sm sm:text-base uppercase tracking-tighter">Initializing Workspace...</p>
@@ -135,7 +135,7 @@ export default function Editor() {
 
   if (!app) {
     return (
-      <div className="h-screen flex items-center justify-center bg-white px-4">
+      <div className="h-[100dvh] flex items-center justify-center bg-white px-4">
         <div className="text-center border-4 border-orange-600 p-6 sm:p-8 shadow-[8px_8px_0px_0px_rgba(234,88,12,1)] max-w-md w-full bg-white">
           <p className="text-zinc-950 mb-6 font-mono text-lg sm:text-xl font-black uppercase tracking-tighter">404: Construction Not Found</p>
           <button
@@ -151,7 +151,7 @@ export default function Editor() {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-white text-zinc-700 overflow-hidden font-sans relative">
+    <div className="h-[100dvh] flex flex-col bg-white text-zinc-700 overflow-hidden font-sans relative">
       {/* Grid Pattern Background */}
       <div
         className="absolute inset-0 z-0 opacity-[0.03]"
