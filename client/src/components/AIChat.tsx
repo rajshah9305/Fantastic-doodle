@@ -2,8 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, Sparkles, Loader2, Cpu } from "lucide-react";
-import { getDefaultAiModel, AI_MODELS, type AIModelId } from "@/lib/models";
+import { Send, Sparkles, Loader2 } from "lucide-react";
+import { getDefaultAiModel, type AIModelId } from "@/lib/models";
 
 interface Message {
   role: "user" | "assistant";
@@ -23,7 +23,6 @@ export default function AIChat({
 }: AIChatProps) {
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
-  const [selectedModel, setSelectedModel] = useState<AIModelId>(getDefaultAiModel());
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -38,7 +37,7 @@ export default function AIChat({
 
     setIsSending(true);
     try {
-      await onSendMessage(input.trim(), selectedModel);
+      await onSendMessage(input.trim(), getDefaultAiModel());
       setInput("");
     } finally {
       setIsSending(false);
@@ -65,23 +64,6 @@ export default function AIChat({
               Modify your app with natural language
             </p>
           </div>
-        </div>
-
-        <div className="flex items-center gap-2 bg-zinc-900/50 p-1.5 rounded border border-orange-900/20">
-          <Cpu className="w-3.5 h-3.5 text-orange-600" />
-          <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-wider">Model:</span>
-          <select
-            value={selectedModel}
-            onChange={(e) => setSelectedModel(e.target.value as AIModelId)}
-            disabled={isSending || isLoading}
-            className="flex-1 bg-transparent text-orange-500 text-[10px] font-mono font-bold py-0.5 focus:outline-none cursor-pointer"
-          >
-            {AI_MODELS.map((model) => (
-              <option key={model.id} value={model.id} className="bg-zinc-900">
-                {model.name}
-              </option>
-            ))}
-          </select>
         </div>
       </div>
 
