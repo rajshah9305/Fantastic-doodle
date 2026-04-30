@@ -10,6 +10,7 @@ import {
   getSessionById,
 } from '../db.js';
 import { getGroqClient } from '../groqClient.js';
+import { logger } from '../utils/logging.js';
 
 const SUPPORTED_MODELS = [
   'llama-3.3-70b-versatile',
@@ -22,7 +23,8 @@ const SUPPORTED_MODELS = [
 const parseAIResponse = (text: string) => {
   try {
     // 1. Try to extract content between triple backticks (markdown)
-    const jsonMatch = text.match(/```(?:json)?\s?([\s\S]*?)```/);
+    // Refined regex to handle variations in code block tagging
+    const jsonMatch = text.match(/```(?:json|JSON)?\s?([\s\S]*?)```/);
     if (jsonMatch) {
       return JSON.parse(jsonMatch[1].trim());
     }
@@ -38,8 +40,9 @@ const parseAIResponse = (text: string) => {
     // 3. Fallback to parsing the whole text
     return JSON.parse(text.trim());
   } catch (error) {
-    console.error('AI Response Parsing Error:', error);
-    console.debug('Raw AI Response:', text);
+    logger.error('AI', 'AI Response Parsing Error', error instanceof Error ? error : new Error(String(error)), {
+      rawResponse: text,
+    });
     throw new Error('Failed to parse AI response. The generated response was not valid JSON.');
   }
 };
@@ -110,10 +113,15 @@ export const appsRouter = router({
             },
           ],
           model: input.model || 'llama-3.3-70b-versatile',
+          response_format: { type: 'json_object' },
           temperature: 0.5,
           max_tokens: 8192,
           top_p: 1,
         });
+
+        if (completion.choices[0]?.finish_reason === 'length') {
+          throw new Error('The generated app exceeded the maximum allowed size. Please try a more specific or smaller request.');
+        }
 
         const responseText =
           completion.choices[0]?.message?.content || '';
@@ -243,10 +251,15 @@ CORE RULES — follow these without exception:
             },
           ],
           model: input.model || 'llama-3.3-70b-versatile',
+          response_format: { type: 'json_object' },
           temperature: 0.5,
           max_tokens: 8192,
           top_p: 1,
         });
+
+        if (completion.choices[0]?.finish_reason === 'length') {
+          throw new Error('The modified app exceeded the maximum allowed size. Please try a smaller instruction.');
+        }
 
         const responseText = completion.choices[0]?.message?.content || '';
 
