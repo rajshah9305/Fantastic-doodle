@@ -97,7 +97,7 @@ export default function AIChat({
               className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[95%] sm:max-w-[85%] rounded-lg px-3 sm:px-4 py-2 ${
+                className={`max-w-[90%] sm:max-w-[85%] rounded-lg px-3 sm:px-4 py-2 ${
                   message.role === "user"
                     ? "bg-orange-600 text-white"
                     : "bg-zinc-900 border border-orange-900/30 text-slate-300"
@@ -125,7 +125,7 @@ export default function AIChat({
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="min-h-[80px] sm:min-h-[100px] max-h-[150px] sm:max-h-[200px] resize-none text-sm sm:text-base bg-zinc-900 border-orange-900/50 text-white placeholder:text-slate-500 focus:border-orange-500"
+            className="min-h-[60px] sm:min-h-[80px] max-h-[150px] sm:max-h-[200px] resize-none text-sm sm:text-base bg-zinc-900 border-orange-900/50 text-white placeholder:text-slate-500 focus:border-orange-500"
             disabled={isSending || isLoading}
             aria-label="Chat input"
           />
@@ -133,7 +133,7 @@ export default function AIChat({
             type="submit"
             size="icon"
             disabled={!input.trim() || isSending || isLoading}
-            className="shrink-0 min-w-[48px] min-h-[48px] bg-orange-600 hover:bg-orange-700 text-white"
+            className="shrink-0 min-w-[44px] min-h-[44px] bg-orange-600 hover:bg-orange-700 text-white"
             title="Send message"
             aria-label="Send message"
           >

@@ -1,6 +1,6 @@
+import { useRef, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import { useTheme } from "@/contexts/ThemeContext";
-import { useState, useEffect } from "react";
 
 interface CodeEditorProps {
   value: string;
@@ -16,15 +16,6 @@ export default function CodeEditor({
   readOnly = false,
 }: CodeEditorProps) {
   const { theme } = useTheme();
-  const [fontSize, setFontSize] = useState(window.innerWidth < 768 ? 16 : 14);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setFontSize(window.innerWidth < 768 ? 16 : 14);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const handleEditorChange = (value: string | undefined) => {
     onChange(value || "");
@@ -39,12 +30,11 @@ export default function CodeEditor({
         onChange={handleEditorChange}
         options={{
           automaticLayout: true,
-          minimap: { enabled: window.innerWidth >= 1024 },
-          fontSize: fontSize,
-          lineHeight: fontSize * 1.5,
+          minimap: { enabled: true },
+          fontSize: 14,
           lineNumbers: "on",
           roundedSelection: false,
-          scrollBeyondLastLine: true,
+          scrollBeyondLastLine: false,
           readOnly,
           wordWrap: "on",
           padding: { top: 16, bottom: 16 },

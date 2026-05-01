@@ -162,7 +162,7 @@ export default function Editor() {
       ></div>
 
       {/* Header */}
-      <header className="h-16 sm:h-20 border-b-4 border-black bg-zinc-950 flex items-center justify-between px-4 md:px-6 z-20 relative shadow-[0px_4px_0px_0px_rgba(0,0,0,1)]">
+      <header className="h-14 sm:h-16 border-b-4 border-black bg-zinc-950 flex items-center justify-between px-4 md:px-6 z-20 relative shadow-[0px_4px_0px_0px_rgba(0,0,0,1)]">
         <div className="flex items-center gap-4 min-w-0">
           <button
             onClick={() => navigate("/dashboard")}
@@ -177,7 +177,7 @@ export default function Editor() {
             <h2 className="text-[10px] sm:text-xs font-black text-orange-600 tracking-[0.2em] uppercase">
               App Studio / Editor
             </h2>
-            <p className="text-sm sm:text-lg font-bold text-white truncate max-w-[120px] sm:max-w-xs md:max-w-md uppercase tracking-tight">
+            <p className="text-sm sm:text-lg font-bold text-white truncate max-w-[150px] sm:max-w-md uppercase tracking-tight">
               {app.title}
             </p>
           </div>
@@ -209,15 +209,15 @@ export default function Editor() {
 
       <div className="flex-1 flex flex-col overflow-hidden relative z-10">
         {/* Tab Navigation - visible on mobile */}
-        <div className="md:hidden h-14 bg-zinc-900 border-b-2 border-black flex items-center justify-around px-2">
+        <div className="md:hidden h-12 bg-zinc-900 border-b-2 border-black flex items-center justify-around px-2">
           <button
             onClick={() => setActiveTab("ai")}
             className={`flex-1 flex flex-col items-center justify-center py-1 transition-all ${
               activeTab === "ai" ? "text-orange-500" : "text-slate-500"
             }`}
           >
-            <Sparkles size={20} />
-            <span className="text-xs font-black uppercase mt-1">AI</span>
+            <Sparkles size={18} />
+            <span className="text-[10px] font-black uppercase mt-0.5">AI</span>
           </button>
           <button
             onClick={() => setActiveTab("code")}
@@ -225,8 +225,8 @@ export default function Editor() {
               activeTab === "code" ? "text-orange-500" : "text-slate-500"
             }`}
           >
-            <Code size={20} />
-            <span className="text-xs font-black uppercase mt-1">Code</span>
+            <Code size={18} />
+            <span className="text-[10px] font-black uppercase mt-0.5">Code</span>
           </button>
           <button
             onClick={() => setActiveTab("preview")}
@@ -234,8 +234,8 @@ export default function Editor() {
               activeTab === "preview" ? "text-orange-500" : "text-slate-500"
             }`}
           >
-            <Eye size={20} />
-            <span className="text-xs font-black uppercase mt-1">View</span>
+            <Eye size={18} />
+            <span className="text-[10px] font-black uppercase mt-0.5">View</span>
           </button>
         </div>
 

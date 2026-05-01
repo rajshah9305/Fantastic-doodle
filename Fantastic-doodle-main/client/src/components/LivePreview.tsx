@@ -48,7 +48,7 @@ export default function LivePreview({
   return (
     <div className="h-full w-full flex flex-col bg-zinc-950 border-2 border-orange-600/50 shadow-[4px_4px_0px_0px_rgba(234,88,12,0.4)] overflow-hidden">
       {/* Preview chrome bar */}
-      <div className="h-10 bg-black border-b border-orange-600/30 flex items-center px-3 gap-1.5 shrink-0">
+      <div className="h-8 bg-black border-b border-orange-600/30 flex items-center px-3 gap-1.5 shrink-0">
         <div className="w-2.5 h-2.5 rounded-full bg-zinc-700 border border-zinc-600" />
         <div className="w-2.5 h-2.5 rounded-full bg-zinc-700 border border-zinc-600" />
         <div className="w-2.5 h-2.5 rounded-full bg-zinc-700 border border-zinc-600" />
